@@ -28,11 +28,7 @@ export const unstable_settings = {
 	initialRouteName: "(drawer)",
 };
 
-if (!process.env.EXPO_PUBLIC_CONVEX_URL) {
-	throw new Error("EXPO_PUBLIC_CONVEX_URL is not set");
-}
-
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL, {
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
 	unsavedChangesWarning: false,
 });
 
@@ -63,11 +59,7 @@ export default function RootLayout() {
 				<StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 				<GestureHandlerRootView style={{ flex: 1 }}>
 					<Stack>
-						<Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-						<Stack.Screen
-							name="modal"
-							options={{ title: "Modal", presentation: "modal" }}
-						/>
+						<Stack.Screen name="index" options={{ headerShown: false }} />
 					</Stack>
 				</GestureHandlerRootView>
 			</ThemeProvider>

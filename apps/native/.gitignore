@@ -18,11 +18,11 @@ expo-env.d.ts
 ios
 android
 
+# environemnt variabels
+.env.*
+
 # macOS
 .DS_Store
-
-# Environment variables
-.env.*
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*

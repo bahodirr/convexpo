@@ -8,7 +8,6 @@ const config = withTurborepoManagedCache(
 	withMonorepoPaths(
 		withNativeWind(getDefaultConfig(__dirname), {
 			input: "./global.css",
-			inlineRem: 16,
 			configPath: "./tailwind.config.js",
 		}),
 	),
