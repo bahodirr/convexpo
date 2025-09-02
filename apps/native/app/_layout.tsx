@@ -1,19 +1,19 @@
-import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { Stack } from "expo-router";
 import {
 	DarkTheme,
 	DefaultTheme,
 	type Theme,
 	ThemeProvider,
 } from "@react-navigation/native";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
-import { NAV_THEME } from "@/lib/constants";
 import React, { useRef } from "react";
-import { useColorScheme } from "@/lib/use-color-scheme";
 import { Platform } from "react-native";
 import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
+import { NAV_THEME } from "@/lib/constants";
+import { useColorScheme } from "@/lib/use-color-scheme";
 
 const LIGHT_THEME: Theme = {
 	...DefaultTheme,
@@ -28,7 +28,11 @@ export const unstable_settings = {
 	initialRouteName: "(drawer)",
 };
 
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+if (!process.env.EXPO_PUBLIC_CONVEX_URL) {
+	throw new Error("EXPO_PUBLIC_CONVEX_URL is not set");
+}
+
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL, {
 	unsavedChangesWarning: false,
 });
 
