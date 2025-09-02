@@ -1,4 +1,4 @@
-# my-better-t-app
+# Convexpo - Convex + Expo + Better Auth
 
 This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Convex, and more.
 
@@ -40,10 +40,6 @@ pnpm dev
 Use the Expo Go app to run the mobile application.
 Your app will connect to the Convex cloud backend automatically.
 
-
-
-
-
 ## Project Structure
 
 ```
@@ -63,3 +59,7 @@ my-better-t-app/
 - `pnpm check-types`: Check TypeScript types across all apps
 - `pnpm dev:native`: Start the React Native/Expo development server
 - `pnpm check`: Run Biome formatting and linting
+
+## Note
+
+i would've used unistyles for my own preference but for anyone wanting to try this on expo go, i decided to choose with nativewind.
