@@ -72,16 +72,16 @@ Notes:
 
 ### 3) Public site URL for Expo
 
-Your Convex “cloud” URL looks like:
+If your Convex cloud URL is:
 
 ```
-https://groovy-groovy-434.convex.cloud
+https://<your-subdomain>.convex.cloud
 ```
 
-Convert to the public “site” URL and add it to `apps/native/.env.development`:
+Convert it to the public site URL and add it to `apps/native/.env.development`:
 
 ```env
-EXPO_PUBLIC_SITE_URL=https://groovy-groovy-434.convex.site
+EXPO_PUBLIC_SITE_URL=https://<your-subdomain>.convex.site
 ```
 
 ### 4) Better Auth secret (Convex env)
@@ -102,14 +102,14 @@ Start the native app so Metro prints the `exp://` URL:
 pnpm --filter @apps/native dev
 # or
 pnpm run dev
-# Look for:
-# Metro waiting on exp://192.168.1.20:8081
+# Look for a line like:
+# Metro waiting on exp://<your-lan-ip>:<port>
 ```
 
 Set it in Convex (from `packages/backend`):
 
 ```bash
-npx convex env set EXPO_MOBILE_URL="exp://192.168.1.20:8081"
+npx convex env set EXPO_MOBILE_URL="exp://<your-lan-ip>:<port>"
 ```
 
 Notes:
@@ -126,7 +126,7 @@ Set it in Convex (from `packages/backend`):
 npx convex env set RESEND_API_KEY="re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ```
 
-Optionally, if local tooling needs it in `.env.local` (not recommended for secrets you don’t need locally):
+Optionally, if local tooling needs it in `.env.local` (only if required):
 
 ```env
 # packages/backend/.env.local
@@ -142,7 +142,7 @@ Avoid placing `RESEND_API_KEY` in client envs.
 - `packages/backend/.env.local`:
   ```env
   CONVEX_URL=https://<your-subdomain>.convex.cloud
-  # Optional:
+  # Optional (only if required locally):
   RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
   ```
 
