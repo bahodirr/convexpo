@@ -21,7 +21,7 @@ export const { createUser, deleteUser, updateUser, createSession } =
 			 * onUpdateUser to keep it synced.
 			 */
 			const userId = await ctx.db.insert("users", {
-				name: "Bee",
+				name: "new user",
 			});
 			return userId;
 		},

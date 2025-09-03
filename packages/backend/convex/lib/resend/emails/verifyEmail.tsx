@@ -3,7 +3,7 @@ export default function generateVerifyEmail({ url }: { url: string }): {
 	text: string;
 } {
 	const html = `
-		<h1>Confirm Apyri Sign up</h1>
+		<h1>Confirm Project Sign up</h1>
 
 		<a href="${url}">
 			Click here to verify your email address
@@ -14,7 +14,7 @@ export default function generateVerifyEmail({ url }: { url: string }): {
 		</p>
 	`;
 
-	const text = `Confirm Apyri Sign up\n\nVerify your email address: ${url}\n\nIf you didn't create an account, you can safely ignore this email.`;
+	const text = `Confirm Project Sign up\n\nVerify your email address: ${url}\n\nIf you didn't create an account, you can safely ignore this email.`;
 
 	return { html, text };
 }

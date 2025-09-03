@@ -1,9 +1,9 @@
 {
 	"expo": {
-		"name": "my-better-t-app",
-		"slug": "my-better-t-app",
+		"name": "native",
+		"slug": "native",
 		"version": "1.0.0",
-		"scheme": "my-better-t-app",
+		"scheme": "native",
 		"web": {
 			"bundler": "metro",
 			"output": "static",

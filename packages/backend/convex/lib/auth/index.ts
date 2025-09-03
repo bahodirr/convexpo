@@ -11,9 +11,9 @@ export const createAuth = (ctx: GenericCtx) =>
 	betterAuth({
 		trustedOrigins: [
 			"https://appleid.apple.com",
-			requireEnv("SITE_URL"),
-			requireEnv("EXPO_WEB_URL"),
-			requireEnv("EXPO_MOBILE_URL"),
+			// requireEnv("SITE_URL"),
+			// requireEnv("EXPO_WEB_URL"), // http://localhost:8081
+			requireEnv("EXPO_MOBILE_URL"), // on dev set exp://xxx.xxx.x.xx:xxxx
 		],
 		database: convexAdapter(ctx, betterAuthComponent),
 		emailAndPassword: {
@@ -26,17 +26,20 @@ export const createAuth = (ctx: GenericCtx) =>
 				});
 			},
 		},
-		socialProviders: {
-			apple: {
-				clientId: requireEnv("APPLE_CLIENT_ID"),
-				clientSecret: requireEnv("APPLE_CLIENT_SECRET"),
-				appBundleIdentifier: requireEnv("APPLE_APP_BUNDLE_IDENTIFIER"),
-			},
-			google: {
-				clientId: requireEnv("GOOGLE_CLIENT_ID"),
-				clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
-			},
-		},
+		/**
+		 * social provider docs will be added later
+		 */
+		// socialProviders: {
+		// 	apple: {
+		// 		clientId: requireEnv("APPLE_CLIENT_ID"),
+		// 		clientSecret: requireEnv("APPLE_CLIENT_SECRET"),
+		// 		appBundleIdentifier: requireEnv("APPLE_APP_BUNDLE_IDENTIFIER"),
+		// 	},
+		// 	google: {
+		// 		clientId: requireEnv("GOOGLE_CLIENT_ID"),
+		// 		clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
+		// 	},
+		// },
 
 		plugins: [expo(), convex()],
 	});

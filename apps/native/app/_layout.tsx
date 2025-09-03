@@ -4,8 +4,7 @@ import {
 	type Theme,
 	ThemeProvider,
 } from "@react-navigation/native";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
@@ -14,6 +13,7 @@ import { Platform } from "react-native";
 import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
 import { NAV_THEME } from "@/lib/constants";
 import { useColorScheme } from "@/lib/use-color-scheme";
+import ConvexProvider from "@/providers/ConvexProvider";
 
 const LIGHT_THEME: Theme = {
 	...DefaultTheme,
@@ -27,10 +27,6 @@ const DARK_THEME: Theme = {
 export const unstable_settings = {
 	initialRouteName: "(drawer)",
 };
-
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
-	unsavedChangesWarning: false,
-});
 
 export default function RootLayout() {
 	const hasMounted = useRef(false);
@@ -54,13 +50,11 @@ export default function RootLayout() {
 		return null;
 	}
 	return (
-		<ConvexProvider client={convex}>
+		<ConvexProvider>
 			<ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
 				<StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 				<GestureHandlerRootView style={{ flex: 1 }}>
-					<Stack>
-						<Stack.Screen name="index" options={{ headerShown: false }} />
-					</Stack>
+					<Slot />
 				</GestureHandlerRootView>
 			</ThemeProvider>
 		</ConvexProvider>

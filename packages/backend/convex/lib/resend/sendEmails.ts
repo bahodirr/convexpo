@@ -27,7 +27,7 @@ export const sendEmail = async (
 	},
 ) => {
 	await resendHandler.sendEmail(ctx, {
-		from: "Brian <brian@apyri.com>",
+		from: "Brian <myname@project.com>",
 		to,
 		subject,
 		html,

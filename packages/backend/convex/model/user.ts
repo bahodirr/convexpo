@@ -35,11 +35,8 @@ export async function getAllUserData(ctx: QueryCtx) {
 	};
 }
 /* ------------------------------- asset admin ------------------------------ */
-const ADMIN_EMAILS = [
-	"brian@colonystudio.xyz",
-	"brian.ort02@icloud.com",
-	"ortbo.02@gmail.com",
-];
+// lol probably dont follow this implementation in produciton
+const ADMIN_EMAILS = ["myname@project.com"];
 
 export async function assertAdmin(ctx: QueryCtx) {
 	const userData = await getAllUserData(ctx);

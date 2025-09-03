@@ -4,8 +4,9 @@ import generateVerifyEmail from "./emails/verifyEmail";
 import generateVerifyOTP from "./emails/verifyOTP";
 import { sendEmail } from "./sendEmails";
 
-// const logoUrl = "https://apyri.com/logo.png";
+// const logoUrl = "https://project.com/logo.png";
 
+/* ------------------------- send email verification ------------------------ */
 export const sendEmailVerification = async (
 	ctx: RunMutationCtx,
 	{
@@ -25,6 +26,7 @@ export const sendEmailVerification = async (
 	});
 };
 
+/* -------------------------------- send otp -------------------------------- */
 export const sendOTPVerification = async (
 	ctx: RunMutationCtx,
 	{
@@ -44,6 +46,7 @@ export const sendOTPVerification = async (
 	});
 };
 
+/* ------------------------------- send reset ------------------------------- */
 export const sendResetPassword = async (
 	ctx: RunMutationCtx,
 	{
