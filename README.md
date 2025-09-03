@@ -1,5 +1,7 @@
 # Convexpo — Convex + Expo + Better Auth
 
+> ⚠️ **WORK IN PROGRESS** — This project is actively being developed and may contain incomplete features or breaking changes.
+
 > Built on top of NativeWind and the Better T Stack.
 
 This project was bootstrapped with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack combining Convex, Expo/React Native, Tailwind (NativeWind), Turborepo, and more. For architecture and deeper patterns, refer to the Better T Stack repo and docs.
