@@ -26,6 +26,12 @@ export const createAuth = (ctx: GenericCtx) =>
 				});
 			},
 		},
+		user: {
+			deleteUser: {
+				enabled: true,
+			},
+		},
+
 		/**
 		 * social provider docs will be added later
 		 */
