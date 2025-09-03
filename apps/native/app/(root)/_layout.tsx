@@ -1,7 +1,8 @@
 import { useConvexAuth } from "convex/react";
 import { Stack } from "expo-router";
 import { useState } from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { authClient } from "@/lib/better-auth/auth-client";
 
 export const unstable_settings = {
@@ -40,16 +41,20 @@ export default function RootLayout() {
 					options={{
 						title: "Home",
 						headerRight: () => (
-							<Pressable onPress={handleSignOut} disabled={isLoadingSignout}>
-								<Text>{isLoadingSignout ? "Bye ;(" : "Sign Out"}</Text>
-							</Pressable>
+							<View className="flex-row items-center space-x-3">
+								<Pressable onPress={handleSignOut} disabled={isLoadingSignout}>
+									<Text className="text-primary">
+										{isLoadingSignout ? "Bye ;(" : "Sign Out"}
+									</Text>
+								</Pressable>
+							</View>
 						),
 						headerLeft: () => (
 							<Pressable
 								onPress={handleDeleteUser}
 								disabled={isLoadingDeleteUser}
 							>
-								<Text>
+								<Text className="text-destructive">
 									{isLoadingDeleteUser ? "Deleting..." : "Delete User"}
 								</Text>
 							</Pressable>

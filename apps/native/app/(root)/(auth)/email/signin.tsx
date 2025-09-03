@@ -73,7 +73,8 @@ export default function SignInRoute() {
 								placeholder="Enter your email"
 								keyboardType="email-address"
 								autoCapitalize="none"
-								className="min-h-[52px] rounded-lg border border-gray-300 px-4 pt-2 text-base"
+								className="min-h-[52px] rounded-lg border border-input bg-background px-4 pt-2 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 
@@ -86,7 +87,8 @@ export default function SignInRoute() {
 								onChangeText={setPassword}
 								placeholder="Enter your password"
 								secureTextEntry
-								className="min-h-[52px] rounded-lg border border-gray-300 px-4 pt-2 text-base"
+								className="min-h-[52px] rounded-lg border border-input bg-background px-4 pt-2 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 					</View>

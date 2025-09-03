@@ -36,17 +36,19 @@ export default function RootLayout() {
 	const { colorScheme, isDarkColorScheme } = useColorScheme();
 
 	useIsomorphicLayoutEffect(() => {
-		if (hasMounted.current) {
-			return;
+		if (!hasMounted.current) {
+			setIsColorSchemeLoaded(true);
+			hasMounted.current = true;
 		}
 
 		if (Platform.OS === "web") {
+			// Apply dark mode class to html element for web
+			document.documentElement.classList.remove("light", "dark");
+			document.documentElement.classList.add(colorScheme || "dark");
 			document.documentElement.classList.add("bg-background");
 		}
 		setAndroidNavigationBar(colorScheme);
-		setIsColorSchemeLoaded(true);
-		hasMounted.current = true;
-	}, []);
+	}, [colorScheme]);
 
 	if (!isColorSchemeLoaded) {
 		return null;

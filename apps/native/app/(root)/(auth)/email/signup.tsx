@@ -89,7 +89,8 @@ export default function SignUpRoute() {
 								onChangeText={setName}
 								placeholder="Enter your full name"
 								autoCapitalize="words"
-								className="rounded-lg border border-gray-300 px-4 py-3 text-base"
+								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 
@@ -103,7 +104,8 @@ export default function SignUpRoute() {
 								placeholder="Enter your email"
 								keyboardType="email-address"
 								autoCapitalize="none"
-								className="rounded-lg border border-gray-300 px-4 py-3 text-base"
+								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 
@@ -116,7 +118,8 @@ export default function SignUpRoute() {
 								onChangeText={setPassword}
 								placeholder="Enter your password"
 								secureTextEntry
-								className="rounded-lg border border-gray-300 px-4 py-3 text-base"
+								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 
@@ -129,7 +132,8 @@ export default function SignUpRoute() {
 								onChangeText={setConfirmPassword}
 								placeholder="Confirm your password"
 								secureTextEntry
-								className="rounded-lg border border-gray-300 px-4 py-3 text-base"
+								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 					</View>

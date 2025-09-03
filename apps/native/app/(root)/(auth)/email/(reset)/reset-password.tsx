@@ -29,21 +29,21 @@ export default function ResetPasswordRoute() {
 
 	if (error === "INVALID_TOKEN" || !token) {
 		return (
-			<SafeAreaView className="flex-1 bg-white">
+			<SafeAreaView className="flex-1 bg-background">
 				<View className="flex-1 justify-center px-6">
 					<View className="mb-8 text-center">
-						<Text className="mb-4 font-bold text-2xl text-gray-900">
+						<Text className="mb-4 font-bold text-2xl text-foreground">
 							Invalid Link
 						</Text>
-						<Text className="text-gray-600">
+						<Text className="text-muted-foreground">
 							This reset link has already been used or is invalid
 						</Text>
 					</View>
 					<TouchableOpacity
 						onPress={() => router.back()}
-						className="rounded-lg border border-gray-300 bg-gray-100 px-6 py-4"
+						className="rounded-lg border border-border bg-secondary px-6 py-4"
 					>
-						<Text className="text-center font-semibold text-gray-900 text-lg">
+						<Text className="text-center font-semibold text-lg text-secondary-foreground">
 							Go Back
 						</Text>
 					</TouchableOpacity>
@@ -53,7 +53,7 @@ export default function ResetPasswordRoute() {
 	}
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
+		<SafeAreaView className="flex-1 bg-background">
 			<KeyboardAvoidingView
 				behavior={Platform.OS === "ios" ? "padding" : "height"}
 				className="flex-1"
@@ -61,7 +61,7 @@ export default function ResetPasswordRoute() {
 				<View className="flex-1 px-6 py-4">
 					<View className="mb-4 space-y-4">
 						<View>
-							<Text className="mb-2 font-medium text-base text-gray-700">
+							<Text className="mb-2 font-medium text-base text-muted-foreground">
 								New Password
 							</Text>
 							<TextInput
@@ -69,12 +69,13 @@ export default function ResetPasswordRoute() {
 								onChangeText={setPassword}
 								placeholder="Enter your new password"
 								secureTextEntry
-								className="rounded-lg border border-gray-300 px-4 py-3 text-base"
+								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 
 						<View>
-							<Text className="mb-2 font-medium text-base text-gray-700">
+							<Text className="mb-2 font-medium text-base text-muted-foreground">
 								Confirm Password
 							</Text>
 							<TextInput
@@ -82,16 +83,17 @@ export default function ResetPasswordRoute() {
 								onChangeText={setConfirmPassword}
 								placeholder="Confirm your new password"
 								secureTextEntry
-								className="rounded-lg border border-gray-300 px-4 py-3 text-base"
+								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
+								placeholderTextColor="hsl(var(--muted-foreground))"
 							/>
 						</View>
 					</View>
 
 					<Pressable
 						onPress={handleResetPassword}
-						className="mb-4 rounded-xl bg-blue-600 px-6 py-4"
+						className="mb-4 rounded-xl bg-primary px-6 py-4"
 					>
-						<Text className="text-center font-semibold text-lg text-white">
+						<Text className="text-center font-semibold text-lg text-primary-foreground">
 							Reset Password
 						</Text>
 					</Pressable>
@@ -100,7 +102,7 @@ export default function ResetPasswordRoute() {
 						onPress={() => router.back()}
 						className="self-center"
 					>
-						<Text className="text-base text-blue-600">Cancel</Text>
+						<Text className="text-base text-primary">Cancel</Text>
 					</TouchableOpacity>
 				</View>
 			</KeyboardAvoidingView>
