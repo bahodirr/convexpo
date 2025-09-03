@@ -61,7 +61,11 @@ export default function SignUpRoute() {
 					{ text: "OK", onPress: () => null },
 				]);
 			}
-		} catch (err) {
+		} catch (err: unknown) {
+			console.log(
+				"Error",
+				err instanceof Error ? err.message : "Unknown error",
+			);
 			Alert.alert("Error", "Something went wrong. Please try again.");
 		} finally {
 			setIsLoading(false);
@@ -69,7 +73,7 @@ export default function SignUpRoute() {
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
+		<SafeAreaView className="flex-1 bg-background">
 			<KeyboardAvoidingView
 				behavior={Platform.OS === "ios" ? "padding" : "height"}
 				className="flex-1"
@@ -77,7 +81,7 @@ export default function SignUpRoute() {
 				<View className="flex-1 px-6 py-4">
 					<View className="mb-4 space-y-4">
 						<View>
-							<Text className="mb-2 font-medium text-base text-gray-700">
+							<Text className="mb-2 font-medium text-base text-muted-foreground">
 								Name
 							</Text>
 							<TextInput
@@ -90,7 +94,7 @@ export default function SignUpRoute() {
 						</View>
 
 						<View>
-							<Text className="mb-2 font-medium text-base text-gray-700">
+							<Text className="mb-2 font-medium text-base text-muted-foreground">
 								Email
 							</Text>
 							<TextInput
@@ -104,7 +108,7 @@ export default function SignUpRoute() {
 						</View>
 
 						<View>
-							<Text className="mb-2 font-medium text-base text-gray-700">
+							<Text className="mb-2 font-medium text-base text-muted-foreground">
 								Password
 							</Text>
 							<TextInput
@@ -117,7 +121,7 @@ export default function SignUpRoute() {
 						</View>
 
 						<View>
-							<Text className="mb-2 font-medium text-base text-gray-700">
+							<Text className="mb-2 font-medium text-base text-muted-foreground">
 								Confirm Password
 							</Text>
 							<TextInput
@@ -133,9 +137,9 @@ export default function SignUpRoute() {
 					<Pressable
 						onPress={handleSignUp}
 						disabled={isLoading}
-						className={`mb-4 rounded-xl px-6 py-4 ${isLoading ? "bg-blue-400" : "bg-blue-600"}`}
+						className={`mb-4 rounded-xl px-6 py-4 ${isLoading ? "bg-primary" : "bg-primary"}`}
 					>
-						<Text className="text-center font-semibold text-lg text-white">
+						<Text className="text-center font-semibold text-lg text-primary-foreground">
 							{isLoading ? "Creating Account..." : "Sign Up"}
 						</Text>
 					</Pressable>
@@ -144,7 +148,7 @@ export default function SignUpRoute() {
 						onPress={() => router.back()}
 						className="self-center"
 					>
-						<Text className="text-base text-blue-600">
+						<Text className="text-base text-primary">
 							Already have an account? Sign In
 						</Text>
 					</TouchableOpacity>

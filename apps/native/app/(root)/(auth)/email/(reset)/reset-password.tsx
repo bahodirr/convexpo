@@ -20,7 +20,6 @@ export default function ResetPasswordRoute() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const handleResetPassword = () => {
-		// TODO: Implement password reset logic
 		if (password !== confirmPassword) {
 			console.log("Passwords don't match");
 			return;

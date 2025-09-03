@@ -4,14 +4,7 @@ import { Pressable } from "react-native";
 
 export default function EmailLayout() {
 	return (
-		<Stack
-			screenOptions={{
-				headerTitleStyle: {
-					fontSize: 18,
-					fontWeight: "600",
-				},
-			}}
-		>
+		<Stack>
 			<Stack.Screen
 				name="signin"
 				options={{
@@ -40,7 +33,7 @@ export default function EmailLayout() {
 		</Stack>
 	);
 }
-
+/* ------------------------------ close button ------------------------------ */
 const CloseButton = () => {
 	const router = useRouter();
 	return (

@@ -11,7 +11,10 @@ export default function HomeRoute() {
 				{Array.from({
 					length: 30,
 				}).map((_, index) => (
-					<View key={index} className="mt-4 h-10 w-10 bg-blue-500" />
+					<View
+						key={`${index}-${Date.now()}`}
+						className="mt-4 h-10 w-10 bg-primary"
+					/>
 				))}
 			</ScrollView>
 		</View>

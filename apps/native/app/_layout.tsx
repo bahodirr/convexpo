@@ -15,6 +15,12 @@ import { NAV_THEME } from "@/lib/constants";
 import { useColorScheme } from "@/lib/use-color-scheme";
 import ConvexProvider from "@/providers/ConvexProvider";
 
+const useIsomorphicLayoutEffect =
+	Platform.OS === "web" && typeof window === "undefined"
+		? React.useEffect
+		: React.useLayoutEffect;
+
+/* ------------------------------- nav themes ------------------------------- */
 const LIGHT_THEME: Theme = {
 	...DefaultTheme,
 	colors: NAV_THEME.light,
@@ -23,15 +29,11 @@ const DARK_THEME: Theme = {
 	...DarkTheme,
 	colors: NAV_THEME.dark,
 };
-
-export const unstable_settings = {
-	initialRouteName: "(drawer)",
-};
-
+/* ------------------------------- root layout ------------------------------ */
 export default function RootLayout() {
 	const hasMounted = useRef(false);
-	const { colorScheme, isDarkColorScheme } = useColorScheme();
 	const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+	const { colorScheme, isDarkColorScheme } = useColorScheme();
 
 	useIsomorphicLayoutEffect(() => {
 		if (hasMounted.current) {
@@ -49,6 +51,7 @@ export default function RootLayout() {
 	if (!isColorSchemeLoaded) {
 		return null;
 	}
+
 	return (
 		<ConvexProvider>
 			<ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
@@ -60,8 +63,3 @@ export default function RootLayout() {
 		</ConvexProvider>
 	);
 }
-
-const useIsomorphicLayoutEffect =
-	Platform.OS === "web" && typeof window === "undefined"
-		? React.useEffect
-		: React.useLayoutEffect;

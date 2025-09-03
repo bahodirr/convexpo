@@ -39,7 +39,7 @@ export const { createUser, deleteUser, updateUser, createSession } =
 			 * function to delete user
 			 *
 			 * delete the user from the
-			 * application users table
+			 * application public users table
 			 */
 			await ctx.db.delete(userId as Id<"users">);
 		},
