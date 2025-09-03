@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
 import { View } from "react-native";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
+// import { View } from "react-native";
+// import { DarkModeToggle } from "@/components/DarkModeToggle";
 
 export default function AuthLayout() {
 	return (
@@ -11,7 +13,7 @@ export default function AuthLayout() {
 					headerShown: true,
 					title: "",
 					headerTransparent: true,
-					headerTitle: headerTitle,
+					headerLeft,
 				}}
 			/>
 			<Stack.Screen
@@ -25,7 +27,7 @@ export default function AuthLayout() {
 	);
 }
 
-const headerTitle = () => {
+const headerLeft = () => {
 	return (
 		<View className="">
 			<DarkModeToggle variant="button" />

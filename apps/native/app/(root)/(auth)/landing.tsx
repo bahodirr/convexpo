@@ -1,26 +1,22 @@
-import { useRouter } from "expo-router";
-import { Pressable, Text } from "react-native";
+import { Link } from "expo-router";
+import { Button } from "heroui-native";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Landing() {
-	const router = useRouter();
-	/* --------------------------------- return --------------------------------- */
 	return (
-		<SafeAreaView className="flex-1 items-center justify-center space-y-4 bg-background">
-			<Text className="mb-4 text-center font-bold text-3xl text-muted-foreground">
-				Convexpo
-			</Text>
-			<Text className="mb-4 text-center text-lg text-muted-foreground">
-				Convex + Better Auth + Expo
-			</Text>
-			<Pressable
-				className="self-center rounded-2xl bg-primary px-6 py-4"
-				onPress={() => router.push("/(root)/(auth)/email/signin")}
-			>
-				<Text className="text-center font-semibold text-lg text-primary-foreground">
-					Continue with Email
+		<SafeAreaView className="flex-1 gap-4 bg-background px-8">
+			<View className="flex-1 justify-end">
+				<Text className="font-extrabold text-6xl">Convexpo</Text>
+				<Text className="text-muted-foreground text-xl">
+					Convex + Better Auth + Expo
 				</Text>
-			</Pressable>
+			</View>
+			<Link href="/(root)/(auth)/email/signin" asChild>
+				<Button className="w-full rounded-full" size="lg">
+					<Button.Label>Testing</Button.Label>
+				</Button>
+			</Link>
 		</SafeAreaView>
 	);
 }

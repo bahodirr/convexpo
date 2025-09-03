@@ -8,6 +8,7 @@ import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
+import { HeroUINativeProvider } from "heroui-native";
 import React, { useRef } from "react";
 import { Platform } from "react-native";
 import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
@@ -56,12 +57,14 @@ export default function RootLayout() {
 
 	return (
 		<ConvexProvider>
-			<ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-				<StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-				<GestureHandlerRootView style={{ flex: 1 }}>
-					<Slot />
-				</GestureHandlerRootView>
-			</ThemeProvider>
+			<HeroUINativeProvider>
+				<ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+					<StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+					<GestureHandlerRootView style={{ flex: 1 }}>
+						<Slot />
+					</GestureHandlerRootView>
+				</ThemeProvider>
+			</HeroUINativeProvider>
 		</ConvexProvider>
 	);
 }

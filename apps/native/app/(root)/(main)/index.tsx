@@ -1,3 +1,4 @@
+import { Button } from "heroui-native";
 import { ScrollView, Text, View } from "react-native";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 
@@ -19,6 +20,7 @@ export default function HomeRoute() {
 					<View className="items-center">
 						<DarkModeToggle />
 					</View>
+					<Button>Click me</Button>
 				</View>
 
 				{Array.from({
