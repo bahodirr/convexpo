@@ -23,64 +23,48 @@ export default function SignUpRoute() {
      * but this is just a base for you to get started
      */
     if (!name.trim()) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Please enter your name");
       return;
     }
 
     if (!email.trim()) {
-      /**
-       * plz use zod validation -
-       * i wrote the wrong email a few times
-       *
-       * i think also there is a way to check on the server with convex too
-       */
       Alert.alert("Error", "Please enter your email");
       return;
     }
 
     if (password !== confirmPassword) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Passwords don't match");
       return;
     }
 
     if (password.length < 6) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Password must be at least 6 characters");
       return;
     }
 
-    setIsLoading(true);
-    try {
-      const { error } = await authClient.signUp.email({
+    const { data, error } = await authClient.signUp.email(
+      {
         name: name.trim(),
         email: email.trim(),
         password: password,
-      });
+      },
+      {
+        onRequest: () => {
+          setIsLoading(true);
+        },
 
-      if (error) {
-        return Alert.alert("Error", error.message || "Failed to sign up");
-      }
-      /**
-       * here i tend to like to add a success haptic to let the user know
-       * its a success while the route loads
-       *
-       * the app/(root)/_layout.tsx
-       * uses useConvexAuth to check if is logged in
-       * it should route on its own
-       *
-       */
-    } catch (err: unknown) {
-      // Catch any unknown errors!
-      const errMsg =
-        err instanceof Error
-          ? `try catch err: ${err.message}`
-          : "unknown error";
-      Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+        onError: (ctx) => {
+          Alert.alert("Error", ctx.error.message || "Failed to sign up");
+        },
+        onSuccess: () => {
+          console.log("success!");
+        },
+        onComplete: () => {
+          setIsLoading(false);
+        },
+      },
+    );
+    console.log(data, error);
   };
   /* --------------------------------- return --------------------------------- */
   return (
@@ -186,7 +170,9 @@ export default function SignUpRoute() {
         <Button.Label>
           {isLoading ? "Creating Account..." : "Sign Up"}
         </Button.Label>
-        <Button.EndContent>{isLoading ? <Spinner /> : null}</Button.EndContent>
+        <Button.EndContent>
+          {isLoading ? <Spinner color={colors.background} /> : null}
+        </Button.EndContent>
       </Button>
       <Text className="px-14 text-center text-muted-foreground text-sm">
         by continuing you agree to our{" "}

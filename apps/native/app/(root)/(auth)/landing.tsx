@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Landing() {
   const { colors } = useTheme();
   return (
-    <SafeAreaView className="flex-1 gap-4  px-8">
+    <SafeAreaView className="flex-1 gap-4 px-8">
       <View className="flex-1 justify-end">
         <Text className="font-extrabold text-6xl text-foreground">
           Convexpo

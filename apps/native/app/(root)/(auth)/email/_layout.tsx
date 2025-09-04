@@ -5,10 +5,7 @@ import { Button, useTheme } from "heroui-native";
 import { View } from "react-native";
 
 export default function EmailLayout() {
-  // const { colors } = useTheme();
   const { modal } = useNavigationOptions();
-
-  // use navigation
   return (
     <Stack
       screenOptions={{
@@ -45,13 +42,12 @@ export default function EmailLayout() {
   );
 }
 /* ------------------------------ close button ------------------------------ */
-
 const CloseButton = () => {
   const { colors } = useTheme();
   return (
     <View className="flex w-full flex-1">
       <Link href=".." asChild>
-        <Button size="sm" isIconOnly className="rounded-full" variant="outline">
+        <Button size="sm" isIconOnly className="rounded-full" variant="ghost">
           <Button.Label>
             <AntDesign name="close" size={16} color={colors.foreground} />
           </Button.Label>

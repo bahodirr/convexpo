@@ -35,45 +35,50 @@ export default function ResetPasswordRoute() {
      * but this is just a base for you to get started
      */
     if (!password) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Please enter your new password");
       return;
     }
 
     if (password !== confirmPassword) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Passwords don't match");
       return;
     }
 
     if (password.length < 6) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Password must be at least 6 characters");
       return;
     }
-
-    setIsLoading(true);
-    try {
-      const { error } = await authClient.resetPassword({
+    const { error, data } = await authClient.resetPassword(
+      {
         newPassword: password,
         token: token,
-      });
-      if (error) {
-        Alert.alert("Error", error.message);
-        throw error;
-      }
-      Alert.alert("Success", "Password reset successful");
-      router.back();
-    } catch (err: unknown) {
-      // Catch any unknown errors!
-      const errMsg =
-        err instanceof Error
-          ? `try catch err: ${err.message}`
-          : "unknown error";
-      Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+      },
+      {
+        onRequest: () => {
+          setIsLoading(true);
+        },
+
+        onError: (ctx) => {
+          Alert.alert("Error", ctx.error.message || "Failed to sign up");
+        },
+        onSuccess: () => {
+          console.log("success!");
+          /**
+           * i have a thought to better the ui
+           *
+           * you could route to the reset password page but since there is no token
+           * you can say go check your email with some sort of animation
+           * then since you're already on that page wait for the token to be sent
+           * then route to the reset password page
+           */
+          router.back();
+        },
+        onComplete: () => {
+          setIsLoading(false);
+        },
+      },
+    );
+    console.log(data, error);
   };
   /* --------------------------------- invalid token --------------------------------- */
   if (error === "INVALID_TOKEN" || !token) {
@@ -171,7 +176,9 @@ export default function ResetPasswordRoute() {
         <Button.Label>
           {isLoading ? "Resetting..." : "Reset Password"}
         </Button.Label>
-        <Button.EndContent>{isLoading ? <Spinner /> : null}</Button.EndContent>
+        <Button.EndContent>
+          {isLoading ? <Spinner color={colors.background} /> : null}
+        </Button.EndContent>
       </Button>
     </FormContainer>
   );

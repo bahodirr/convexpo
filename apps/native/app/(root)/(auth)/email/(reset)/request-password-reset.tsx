@@ -4,11 +4,14 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import FormHeader, { FormContainer } from "@/components/ui/form";
 import { authClient } from "@/lib/better-auth/auth-client";
-import { useRouter } from "expo-router";
-
+/**
+ * RequestPasswordResetRouteadd redirect to link!!!
+ */
+if (!process.env.EXPO_PUBLIC_MOBILE_URL) {
+  throw new Error("EXPO_PUBLIC_MOBILE_URL is not defined");
+}
 export default function RequestPasswordResetRoute() {
   const { colors } = useTheme();
-  const router = useRouter();
   /* ---------------------------------- state --------------------------------- */
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,36 +24,40 @@ export default function RequestPasswordResetRoute() {
      * but this is just a base for you to get started
      */
     if (!email.trim()) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Please enter your email");
       return;
     }
-    setIsLoading(true);
-    try {
-      const { error } = await authClient.requestPasswordReset({
+    const { error, data } = await authClient.requestPasswordReset(
+      {
         email: email,
-        redirectTo: "exp://192.168.1.91:8081/--/email/reset-password", // use metro link
-      });
-      if (error) {
-        Alert.alert("Error", error.message);
-        throw error;
-      }
+        /**
+         * "/--/" is for expo go
+         * "myschema://" for dev builds
+         *
+         * make sure if you make a dev build to change the route
+         *
+         * https://docs.expo.dev/versions/latest/sdk/linking/#linkingcreateurlpath-namedparameters
+         */
+        redirectTo: `${process.env.EXPO_PUBLIC_MOBILE_URL}/email/reset-password`, // use metro link
+      },
+      {
+        onRequest: () => {
+          setIsLoading(true);
+        },
 
-      Alert.alert("Email sent", "Please check your inbox, even spam");
-      router.back();
-      // TODO: no need to route back -- the root route handler does that for us
-    } catch (err: unknown) {
-      // Catch any unknown errors!
-      const errMsg =
-        err instanceof Error
-          ? `try catch err: ${err.message}`
-          : "unknown error";
-      Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+        onError: (ctx) => {
+          Alert.alert("Error", ctx.error.message || "Failed to sign up");
+        },
+        onSuccess: () => {
+          console.log("success!");
+        },
+        onComplete: () => {
+          setIsLoading(false);
+        },
+      },
+    );
+    console.log(data, error);
   };
-
   /* --------------------------------- return --------------------------------- */
   return (
     <FormContainer>
@@ -87,7 +94,9 @@ export default function RequestPasswordResetRoute() {
         <Button.Label>
           {isLoading ? "Sending..." : "Send Reset Link"}
         </Button.Label>
-        <Button.EndContent>{isLoading ? <Spinner /> : null}</Button.EndContent>
+        <Button.EndContent>
+          {isLoading ? <Spinner color={colors.background} /> : null}
+        </Button.EndContent>
       </Button>
     </FormContainer>
   );

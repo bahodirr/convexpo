@@ -21,44 +21,37 @@ export default function SignInRoute() {
      * but this is just a base for you to get started
      */
     if (!email.trim()) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Please enter your email");
       return;
     }
     if (!password) {
-      // plz for the love of god use zod for validation
       Alert.alert("Error", "Please enter your password");
       return;
     }
-    setIsLoading(true);
-    try {
-      const { error } = await authClient.signIn.email({
+
+    const { data, error } = await authClient.signIn.email(
+      {
         email: email.trim(),
         password: password,
         rememberMe: true,
-      });
-      if (error) {
-        return Alert.alert("Error", error.message || "Failed to sign in");
-      }
-      /**
-       * here i tend to like to add a success haptic to let the user know
-       * its a success while the route loads
-       *
-       * the app/(root)/_layout.tsx
-       * uses useConvexAuth to check if is logged in
-       * it should route on its own
-       *
-       */
-    } catch (err: unknown) {
-      // Catch any unknown errors!
-      const errMsg =
-        err instanceof Error
-          ? `try catch err: ${err.message}`
-          : "unknown error";
-      Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+      },
+      {
+        onRequest: () => {
+          setIsLoading(true);
+        },
+
+        onError: (ctx) => {
+          Alert.alert("Error", ctx.error.message || "Failed to sign up");
+        },
+        onSuccess: () => {
+          console.log("success!");
+        },
+        onComplete: () => {
+          setIsLoading(false);
+        },
+      },
+    );
+    console.log(data, error);
   };
   /* --------------------------------- return --------------------------------- */
   return (
@@ -120,7 +113,7 @@ export default function SignInRoute() {
       >
         <Button.Label>{isLoading ? "Signing In..." : "Sign In"}</Button.Label>
         <Button.EndContent>
-          {isLoading ? <Spinner color={colors.background} /> : null}
+          {isLoading ? <Spinner color={colors.foreground} /> : null}
         </Button.EndContent>
       </Button>
       {/* forgot password route */}

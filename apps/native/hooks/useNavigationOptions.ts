@@ -34,7 +34,8 @@ export const useNavigationOptions = () => {
       headerLargeTitleStyle: {
         color: colors.foreground,
       },
-      headerShadowVisible: Platform.OS === "ios",
+
+      headerShadowVisible: false,
       contentStyle: { backgroundColor: colors.background },
     };
 
