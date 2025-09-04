@@ -102,7 +102,7 @@ export default function ResetPasswordRoute() {
                   color={colors.defaultForeground}
                 />
               </Button.StartContent>
-              <Button.Label>Back to Sign In</Button.Label>
+              <Button.LabelContent>Back to Sign In</Button.LabelContent>
             </Button>
           </Link>
         </View>
@@ -173,9 +173,9 @@ export default function ResetPasswordRoute() {
         disabled={isLoading}
         className="rounded-3xl"
       >
-        <Button.Label>
+        <Button.LabelContent>
           {isLoading ? "Resetting..." : "Reset Password"}
-        </Button.Label>
+        </Button.LabelContent>
         <Button.EndContent>
           {isLoading ? <Spinner color={colors.background} /> : null}
         </Button.EndContent>

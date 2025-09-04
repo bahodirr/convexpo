@@ -167,9 +167,9 @@ export default function SignUpRoute() {
         disabled={isLoading}
         className="rounded-3xl"
       >
-        <Button.Label>
+        <Button.LabelContent>
           {isLoading ? "Creating Account..." : "Sign Up"}
-        </Button.Label>
+        </Button.LabelContent>
         <Button.EndContent>
           {isLoading ? <Spinner color={colors.background} /> : null}
         </Button.EndContent>

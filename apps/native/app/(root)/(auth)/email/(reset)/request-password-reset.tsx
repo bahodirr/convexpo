@@ -91,9 +91,9 @@ export default function RequestPasswordResetRoute() {
         disabled={isLoading}
         className="rounded-3xl"
       >
-        <Button.Label>
+        <Button.LabelContent>
           {isLoading ? "Sending..." : "Send Reset Link"}
-        </Button.Label>
+        </Button.LabelContent>
         <Button.EndContent>
           {isLoading ? <Spinner color={colors.background} /> : null}
         </Button.EndContent>

@@ -111,9 +111,11 @@ export default function SignInRoute() {
         disabled={isLoading}
         className="rounded-3xl"
       >
-        <Button.Label>{isLoading ? "Signing In..." : "Sign In"}</Button.Label>
+        <Button.LabelContent>
+          {isLoading ? "Signing In..." : "Sign In"}
+        </Button.LabelContent>
         <Button.EndContent>
-          {isLoading ? <Spinner color={colors.foreground} /> : null}
+          {isLoading ? <Spinner color={colors.background} /> : null}
         </Button.EndContent>
       </Button>
       {/* forgot password route */}
@@ -126,7 +128,7 @@ export default function SignInRoute() {
               color={colors.defaultForeground}
             />
           </Button.StartContent>
-          <Button.Label>Forgot Password?</Button.Label>
+          <Button.LabelContent>Forgot Password?</Button.LabelContent>
           <Button.EndContent>
             <Ionicons
               name="chevron-forward"
@@ -146,7 +148,7 @@ export default function SignInRoute() {
               color={colors.defaultForeground}
             />
           </Button.StartContent>
-          <Button.Label>Sign Up</Button.Label>
+          <Button.LabelContent>Sign Up</Button.LabelContent>
           <Button.EndContent>
             <Ionicons
               name="chevron-forward"

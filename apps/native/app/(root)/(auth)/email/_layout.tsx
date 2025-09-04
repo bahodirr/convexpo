@@ -48,9 +48,9 @@ const CloseButton = () => {
     <View className="flex w-full flex-1">
       <Link href=".." asChild>
         <Button size="sm" isIconOnly className="rounded-full" variant="ghost">
-          <Button.Label>
+          <Button.LabelContent>
             <AntDesign name="close" size={16} color={colors.foreground} />
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
       </Link>
     </View>
