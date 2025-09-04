@@ -7,187 +7,197 @@ import FormHeader, { FormContainer } from "@/components/ui/form";
 import { authClient } from "@/lib/better-auth/auth-client";
 
 export default function SignUpRoute() {
-	const { colors } = useTheme();
-	/* ---------------------------------- state --------------------------------- */
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	/* ------------------------------ handle signup ----------------------------- */
-	const handleSignUp = async () => {
-		/**
-		 * FEAT: Add your own form validation validation here
-		 * i've been using tanstack form for react native with zod
-		 *
-		 * but this is just a base for you to get started
-		 */
-		if (!name.trim()) {
-			// plz for the love of god use zod for validation
-			Alert.alert("Error", "Please enter your name");
-			return;
-		}
+  const { colors } = useTheme();
+  /* ---------------------------------- state --------------------------------- */
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  /* ------------------------------ handle signup ----------------------------- */
+  const handleSignUp = async () => {
+    /**
+     * FEAT: Add your own form validation validation here
+     * i've been using tanstack form for react native with zod
+     *
+     * but this is just a base for you to get started
+     */
+    if (!name.trim()) {
+      // plz for the love of god use zod for validation
+      Alert.alert("Error", "Please enter your name");
+      return;
+    }
 
-		if (!email.trim()) {
-			// plz for the love of god use zod for validation
-			Alert.alert("Error", "Please enter your email");
-			return;
-		}
+    if (!email.trim()) {
+      /**
+       * plz use zod validation -
+       * i wrote the wrong email a few times
+       *
+       * i think also there is a way to check on the server with convex too
+       */
+      Alert.alert("Error", "Please enter your email");
+      return;
+    }
 
-		if (password !== confirmPassword) {
-			// plz for the love of god use zod for validation
-			Alert.alert("Error", "Passwords don't match");
-			return;
-		}
+    if (password !== confirmPassword) {
+      // plz for the love of god use zod for validation
+      Alert.alert("Error", "Passwords don't match");
+      return;
+    }
 
-		if (password.length < 6) {
-			// plz for the love of god use zod for validation
-			Alert.alert("Error", "Password must be at least 6 characters");
-			return;
-		}
+    if (password.length < 6) {
+      // plz for the love of god use zod for validation
+      Alert.alert("Error", "Password must be at least 6 characters");
+      return;
+    }
 
-		setIsLoading(true);
-		try {
-			const { error } = await authClient.signUp.email({
-				name: name.trim(),
-				email: email.trim(),
-				password: password,
-			});
+    setIsLoading(true);
+    try {
+      const { error } = await authClient.signUp.email({
+        name: name.trim(),
+        email: email.trim(),
+        password: password,
+      });
 
-			if (error) {
-				return Alert.alert("Error", error.message || "Failed to sign up");
-			}
-			/**
-			 * here i tend to like to add a success haptic to let the user know
-			 * its a success while the route loads
-			 */
-		} catch (err: unknown) {
-			// Catch any unknown errors!
-			const errMsg =
-				err instanceof Error
-					? `try catch err: ${err.message}`
-					: "unknown error";
-			Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
-		} finally {
-			setIsLoading(false);
-		}
-	};
-	/* --------------------------------- return --------------------------------- */
-	return (
-		<FormContainer>
-			{/* header */}
-			<FormHeader
-				title="Sign Up"
-				description="Create your account to get started"
-			/>
-			{/* name */}
-			<TextField isRequired>
-				<TextField.Input
-					className="rounded-3xl"
-					placeholder="Enter your full name"
-					autoCapitalize="words"
-					value={name}
-					onChangeText={setName}
-				>
-					<TextField.InputStartContent className="pointer-events-none">
-						<Ionicons
-							name="person-outline"
-							size={16}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputStartContent>
-				</TextField.Input>
-			</TextField>
-			{/* email */}
-			<TextField isRequired>
-				<TextField.Input
-					className="rounded-3xl"
-					placeholder="Enter your email"
-					keyboardType="email-address"
-					autoCapitalize="none"
-					value={email}
-					onChangeText={setEmail}
-				>
-					<TextField.InputStartContent className="pointer-events-none">
-						<Ionicons
-							name="mail-outline"
-							size={16}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputStartContent>
-				</TextField.Input>
-			</TextField>
-			{/* password */}
-			<TextField isRequired>
-				<TextField.Input
-					className="rounded-3xl"
-					placeholder="Enter your password"
-					secureTextEntry
-					value={password}
-					onChangeText={setPassword}
-				>
-					<TextField.InputStartContent className="pointer-events-none">
-						<Ionicons
-							name="lock-closed-outline"
-							size={16}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputStartContent>
-					<TextField.InputEndContent className="pointer-events-none">
-						<Ionicons
-							name="eye-outline"
-							size={16}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputEndContent>
-				</TextField.Input>
-			</TextField>
-			{/* confirm password */}
-			<TextField isRequired>
-				<TextField.Input
-					className="rounded-3xl"
-					placeholder="Confirm your password"
-					secureTextEntry
-					value={confirmPassword}
-					onChangeText={setConfirmPassword}
-				>
-					<TextField.InputStartContent className="pointer-events-none">
-						<Ionicons
-							name="lock-closed-outline"
-							size={16}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputStartContent>
-					<TextField.InputEndContent className="pointer-events-none">
-						<Ionicons
-							name="checkmark-outline"
-							size={16}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputEndContent>
-				</TextField.Input>
-			</TextField>
-			{/* submit button */}
-			<Button
-				onPress={handleSignUp}
-				disabled={isLoading}
-				className="rounded-3xl"
-			>
-				<Button.Label>
-					{isLoading ? "Creating Account..." : "Sign Up"}
-				</Button.Label>
-				<Button.EndContent>{isLoading ? <Spinner /> : null}</Button.EndContent>
-			</Button>
-			<Text className="px-14 text-center text-muted-foreground text-sm">
-				by continuing you agree to our{" "}
-				<Link href="http://convex.dev" className="text-primary underline">
-					terms of service
-				</Link>{" "}
-				and{" "}
-				<Link href="http://convex.dev" className="text-primary underline">
-					privacy policy
-				</Link>
-			</Text>
-		</FormContainer>
-	);
+      if (error) {
+        return Alert.alert("Error", error.message || "Failed to sign up");
+      }
+      /**
+       * here i tend to like to add a success haptic to let the user know
+       * its a success while the route loads
+       *
+       * the app/(root)/_layout.tsx
+       * uses useConvexAuth to check if is logged in
+       * it should route on its own
+       *
+       */
+    } catch (err: unknown) {
+      // Catch any unknown errors!
+      const errMsg =
+        err instanceof Error
+          ? `try catch err: ${err.message}`
+          : "unknown error";
+      Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  /* --------------------------------- return --------------------------------- */
+  return (
+    <FormContainer>
+      {/* header */}
+      <FormHeader
+        title="Sign Up"
+        description="Create your account to get started"
+      />
+      {/* name */}
+      <TextField isRequired>
+        <TextField.Input
+          className="rounded-3xl"
+          placeholder="Enter your full name"
+          autoCapitalize="words"
+          value={name}
+          onChangeText={setName}
+        >
+          <TextField.InputStartContent className="pointer-events-none">
+            <Ionicons
+              name="person-outline"
+              size={16}
+              color={colors.mutedForeground}
+            />
+          </TextField.InputStartContent>
+        </TextField.Input>
+      </TextField>
+      {/* email */}
+      <TextField isRequired>
+        <TextField.Input
+          className="rounded-3xl"
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        >
+          <TextField.InputStartContent className="pointer-events-none">
+            <Ionicons
+              name="mail-outline"
+              size={16}
+              color={colors.mutedForeground}
+            />
+          </TextField.InputStartContent>
+        </TextField.Input>
+      </TextField>
+      {/* password */}
+      <TextField isRequired>
+        <TextField.Input
+          className="rounded-3xl"
+          placeholder="Enter your password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        >
+          <TextField.InputStartContent className="pointer-events-none">
+            <Ionicons
+              name="lock-closed-outline"
+              size={16}
+              color={colors.mutedForeground}
+            />
+          </TextField.InputStartContent>
+          <TextField.InputEndContent className="pointer-events-none">
+            <Ionicons
+              name="eye-outline"
+              size={16}
+              color={colors.mutedForeground}
+            />
+          </TextField.InputEndContent>
+        </TextField.Input>
+      </TextField>
+      {/* confirm password */}
+      <TextField isRequired>
+        <TextField.Input
+          className="rounded-3xl"
+          placeholder="Confirm your password"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        >
+          <TextField.InputStartContent className="pointer-events-none">
+            <Ionicons
+              name="lock-closed-outline"
+              size={16}
+              color={colors.mutedForeground}
+            />
+          </TextField.InputStartContent>
+          <TextField.InputEndContent className="pointer-events-none">
+            <Ionicons
+              name="checkmark-outline"
+              size={16}
+              color={colors.mutedForeground}
+            />
+          </TextField.InputEndContent>
+        </TextField.Input>
+      </TextField>
+      {/* submit button */}
+      <Button
+        onPress={handleSignUp}
+        disabled={isLoading}
+        className="rounded-3xl"
+      >
+        <Button.Label>
+          {isLoading ? "Creating Account..." : "Sign Up"}
+        </Button.Label>
+        <Button.EndContent>{isLoading ? <Spinner /> : null}</Button.EndContent>
+      </Button>
+      <Text className="px-14 text-center text-muted-foreground text-sm">
+        by continuing you agree to our{" "}
+        <Link href="http://convex.dev" className="text-primary underline">
+          terms of service
+        </Link>{" "}
+        and{" "}
+        <Link href="http://convex.dev" className="text-primary underline">
+          privacy policy
+        </Link>
+      </Text>
+    </FormContainer>
+  );
 }
