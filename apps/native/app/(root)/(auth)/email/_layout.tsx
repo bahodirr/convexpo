@@ -1,44 +1,63 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Stack, useRouter } from "expo-router";
-import { Pressable } from "react-native";
+import { Link, Stack } from "expo-router";
+import { Button, useTheme } from "heroui-native";
+import { View } from "react-native";
 
 export default function EmailLayout() {
+	const { theme, colors } = useTheme();
+
 	return (
-		<Stack>
+		<Stack
+			screenOptions={{
+				headerStyle: { backgroundColor: colors.background },
+				contentStyle: {
+					backgroundColor: colors.background,
+				},
+				headerShadowVisible: false,
+				gestureEnabled: false,
+			}}
+		>
 			<Stack.Screen
 				name="signin"
 				options={{
-					title: "Sign In",
+					title: "",
 					headerLeft: CloseButton,
 				}}
 			/>
 			<Stack.Screen
 				name="signup"
 				options={{
-					title: "Sign Up",
+					title: "",
 				}}
 			/>
 			<Stack.Screen
 				name="(reset)/request-password-reset"
 				options={{
-					title: "Reset Password",
+					title: "",
 				}}
 			/>
 			<Stack.Screen
 				name="(reset)/reset-password"
 				options={{
-					title: "Reset Password",
+					title: "",
 				}}
 			/>
 		</Stack>
 	);
 }
 /* ------------------------------ close button ------------------------------ */
+
 const CloseButton = () => {
-	const router = useRouter();
+	const { colors } = useTheme();
 	return (
-		<Pressable onPress={() => router.back()} className="px-4 py-4">
-			<AntDesign name="close" size={18} color="black" />
-		</Pressable>
+		<View className="flex w-full flex-1">
+			<Link href=".." asChild>
+				<Button size="sm" isIconOnly className="rounded-full" variant="outline">
+					<Button.Label>
+						<AntDesign name="close" size={16} color={colors.foreground} />
+					</Button.Label>
+				</Button>
+			</Link>
+		</View>
 	);
 };

@@ -1,30 +1,74 @@
-import { router, useLocalSearchParams } from "expo-router";
+import Ionicons from "@expo/vector-icons/build/Ionicons";
+import { Link, useLocalSearchParams } from "expo-router";
+import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
-import {
-	KeyboardAvoidingView,
-	Platform,
-	Pressable,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Alert, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import FormHeader, { FormContainer } from "@/components/ui/form";
 
 export default function ResetPasswordRoute() {
+	const { colors } = useTheme();
 	const { token, error } = useLocalSearchParams<{
 		token: string;
 		error?: string;
 	}>();
+	/* ---------------------------------- state --------------------------------- */
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-
-	const handleResetPassword = () => {
-		if (password !== confirmPassword) {
-			console.log("Passwords don't match");
+	const [isLoading, setIsLoading] = useState(false);
+	/* ------------------------- handle reset password ------------------------- */
+	const handleResetPassword = async () => {
+		/**
+		 * FEAT: Add your own form validation validation here
+		 * i've been using tanstack form for react native with zod
+		 *
+		 * but this is just a base for you to get started
+		 */
+		if (!password) {
+			// plz for the love of god use zod for validation
+			Alert.alert("Error", "Please enter your new password");
 			return;
 		}
-		console.log("Reset password with token:", token, "and password:", password);
+
+		if (password !== confirmPassword) {
+			// plz for the love of god use zod for validation
+			Alert.alert("Error", "Passwords don't match");
+			return;
+		}
+
+		if (password.length < 6) {
+			// plz for the love of god use zod for validation
+			Alert.alert("Error", "Password must be at least 6 characters");
+			return;
+		}
+
+		setIsLoading(true);
+		try {
+			// TODO: Implement password reset logic with your auth provider
+			console.log(
+				"Reset password with token:",
+				token,
+				"and password:",
+				password,
+			);
+			Alert.alert("Success", "Password reset successfully!", [
+				{
+					text: "OK",
+					onPress: () => {
+						// Navigate to signin after successful reset
+					},
+				},
+			]);
+		} catch (err: unknown) {
+			// Catch any unknown errors!
+			const errMsg =
+				err instanceof Error
+					? `try catch err: ${err.message}`
+					: "unknown error";
+			Alert.alert("Error", errMsg || "Something went wrong. Please try again.");
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	if (error === "INVALID_TOKEN" || !token) {
@@ -39,73 +83,92 @@ export default function ResetPasswordRoute() {
 							This reset link has already been used or is invalid
 						</Text>
 					</View>
-					<TouchableOpacity
-						onPress={() => router.back()}
-						className="rounded-lg border border-border bg-secondary px-6 py-4"
-					>
-						<Text className="text-center font-semibold text-lg text-secondary-foreground">
-							Go Back
-						</Text>
-					</TouchableOpacity>
+					<Link href="/(root)/(auth)/email/signin" asChild>
+						<Button className="rounded-3xl">
+							<Button.StartContent>
+								<Ionicons
+									name="arrow-back-outline"
+									size={16}
+									color={colors.defaultForeground}
+								/>
+							</Button.StartContent>
+							<Button.Label>Back to Sign In</Button.Label>
+						</Button>
+					</Link>
 				</View>
 			</SafeAreaView>
 		);
 	}
 
+	/* --------------------------------- return --------------------------------- */
 	return (
-		<SafeAreaView className="flex-1 bg-background">
-			<KeyboardAvoidingView
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-				className="flex-1"
+		<FormContainer>
+			{/* header */}
+			<FormHeader
+				title="Reset Password"
+				description="Enter your new password to complete the reset"
+			/>
+			{/* new password */}
+			<TextField isRequired>
+				<TextField.Input
+					className="rounded-3xl"
+					placeholder="Enter your new password"
+					secureTextEntry
+					value={password}
+					onChangeText={setPassword}
+				>
+					<TextField.InputStartContent className="pointer-events-none">
+						<Ionicons
+							name="lock-closed-outline"
+							size={16}
+							color={colors.mutedForeground}
+						/>
+					</TextField.InputStartContent>
+					<TextField.InputEndContent className="pointer-events-none">
+						<Ionicons
+							name="eye-outline"
+							size={16}
+							color={colors.mutedForeground}
+						/>
+					</TextField.InputEndContent>
+				</TextField.Input>
+			</TextField>
+			{/* confirm password */}
+			<TextField isRequired>
+				<TextField.Input
+					className="rounded-3xl"
+					placeholder="Confirm your new password"
+					secureTextEntry
+					value={confirmPassword}
+					onChangeText={setConfirmPassword}
+				>
+					<TextField.InputStartContent className="pointer-events-none">
+						<Ionicons
+							name="lock-closed-outline"
+							size={16}
+							color={colors.mutedForeground}
+						/>
+					</TextField.InputStartContent>
+					<TextField.InputEndContent className="pointer-events-none">
+						<Ionicons
+							name="checkmark-outline"
+							size={16}
+							color={colors.mutedForeground}
+						/>
+					</TextField.InputEndContent>
+				</TextField.Input>
+			</TextField>
+			{/* submit button */}
+			<Button
+				onPress={handleResetPassword}
+				disabled={isLoading}
+				className="rounded-3xl"
 			>
-				<View className="flex-1 px-6 py-4">
-					<View className="mb-4 space-y-4">
-						<View>
-							<Text className="mb-2 font-medium text-base text-muted-foreground">
-								New Password
-							</Text>
-							<TextInput
-								value={password}
-								onChangeText={setPassword}
-								placeholder="Enter your new password"
-								secureTextEntry
-								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
-								placeholderTextColor="hsl(var(--muted-foreground))"
-							/>
-						</View>
-
-						<View>
-							<Text className="mb-2 font-medium text-base text-muted-foreground">
-								Confirm Password
-							</Text>
-							<TextInput
-								value={confirmPassword}
-								onChangeText={setConfirmPassword}
-								placeholder="Confirm your new password"
-								secureTextEntry
-								className="rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground"
-								placeholderTextColor="hsl(var(--muted-foreground))"
-							/>
-						</View>
-					</View>
-
-					<Pressable
-						onPress={handleResetPassword}
-						className="mb-4 rounded-xl bg-primary px-6 py-4"
-					>
-						<Text className="text-center font-semibold text-lg text-primary-foreground">
-							Reset Password
-						</Text>
-					</Pressable>
-
-					<TouchableOpacity
-						onPress={() => router.back()}
-						className="self-center"
-					>
-						<Text className="text-base text-primary">Cancel</Text>
-					</TouchableOpacity>
-				</View>
-			</KeyboardAvoidingView>
-		</SafeAreaView>
+				<Button.Label>
+					{isLoading ? "Resetting..." : "Reset Password"}
+				</Button.Label>
+				<Button.EndContent>{isLoading ? <Spinner /> : null}</Button.EndContent>
+			</Button>
+		</FormContainer>
 	);
 }

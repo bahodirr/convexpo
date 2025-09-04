@@ -1,6 +1,6 @@
 import { Button } from "heroui-native";
 import { ScrollView, Text, View } from "react-native";
-import { DarkModeToggle } from "@/components/DarkModeToggle";
+// import { DarkModeToggle } from "@/components/DarkModeToggle";
 
 export default function HomeRoute() {
 	return (
@@ -17,9 +17,9 @@ export default function HomeRoute() {
 					<Text className="mb-4 text-center text-base text-muted-foreground">
 						Your app with Convex, Better Auth, and Expo
 					</Text>
-					<View className="items-center">
-						<DarkModeToggle />
-					</View>
+					{/* <View className="items-center"> */}
+					{/* <DarkModeToggle /> */}
+					{/* </View> */}
 					<Button>Click me</Button>
 				</View>
 
