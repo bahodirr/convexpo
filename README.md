@@ -35,11 +35,12 @@ This project was bootstrapped with **[Better‑T‑Stack](https://github.com/Ama
 
 ## Prerequisites
 
-* A **Resend** account & API key (for transactional emails) Domain
+* A **Resend** account & API key (for transactional emails)
+* A **verified domain** in Resend (required for authentication emails)
 * A **Convex** account (created by the CLI wizard below)
 * **Expo Go** installed on your phone (for instant runs) from testflight expo 54 [EXPO GO 54](https://testflight.apple.com/join/GZJxxfUU)
 
-> **Note:** For reliable email delivery in production, verify a sender domain in Resend. For local dev, a generic `@example.com` sender is usually fine but may hit spam.
+> **⚠️ IMPORTANT:** Authentication emails require a verified domain in Resend. You cannot use test mode with just an API key for authentication flows. The sender email must match your verified domain.
 
 ---
 
@@ -87,17 +88,30 @@ What would you like to configure (use arrow keys)
 
 12. **Convex env setup**
 
-**a. Resend API key**
+**a. Resend Setup (Domain + API Key)**
 
-* Create a key in Resend: *Dashboard → API Keys → Create*
+**First, verify your domain in Resend:**
+1. Go to [Resend Dashboard → Domains](https://resend.com/domains)
+2. Click "Add Domain" and add your domain (e.g., `yourdomain.com`)
+3. Follow the DNS verification steps (add the required DNS records)
+4. Wait for verification (usually takes a few minutes)
 
+**Then, create an API key:**
+* Go to *Dashboard → API Keys → Create*
   * Name: any
   * Permissions: *Full access*
-  * Domain: *All domains* (dev) or your verified domain (prod)
+  * Domain: Select your verified domain
 * Set it in Convex:
 
 ```bash
 npx convex env set RESEND_API_KEY=...
+```
+
+**Finally, update the sender email:**
+* Edit `packages/backend/convex/lib/resend/sendEmails.ts`
+* Change the `from` field to use your verified domain:
+```ts
+from: "auth@yourdomain.com", // Must match your verified domain
 ```
 
 **b. Better Auth secret**
