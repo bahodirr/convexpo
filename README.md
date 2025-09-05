@@ -1,170 +1,135 @@
-# Convexpo — Convex + Expo + Better Auth
+# Convexpo
 
-> ⚠️ **WORK IN PROGRESS** — This project is actively being developed and may contain incomplete features or breaking changes.
+## Convex + Better Auth + Expo (React Native) + Hero UI Native
 
-> Built on top of NativeWind and the Better T Stack.
+This project was bootstrapped with **[Better‑T‑Stack](https://github.com/AmanVarshney01/create-better-t-stack)**, a modern TypeScript stack combining Convex, Expo/React Native, Tailwind (NativeWind), Turborepo, and more. For architecture and deeper patterns, refer to the Better‑T‑Stack repo and docs.
 
-This project was bootstrapped with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack combining Convex, Expo/React Native, Tailwind (NativeWind), Turborepo, and more. For architecture and deeper patterns, refer to the Better T Stack repo and docs.
-
-## Features
-
-- TypeScript — type safety and DX
-- React Native + Expo — mobile development
-- TailwindCSS (NativeWind) — utility-first styling
-- Convex — reactive backend-as-a-service
-- Better Auth — authentication primitives
-- Biome — formatting and linting
-- Turborepo — monorepo tooling
+> To reproduce a similar starter, run:
+>
+> ```bash
+> pnpm create better-t-stack@latest my-better-t-app \
+>  --frontend native-nativewind \
+>  --backend convex \
+>  --runtime none --api none --auth none --database none --orm none --db-setup none \
+>  --package-manager pnpm --no-git \
+>  --web-deploy none --server-deploy none \
+>  --install \
+>  --addons turborepo \
+>  --examples todo
+> ```
 
 ---
 
-## Quick Start
+## Tech Stack
 
-Install dependencies:
+* **TypeScript** — static typing for safety and DX
+* **[React Native Expo](https://expo.dev/)** — version 54 cross‑platform mobile development 🚧 Beta, Coming out w/in next month!
+* **[Tailwind (Nativewind)](https://www.nativewind.dev/)** — tailwind for React Native
+* **[Hero UI Native](https://github.com/heroui-inc/heroui-native)** — modern React Native UI library 🚧 Aplha Change and use what you want!
+* **[Convex](https://docs.convex.dev/)** — reactive backend‑as‑a‑service
+* **[Better Auth](https://convex-better-auth.netlify.app/)** — authentication primitives on Convex 🚧 Aplha, We need more people to test!
+* **[Biome](https://biomejs.dev/)** — fast formatting and linting
+* **[Turborepo](https://turbo.build/repo/docs)** — monorepo build system
+
+---
+
+## Prerequisites
+
+* A **Resend** account & API key (for transactional emails) Domain
+* A **Convex** account (created by the CLI wizard below)
+* **Expo Go** installed on your phone (for instant runs) from testflight expo 54 [EXPO GO 54](https://testflight.apple.com/join/GZJxxfUU)
+
+> **Note:** For reliable email delivery in production, verify a sender domain in Resend. For local dev, a generic `@example.com` sender is usually fine but may hit spam.
+
+---
+
+## Running the Example Project
+
+1. **Clone or fork** this repo.
+
+2. **Install root dependencies**:
 
 ```bash
 pnpm install
 ```
 
-Start development:
+3. **Start dev** (Turborepo scripts will spawn native + backend):
 
 ```bash
 pnpm run dev
 ```
 
-Open the app using Expo Go on your device or simulator. Continue below for one-time setup of Convex and environment variables.
+4. In the **Native#dev** terminal pane you should see your **Expo Go mobile URL schema** — **save this**, you’ll need it for deep links:
 
----
+```
+Metro waiting on exp://xxx.xxx.x.xx:xxxx
+```
 
-## Setup (Convex, Expo envs, Resend)
+5. In the **@my-better-t-app/backend** terminal pane, the Convex wizard will prompt:
 
-These are the project’s specific setup steps. They complement the Better T Stack docs.
+```
+What would you like to configure (use arrow keys)
+> create a new project
+  choose an existing project
+```
 
-### 1) Convex login and project init (backend)
+6. Choose **create a new project**
 
-From `packages/backend`:
+7. **Name** it (anything)
+
+8. Select **cloud development**
+
+9. An error may appear while routes initialize. Check `packages/backend/.env.local` — you should now see **`CONVEX_DEPLOYMENT`** and **`CONVEX_URL`** set.
+
+10. **Stop the dev servers** (Ctrl + C) now that Convex credentials exist.
+
+11. `cd` into **`packages/backend`**.
+
+12. **Convex env setup**
+
+**a. Resend API key**
+
+* Create a key in Resend: *Dashboard → API Keys → Create*
+
+  * Name: any
+  * Permissions: *Full access*
+  * Domain: *All domains* (dev) or your verified domain (prod)
+* Set it in Convex:
 
 ```bash
-pnpm convex dev
+npx convex env set RESEND_API_KEY=...
 ```
 
-Follow the prompts (login or create account, device code, create a new project, cloud deployment). This will create `packages/backend/.env.local` with:
-
-```env
-CONVEX_DEPLOYMENT=...
-CONVEX_URL=https://<your-subdomain>.convex.cloud
-```
-
-Verify `CONVEX_URL` exists and is correct.
-
-### 2) Expo env for Convex URL
-
-Create the file: `apps/native/.env.development`
-
-Add:
-
-```env
-EXPO_PUBLIC_CONVEX_URL=https://<your-subdomain>.convex.cloud
-```
-
-Notes:
-- Use `.env.development` (no typos).
-- Use exactly one `=`.
-- Vars exposed to the client must be prefixed with `EXPO_PUBLIC_`.
-
-### 3) Public site URL for Expo
-
-If your Convex cloud URL is:
-
-```
-https://<your-subdomain>.convex.cloud
-```
-
-Convert it to the public site URL and add it to `apps/native/.env.development`:
-
-```env
-EXPO_PUBLIC_SITE_URL=https://<your-subdomain>.convex.site
-```
-
-### 4) Better Auth secret (Convex env)
-
-From `packages/backend`, set a secret in Convex env:
+**b. Better Auth secret**
 
 ```bash
-npx convex env set BETTER_AUTH_SECRET="$(openssl rand -base64 32)"
+npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
 ```
 
-Do not put this in client envs.
-
-### 5) Expo Go development URL (EXPO_MOBILE_URL)
-
-Start the native app so Metro prints the `exp://` URL:
+**c. Expo mobile URL (for deep links)**
 
 ```bash
-pnpm --filter @apps/native dev
-# or
-pnpm run dev
-# Look for a line like:
-# Metro waiting on exp://<your-lan-ip>:<port>
+npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx
 ```
 
-Set it in Convex (from `packages/backend`):
+13. **Expo env setup**
 
-```bash
-npx convex env set EXPO_MOBILE_URL="exp://<your-lan-ip>:<port>"
+In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
+
+```ini
+CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
 ```
 
-Notes:
-- Only for development in Expo Go.
-- If using an Expo Dev Build or custom scheme, set `EXPO_MOBILE_URL` to that scheme (e.g., `myapp://`).
+Now create `apps/native/.env.development` with:
 
-### 6) Resend setup
+```ini
+EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud  # deployment url
+EXPO_PUBLIC_SITE_URL=https://https://xxxx-xxx-xxx.convex.site        # http actions url
 
-Create/get your Resend API key from https://resend.com.
-
-Set it in Convex (from `packages/backend`):
-
-```bash
-npx convex env set RESEND_API_KEY="re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+# NOTE: the "/--" suffix is only needed for **Expo Go**.
+# For a dev/prod build with a custom scheme (e.g. schema://), do **not** include /--
+EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
 ```
-
-Optionally, if local tooling needs it in `.env.local` (only if required):
-
-```env
-# packages/backend/.env.local
-RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-```
-
-Avoid placing `RESEND_API_KEY` in client envs.
-
----
-
-## Verify env files
-
-- `packages/backend/.env.local`:
-  ```env
-  CONVEX_URL=https://<your-subdomain>.convex.cloud
-  # Optional (only if required locally):
-  RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  ```
-
-- `apps/native/.env.development`:
-  ```env
-  EXPO_PUBLIC_CONVEX_URL=https://<your-subdomain>.convex.cloud
-  EXPO_PUBLIC_SITE_URL=https://<your-subdomain>.convex.site
-  ```
-
----
-
-## Scripts
-
-- `pnpm dev` — start all apps in dev mode
-- `pnpm build` — build all apps
-- `pnpm dev:native` — start Expo/Metro for the native app
-- `pnpm dev:web` — start only the web app (if present)
-- `pnpm dev:setup` — guided Convex setup flow
-- `pnpm check-types` — typecheck
-- `pnpm check` — Biome format + lint
 
 ---
 
@@ -172,28 +137,59 @@ Avoid placing `RESEND_API_KEY` in client envs.
 
 ```text
 convexpo/
-├── apps/
-│   └── native/        # React Native (Expo) app
-└── packages/
-    └── backend/       # Convex backend (functions, schema)
+├─ apps/
+│  └─ native/          # React Native (Expo) app
+└─ packages/
+   └─ backend/         # Convex backend (functions, schema, auth routes)
 ```
+
+* The **backend** exposes Better Auth HTTP routes and emails via Resend.
+* The **native** app uses Expo Router and consumes Better Auth’s client APIs.
 
 ---
 
-## Notes
+## Auth: Email + Password (with Password Reset) IS DONE
 
-- Built with Better T Stack. For deeper stack-level docs and patterns, see:
-  - Better T Stack: https://github.com/AmanVarshney01/create-better-t-stack
-  - Convex: https://docs.convex.dev
-  - Expo: https://docs.expo.dev
-  - NativeWind: https://www.nativewind.dev
-  - shadcn/ui: https://ui.shadcn.com
-  - Resend: https://resend.com
+This starter implements **classic email + password** authentication and a **password reset** flow using email tokens.
 
-- This template uses NativeWind for compatibility with Expo Go. If you prefer, switch to Unistyles in a custom dev build.
+### How it works
 
-- Common pitfalls:
-  - File is `.env.development` (not `.env.devlopment`).
-  - No trailing `=` in env values.
-  - Client env vars must start with `EXPO_PUBLIC_`.
-  - `EXPO_MOBILE_URL` changes with your LAN IP/port; update when it changes.
+1. **Sign up / Sign in**
+
+   * Frontend calls Better Auth client (email + password) and receives a session.
+2. **Forgot Password**
+
+   * User enters email → backend generates a one‑time **reset token** and sends an email via **Resend**.
+3. **Deep Link**
+
+   * The email contains a link that ultimately opens the app via your **Expo mobile URL** and navigates to a reset screen (e.g. `/reset-password`) with a `token` query param.
+4. **Reset Password**
+
+   * The reset screen reads the token from the route, lets the user set a new password, and calls the Better Auth reset endpoint.
+
+### Route contracts (Expo Router)
+
+* `(root)/(auth)/email/sign-in` — email + password login
+* `(root)/(auth)/email/sign-up` — email + password registration
+* `(root)/(auth)/email/(reset)/request-password-reset` — request reset email
+* `(root)/(auth)/email/(reset)/reset-password` — accepts `token` query param from email allowing user to submit the new password
+
+---
+
+## Running (after setup)
+
+```bash
+pnpm run dev
+```
+
+* Scan the QR in **Expo Go** to open the app.
+* Use the **Sign Up** screen to create an account.
+* Use **Forgot Password** to trigger a reset email → tap the link → you’ll land on the **Reset Password** screen inside the app.
+
+## COMING SOON
+* apple login
+* google login
+
+## License
+
+MIT
