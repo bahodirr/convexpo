@@ -25,9 +25,9 @@ This project was bootstrapped with **[Better‑T‑Stack](https://github.com/Ama
 * **TypeScript** — static typing for safety and DX
 * **[React Native Expo](https://expo.dev/)** — version 54 cross‑platform mobile development 🚧 Beta, Coming out w/in next month!
 * **[Tailwind (Nativewind)](https://www.nativewind.dev/)** — tailwind for React Native
-* **[Hero UI Native](https://github.com/heroui-inc/heroui-native)** — modern React Native UI library 🚧 Aplha Change and use what you want!
+* **[Hero UI Native](https://github.com/heroui-inc/heroui-native)** — modern React Native UI library 🚧 Alpha Change and use what you want!
 * **[Convex](https://docs.convex.dev/)** — reactive backend‑as‑a‑service
-* **[Better Auth](https://convex-better-auth.netlify.app/)** — authentication primitives on Convex 🚧 Aplha, We need more people to test!
+* **[Better Auth](https://convex-better-auth.netlify.app/)** — authentication primitives on Convex 🚧 Alpha, We need more people to test!
 * **[Biome](https://biomejs.dev/)** — fast formatting and linting
 * **[Turborepo](https://turbo.build/repo/docs)** — monorepo build system
 
