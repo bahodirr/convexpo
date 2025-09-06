@@ -106,12 +106,9 @@ What would you like to configure (use arrow keys)
 ```bash
 npx convex env set RESEND_API_KEY=...
 ```
-
 **Finally, update the sender email:**
-* Edit `packages/backend/convex/lib/resend/sendEmails.ts`
-* Change the `from` field to use your verified domain:
-```ts
-from: "auth@yourdomain.com", // Must match your verified domain
+```bash
+npx convex env set RESEND_AUTH_EMAIL=auth@yourdomain.com
 ```
 
 **b. Better Auth secret**
