@@ -80,7 +80,7 @@ What would you like to configure (use arrow keys)
 
 8. Select **cloud development**
 
-9. An error may appear while routes initialize. Check `packages/backend/.env.local` — you should now see **`CONVEX_DEPLOYMENT`** and **`CONVEX_URL`** set.
+9. An error WILL appear while routes initialize. Check `packages/backend/.env.local` — you should now see **`CONVEX_DEPLOYMENT`** and **`CONVEX_URL`** set.
 
 10. **Stop the dev servers** (Ctrl + C) now that Convex credentials exist.
 
@@ -120,7 +120,7 @@ from: "auth@yourdomain.com", // Must match your verified domain
 npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
 ```
 
-**c. Expo mobile URL (for deep links)**
+**c. Expo mobile URL (for deep links)** use your own **Expo Go mobile URL schema**
 
 ```bash
 npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx
