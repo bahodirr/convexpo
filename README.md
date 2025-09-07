@@ -33,6 +33,21 @@ This project was bootstrapped with **[Better‑T‑Stack](https://github.com/Ama
 
 ---
 
+## Project Structure
+
+```text
+convexpo/
+├─ apps/
+│  └─ native/          # React Native (Expo) app
+└─ packages/
+   └─ backend/         # Convex backend (functions, schema, auth routes)
+```
+
+* The **backend** exposes Better Auth HTTP routes and emails via Resend.
+* The **native** app uses Expo Router and consumes Better Auth’s client APIs.
+
+---
+
 ## Prerequisites
 
 * A **Resend** account & API key (for transactional emails)
@@ -142,57 +157,12 @@ EXPO_PUBLIC_SITE_URL=https://https://xxxx-xxx-xxx.convex.site        # http acti
 EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
 ```
 
----
-
-## Project Structure
-
-```text
-convexpo/
-├─ apps/
-│  └─ native/          # React Native (Expo) app
-└─ packages/
-   └─ backend/         # Convex backend (functions, schema, auth routes)
-```
-
-* The **backend** exposes Better Auth HTTP routes and emails via Resend.
-* The **native** app uses Expo Router and consumes Better Auth’s client APIs.
-
----
-
-## Auth: Email + Password (with Password Reset) IS DONE
-
-This starter implements **classic email + password** authentication and a **password reset** flow using email tokens.
-
-### How it works
-
-1. **Sign up / Sign in**
-
-   * Frontend calls Better Auth client (email + password) and receives a session.
-2. **Forgot Password**
-
-   * User enters email → backend generates a one‑time **reset token** and sends an email via **Resend**.
-3. **Deep Link**
-
-   * The email contains a link that ultimately opens the app via your **Expo mobile URL** and navigates to a reset screen (e.g. `/reset-password`) with a `token` query param.
-4. **Reset Password**
-
-   * The reset screen reads the token from the route, lets the user set a new password, and calls the Better Auth reset endpoint.
-
-### Route contracts (Expo Router)
-
-* `(root)/(auth)/email/sign-in` — email + password login
-* `(root)/(auth)/email/sign-up` — email + password registration
-* `(root)/(auth)/email/(reset)/request-password-reset` — request reset email
-* `(root)/(auth)/email/(reset)/reset-password` — accepts `token` query param from email allowing user to submit the new password
-
----
-
-## Running (after setup)
+## Running (after setup) Email + Password is Complete
 
 ```bash
 pnpm run dev
 ```
-
+> **⚠️ IMPORTANT:** Convex server takes a few seconds to minutes to start up becuase of the index setup for the first time.
 * Scan the QR in **Expo Go** to open the app.
 * Use the **Sign Up** screen to create an account.
 * Use **Forgot Password** to trigger a reset email → tap the link → you’ll land on the **Reset Password** screen inside the app.
