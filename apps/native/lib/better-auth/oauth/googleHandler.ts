@@ -36,7 +36,7 @@ export const useGoogleSignIn = (options: UseGoogleSignInOptions = {}) => {
 	const { onSuccess, onError, showAlert = true } = options;
 	const [submitting, setSubmitting] = useState(false);
 
-	const signIn = async () => {
+	const gSignIn = async () => {
 		if (submitting) return;
 
 		setSubmitting(true);
@@ -61,7 +61,7 @@ export const useGoogleSignIn = (options: UseGoogleSignInOptions = {}) => {
 	};
 
 	return {
-		signIn,
+		gSignIn,
 		submitting,
 	};
 };

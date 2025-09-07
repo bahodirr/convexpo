@@ -52,7 +52,7 @@ export const useAppleSignIn = (options: UseAppleSignInOptions = {}) => {
 	const { onSuccess, onError, showAlert = true } = options;
 	const [submitting, setSubmitting] = useState(false);
 
-	const signIn = async () => {
+	const aSignIn = async () => {
 		if (submitting) return;
 
 		setSubmitting(true);
@@ -77,7 +77,7 @@ export const useAppleSignIn = (options: UseAppleSignInOptions = {}) => {
 	};
 
 	return {
-		signIn,
+		aSignIn,
 		submitting,
 	};
 };
