@@ -11,8 +11,8 @@ export const createAuth = (ctx: GenericCtx) =>
 	betterAuth({
 		trustedOrigins: [
 			"https://appleid.apple.com",
-			// requireEnv("SITE_URL"),
-			// requireEnv("EXPO_WEB_URL"), // http://localhost:8081
+			// requireEnv("SITE_URL"), // localhost:3000 next js?
+			// requireEnv("EXPO_WEB_URL"), // http://localhost:8081  // expo web
 			requireEnv("EXPO_MOBILE_URL"), // on dev set exp://xxx.xxx.x.xx:xxxx
 		],
 		database: convexAdapter(ctx, betterAuthComponent),

@@ -148,6 +148,9 @@ CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
 
 Now create `apps/native/.env.development` with:
 
+> Convex does not directly show you the .site domain, but it’s the same prefix as your .cloud URL.
+Just replace .cloud with .site to get the HTTP actions domain:
+
 ```ini
 EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud  # deployment url
 EXPO_PUBLIC_SITE_URL=https://https://xxxx-xxx-xxx.convex.site        # http actions url
@@ -167,9 +170,45 @@ pnpm run dev
 * Use the **Sign Up** screen to create an account.
 * Use **Forgot Password** to trigger a reset email → tap the link → you’ll land on the **Reset Password** screen inside the app.
 
-## COMING SOON
-* apple login
-* google login
+## Apple Login
+
+if you want to use the better auth apple login docs look here [Better Auth Apple Docs](https://www.better-auth.com/docs/authentication/apple)
+
+currently most of the implementation is done as a prototype. Functions will be cleaned up and updated soon.
+
+you have to uncomment the apple login at the bottom of the `packages/backend/convex/lib/auth/index.ts` file
+
+```ts
+// socialProviders: {
+// 	apple: {
+// 		clientId: requireEnv("APPLE_CLIENT_ID"),
+// 		clientSecret: requireEnv("APPLE_CLIENT_SECRET"),
+// 		appBundleIdentifier: requireEnv("APPLE_APP_BUNDLE_IDENTIFIER"),
+// 	},
+// },
+```
+
+usage in the expo app is in  apps/native/lib/better-auth/oauth/applehandler.ts
+
+
+## Google Login
+
+if you want to use the better auth google login docs look here [Better Auth Google Docs](https://www.better-auth.com/docs/authentication/google)
+
+currently most of the implementation is done as a prototype. Functions will be cleaned up and updated soon.
+
+you have to uncomment the google login at the bottom of the `packages/backend/convex/lib/auth/index.ts` file
+
+```ts
+// socialProviders: {
+// 	google: {
+// 		clientId: requireEnv("GOOGLE_CLIENT_ID"),
+// 		clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
+// 	},
+// },
+```
+
+usage in the expo app is in  apps/native/lib/better-auth/oauth/googlehandler.ts
 
 ## License
 
