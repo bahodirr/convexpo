@@ -13,7 +13,7 @@ export const createAuth = (ctx: GenericCtx) =>
 			"https://appleid.apple.com",
 			// requireEnv("SITE_URL"), // localhost:3000 next js?
 			// requireEnv("EXPO_WEB_URL"), // http://localhost:8081  // expo web
-			requireEnv("EXPO_MOBILE_URL"), // on dev set exp://xxx.xxx.x.xx:xxxx
+			requireEnv("EXPO_MOBILE_URL"), // on dev set exp://xxx.xxx.x.xx:xxxx // expo mobile url
 		],
 		database: convexAdapter(ctx, betterAuthComponent),
 		emailAndPassword: {
