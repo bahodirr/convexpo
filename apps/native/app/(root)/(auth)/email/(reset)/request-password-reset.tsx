@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/build/Ionicons";
+import { useRouter } from "expo-router";
 import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
 import { Alert } from "react-native";
@@ -12,6 +13,7 @@ if (!process.env.EXPO_PUBLIC_MOBILE_URL) {
 	throw new Error("EXPO_PUBLIC_MOBILE_URL is not defined");
 }
 export default function RequestPasswordResetRoute() {
+	const router = useRouter();
 	const { colors } = useTheme();
 	/* ---------------------------------- state --------------------------------- */
 	const [email, setEmail] = useState("");
@@ -55,6 +57,7 @@ export default function RequestPasswordResetRoute() {
 				},
 				onSuccess: () => {
 					setIsLoading(false);
+					router.back();
 					console.log("success!");
 				},
 			},
