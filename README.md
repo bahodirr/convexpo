@@ -161,6 +161,7 @@ EXPO_PUBLIC_SITE_URL=https://xxxx-xxx-xxx.convex.site      # HTTP Actions URL
 
 # NOTE: The "/--" suffix is only needed for **Expo Go**.
 # For dev/prod builds with a custom scheme (e.g., myapp://), do NOT include /--
+# Remember this may change based on location
 EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
 ```
 
