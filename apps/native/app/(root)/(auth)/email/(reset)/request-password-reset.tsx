@@ -57,6 +57,7 @@ export default function RequestPasswordResetRoute() {
 				},
 				onSuccess: () => {
 					setIsLoading(false);
+					Alert.alert("Success", "Reset link sent to your email");
 					router.back();
 					console.log("success!");
 				},

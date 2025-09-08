@@ -64,6 +64,7 @@ export default function ResetPasswordRoute() {
 				onSuccess: () => {
 					setIsLoading(false);
 					console.log("success!");
+					Alert.alert("Success", "Password reset successfully");
 					/**
 					 * i have a thought to better the ui
 					 *
