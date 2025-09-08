@@ -3,7 +3,7 @@ import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
-import FormHeader, { FormContainer } from "@/components/ui/form";
+import FormHeader, { FormContainer } from "@/components/form";
 import { authClient } from "@/lib/better-auth/auth-client";
 
 export default function ResetPasswordRoute() {
