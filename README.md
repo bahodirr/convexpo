@@ -151,9 +151,13 @@ In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
 CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
 ```
 
-> **About `.cloud` vs `.site`:** Convex shows only the `.cloud` deployment domain. For **HTTP Actions**, the host is the same prefix but with a `.site` TLD. You won’t see `.site` in the dashboard—just swap `.cloud` → `.site`.
 
 Create `apps/native/.env.development`:
+
+> **Env setup: `.cloud` and `.site`**
+> - Where to find it in the Convex dashboard: Project → Settings → URL & deployment keys → Show development credentials → Deployment URL
+> - The Deployment URL will look like `https://xxxx-xxx-xxx.convex.cloud`
+> - For HTTP Actions, use the same prefix with a `.site` TLD: `https://xxxx-xxx-xxx.convex.site`
 
 ```ini
 EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud   # deployment URL
