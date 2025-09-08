@@ -173,6 +173,7 @@ EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
 
 ## Running (after setup): Email + Password
 
+Go back to root folder and run the following command:
 ```bash
 pnpm run dev
 ```
