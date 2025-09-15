@@ -23,33 +23,33 @@ SplashScreen.preventAutoHideAsync();
  * options cannot be set in Expo Go
  */
 SplashScreen.setOptions({
-  duration: 250,
-  fade: true,
+	duration: 250,
+	fade: true,
 });
 
 export default function SplashScreenProvider({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  const { isLoading: isAuthLoading } = useConvexAuth();
-  const [fontsLoaded, fontError] = useFonts({});
+	const { isLoading: isAuthLoading } = useConvexAuth();
+	const [fontsLoaded, fontError] = useFonts({});
 
-  if (fontError) {
-    throw fontError;
-  }
+	if (fontError) {
+		throw fontError;
+	}
 
-  useEffect(() => {
-    if (isAuthLoading || !fontsLoaded) {
-      return;
-    }
-    /**
-     * i just like to wait until auth is loaded
-     */
-    delay(350).then(() => {
-      SplashScreen.hideAsync();
-    });
-  }, [isAuthLoading, fontsLoaded]);
+	useEffect(() => {
+		if (isAuthLoading || !fontsLoaded) {
+			return;
+		}
+		/**
+		 * i just like to wait until auth is loaded
+		 */
+		delay(350).then(() => {
+			SplashScreen.hideAsync();
+		});
+	}, [isAuthLoading, fontsLoaded]);
 
-  return <>{children}</>;
+	return <>{children}</>;
 }
