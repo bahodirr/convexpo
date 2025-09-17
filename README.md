@@ -23,11 +23,11 @@ This project was bootstrapped with **[Better-T-Stack](https://github.com/AmanVar
 ## Tech Stack
 
 * **TypeScript** — static typing for safety and DX
-* **[React Native (Expo)](https://expo.dev/)** — SDK 54 cross-platform development 🚧 *Beta*
+* **[React Native (Expo)](https://expo.dev/)** — SDK 54
 * **[Tailwind (NativeWind)](https://www.nativewind.dev/)** — Tailwind for React Native
 * **[Hero UI Native](https://github.com/heroui-inc/heroui-native)** — modern React Native UI library 🚧 *Alpha*
 * **[Convex](https://docs.convex.dev/)** — reactive backend-as-a-service
-* **[Better Auth](https://convex-better-auth.netlify.app/)** — auth primitives on Convex 🚧 *Alpha — community testing welcome*
+* **[Better Auth](https://convex-better-auth.netlify.app/)** — auth primitives on Convex
 * **[Biome](https://biomejs.dev/)** — fast formatting and linting
 * **[Turborepo](https://turbo.build/repo/docs)** — monorepo build system
 
@@ -161,7 +161,7 @@ Create `apps/native/.env.development`:
 
 ```ini
 EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud   # deployment URL
-EXPO_PUBLIC_SITE_URL=https://xxxx-xxx-xxx.convex.site      # HTTP Actions URL
+EXPO_PUBLIC_CONVEX_SITE_URL=https://xxxx-xxx-xxx.convex.site      # HTTP Actions URL
 
 # NOTE: The "/--" suffix is only needed for **Expo Go**.
 # For dev/prod builds with a custom scheme (e.g., myapp://), do NOT include /--

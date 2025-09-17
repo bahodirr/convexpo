@@ -1,6 +1,6 @@
 import { httpRouter } from "convex/server";
 import { httpAction } from "./_generated/server";
-import { betterAuthComponent } from "./auth";
+import { authComponent } from "./auth";
 import { createAuth } from "./lib/auth";
 import { resendHandler } from "./lib/resend/sendEmails";
 
@@ -9,7 +9,7 @@ const http = httpRouter();
  * AUTH
  * Client side frameworks need CORS enabled to work properly.
  */
-betterAuthComponent.registerRoutes(http, createAuth, { cors: true });
+authComponent.registerRoutes(http, createAuth, { cors: true });
 /**
  * RESEND
  * Route for handling resend webhook events.

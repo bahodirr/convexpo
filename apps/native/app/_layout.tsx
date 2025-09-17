@@ -2,6 +2,7 @@ import { Slot } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
 import { HeroUINativeProvider } from "heroui-native";
+import { StrictMode } from "react";
 import { AppThemeProvider, useAppTheme } from "@/contexts/app-theme-context";
 import ConvexProvider from "@/providers/ConvexProvider";
 import SplashScreenProvider from "@/providers/SplashScreenProvider";
@@ -26,14 +27,16 @@ function ThemedLayout() {
 /* ------------------------------- root layout ------------------------------ */
 export default function Layout() {
 	return (
-		<ConvexProvider>
-			<SplashScreenProvider>
-				<GestureHandlerRootView className="flex-1">
-					<AppThemeProvider>
-						<ThemedLayout />
-					</AppThemeProvider>
-				</GestureHandlerRootView>
-			</SplashScreenProvider>
-		</ConvexProvider>
+		<StrictMode>
+			<ConvexProvider>
+				<SplashScreenProvider>
+					<GestureHandlerRootView className="flex-1">
+						<AppThemeProvider>
+							<ThemedLayout />
+						</AppThemeProvider>
+					</GestureHandlerRootView>
+				</SplashScreenProvider>
+			</ConvexProvider>
+		</StrictMode>
 	);
 }

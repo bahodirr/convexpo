@@ -1,13 +1,19 @@
 import { expo } from "@better-auth/expo";
-import { convexAdapter } from "@convex-dev/better-auth";
+// import type { DataModel } from "../../_generated/dataModel";
+// import type { GenericCtx } from "../../_generated/server";
+import { createClient, type GenericCtx } from "@convex-dev/better-auth";
+// import { convexAdapter } from "@convex-dev/better-auth";
 import { convex } from "@convex-dev/better-auth/plugins";
 import { requireEnv, requireMutationCtx } from "@convex-dev/better-auth/utils";
 import { betterAuth } from "better-auth";
-import type { GenericCtx } from "../../_generated/server";
-import { betterAuthComponent } from "../../auth";
+import { authComponent } from "../../auth";
 import { sendResetPassword } from "../resend/emails";
+import type { DataModel } from "./_generated/dataModel";
 
-export const createAuth = (ctx: GenericCtx) =>
+export const createAuth = (
+	ctx: GenericCtx<DataModel>,
+	{ optionsOnly } = { optionsOnly: false },
+) =>
 	betterAuth({
 		trustedOrigins: [
 			"https://appleid.apple.com",
@@ -15,7 +21,12 @@ export const createAuth = (ctx: GenericCtx) =>
 			// requireEnv("EXPO_WEB_URL"), // http://localhost:8081  // expo web
 			requireEnv("EXPO_MOBILE_URL"), // on dev set exp://xxx.xxx.x.xx:xxxx // expo mobile url
 		],
-		database: convexAdapter(ctx, betterAuthComponent),
+		logger: {
+			disabled: optionsOnly,
+		},
+		database: authComponent.adapter(ctx),
+		// database: convexAdapter(ctx, authComponent),
+		// Configure simple, non-verified email/password to get started
 		emailAndPassword: {
 			enabled: true,
 			requireEmailVerification: false,
@@ -46,6 +57,5 @@ export const createAuth = (ctx: GenericCtx) =>
 		// 		clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
 		// 	},
 		// },
-
 		plugins: [expo(), convex()],
 	});
