@@ -18,26 +18,37 @@ export const handleAppleSignIn = async () => {
 			throw new Error("Failed to get Apple identity token");
 		}
 
-		// Use auth client to sign in with apple
-		const { data, error } = await authClient.signIn.social({
-			provider: "apple",
-			idToken: {
-				token: credential.identityToken,
+		await authClient.signIn.social(
+			{
+				provider: "apple",
+				idToken: {
+					token: credential.identityToken,
+					nonce: credential.authorizationCode ?? undefined,
+					accessToken: credential.identityToken,
+				},
 			},
-		});
+			{
+				onError: (ctx) => {
+					console.log("Apple Sign In Error", ctx.error);
+				},
+				onSuccess: (data) => {
+					console.log("Apple Sign In Success", data);
+				},
+			},
+		);
 
-		if (error) {
-			throw error;
-		}
+		// if (error) {
+		// 	throw error;
+		// }
 
-		return { success: true, data };
+		// return { success: true, data };
 	} catch (error) {
-		console.log("Apple Sign In Error", error);
-		return {
-			success: false,
-			error:
-				error instanceof Error ? error : new Error("Unknown error occurred"),
-		};
+		// console.log("Apple Sign In Error", error);
+		// return {
+		// 	success: false,
+		// 	error:
+		// 		error instanceof Error ? error : new Error("Unknown error occurred"),
+		// };
 	}
 };
 

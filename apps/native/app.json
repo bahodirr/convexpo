@@ -1,13 +1,13 @@
 {
 	"expo": {
-		"name": "native",
-		"slug": "native",
+		"name": "convexpo",
+		"slug": "convexpo",
 		"version": "1.0.0",
 		"scheme": "native",
 		"web": {
 			"bundler": "metro",
 			"output": "static",
-			"favicon": "./assets/favicon.png"
+			"favicon": "./assets/logo-b.png"
 		},
 		"plugins": ["expo-router", "expo-secure-store", "expo-web-browser"],
 		"experiments": {
@@ -19,7 +19,7 @@
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "automatic",
 		"splash": {
-			"image": "./assets/splash.png",
+			"image": "./assets/logo-b.png",
 			"resizeMode": "contain",
 			"backgroundColor": "#ffffff"
 		},
@@ -30,7 +30,7 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
+				"foregroundImage": "./assets/logo-b.png",
 				"backgroundColor": "#ffffff"
 			},
 			"package": "com.amanvarshney01.mybettertapp",

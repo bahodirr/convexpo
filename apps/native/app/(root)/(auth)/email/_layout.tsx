@@ -1,7 +1,4 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { Link, Stack } from "expo-router";
-import { Button, useTheme } from "heroui-native";
-import { View } from "react-native";
+import { Stack } from "expo-router";
 import { useNavigationOptions } from "@/hooks/useNavigationOptions";
 
 export default function EmailLayout() {
@@ -10,6 +7,7 @@ export default function EmailLayout() {
 		<Stack
 			screenOptions={{
 				gestureEnabled: false,
+				headerTransparent: true,
 				...modal,
 			}}
 		>
@@ -17,7 +15,6 @@ export default function EmailLayout() {
 				name="signin"
 				options={{
 					title: "",
-					// headerLeft: CloseButton,
 				}}
 			/>
 			<Stack.Screen

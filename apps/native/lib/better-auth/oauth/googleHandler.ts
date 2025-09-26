@@ -4,25 +4,36 @@ import { authClient } from "../auth-client";
 
 /* ------------------------------ core handler ------------------------------ */
 export const handleGoogleSignIn = async () => {
-	try {
-		// Use auth client to sign in with Google
-		const { data, error } = await authClient.signIn.social({
+	// try {
+	// Use auth client to sign in with Google
+	const { data, error } = await authClient.signIn.social(
+		{
 			provider: "google",
-		});
+		},
+		{
+			onError: (ctx) => {
+				console.log("Google Sign In Error", ctx.error);
+			},
+			onSuccess: (data) => {
+				console.log("Google Sign In Success", data);
+			},
+		},
+	);
+	console.log(data, error);
 
-		if (error) {
-			throw error;
-		}
+	// if (error) {
+	// 	throw error;
+	// }
 
-		return { success: true, data };
-	} catch (error) {
-		console.log("Google Sign In Error", error);
-		return {
-			success: false,
-			error:
-				error instanceof Error ? error : new Error("Unknown error occurred"),
-		};
-	}
+	// 	return { success: true, data };
+	// } catch (error) {
+	// 	console.log("Google Sign In Error", error);
+	// 	return {
+	// 		success: false,
+	// 		error:
+	// 			error instanceof Error ? error : new Error("Unknown error occurred"),
+	// 	};
+	// }
 };
 
 /* ---------------------------------- hook ---------------------------------- */

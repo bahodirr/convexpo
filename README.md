@@ -53,7 +53,8 @@ convexpo/
 * A **Resend** account & API key (for transactional emails)
 * A **verified domain** in Resend (required for authentication emails)
 * A **Convex** account (created by the CLI wizard below)
-* **Expo Go** installed on your phone (for instant runs) — TestFlight for SDK 54: [EXPO GO 54](https://testflight.apple.com/join/GZJxxfUU)
+* **Expo Go** installed on your phone (for instant runs) or a expo **Prebuild**
+
 
 > **⚠️ IMPORTANT:** Authentication emails require a verified domain in Resend. You cannot use test mode with just an API key for auth flows. The sender email must match your verified domain.
 

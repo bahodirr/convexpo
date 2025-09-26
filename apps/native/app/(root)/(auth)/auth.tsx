@@ -66,9 +66,11 @@ export default function SignInRoute() {
 				<Text className="text-secondary text-sm">
 					Register for convexpo, zero to shipped in minutes.
 				</Text>
-				<Button>
-					<Button.LabelContent>Email</Button.LabelContent>
-				</Button>
+				<Link href="/(root)/(auth)/email/signin" asChild>
+					<Button>
+						<Button.LabelContent>Email</Button.LabelContent>
+					</Button>
+				</Link>
 				<Text className="text-muted-foreground text-sm">
 					By continuing, you agree to Convexpo's{" "}
 					<Link href="http://convex.dev" className="text-primary">

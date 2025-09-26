@@ -63,7 +63,7 @@ export default function SignInRoute() {
 			{/* email text-field*/}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your email"
 					keyboardType="email-address"
 					autoCapitalize="none"
@@ -73,7 +73,7 @@ export default function SignInRoute() {
 					<TextField.InputStartContent className="pointer-events-none">
 						<Ionicons
 							name="mail-outline"
-							size={16}
+							size={22}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
@@ -82,7 +82,7 @@ export default function SignInRoute() {
 			{/* password text-field */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your password"
 					secureTextEntry
 					value={password}
@@ -108,6 +108,7 @@ export default function SignInRoute() {
 			<Button
 				onPress={handleSignIn}
 				disabled={isLoading}
+				size="lg"
 				className="rounded-3xl"
 			>
 				<Button.LabelContent>

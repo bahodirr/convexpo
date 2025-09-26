@@ -59,7 +59,9 @@ export const useNavigationOptions = () => {
 				 */
 				...base,
 				headerStyle: {
-					backgroundColor: colors.background,
+					// backgroundColor: colors.background,
+					backgroundColor:
+						Platform.OS === "ios" ? "transparent" : colors.background,
 				},
 			},
 		};
