@@ -1,13 +1,12 @@
-import Ionicons from "@expo/vector-icons/build/Ionicons";
 import { Link } from "expo-router";
-import { Button, useTheme } from "heroui-native";
+import { Button } from "heroui-native";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { useAppleSignIn } from "@/lib/better-auth/oauth/appleHandler";
 // import { useGoogleSignIn } from "@/lib/better-auth/oauth/googleHandler";
 
 export default function Landing() {
-	const { colors } = useTheme();
+	// const { colors } = useTheme();
 	// const { gSignIn } = useGoogleSignIn();
 	// const { aSignIn } = useAppleSignIn();
 	return (
@@ -21,9 +20,9 @@ export default function Landing() {
 				</Text>
 			</View>
 
-			<View className="w-full flex-row gap-4">
-				{/* google */}
-				<Button
+			{/* <View className="w-full flex-row gap-4"> */}
+			{/* google */}
+			{/* <Button
 					className="flex-1 overflow-hidden rounded-full"
 					size="lg"
 					variant="secondary"
@@ -40,9 +39,9 @@ export default function Landing() {
 						/>
 					</Button.StartContent>
 					<Button.LabelContent>Google</Button.LabelContent>
-				</Button>
-				{/* apple */}
-				<Button
+				</Button> */}
+			{/* apple */}
+			{/* <Button
 					className="flex-1 overflow-hidden rounded-full"
 					size="lg"
 					variant="secondary"
@@ -60,11 +59,16 @@ export default function Landing() {
 					</Button.StartContent>
 					<Button.LabelContent>Apple</Button.LabelContent>
 				</Button>
-			</View>
+			</View> */}
 			{/* email + password route */}
-			<Link href="/(root)/(auth)/email/signin" asChild>
+			{/* <Link href="/(root)/(auth)/email/signin" asChild>
 				<Button className="w-full rounded-full" size="lg">
 					<Button.LabelContent>Email</Button.LabelContent>
+				</Button>
+			</Link> */}
+			<Link href="/(root)/(auth)/auth" asChild>
+				<Button className="w-full rounded-full" size="lg">
+					<Button.LabelContent>Get Started</Button.LabelContent>
 				</Button>
 			</Link>
 		</SafeAreaView>

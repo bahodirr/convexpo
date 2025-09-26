@@ -17,7 +17,7 @@ export default function EmailLayout() {
 				name="signin"
 				options={{
 					title: "",
-					headerLeft: CloseButton,
+					// headerLeft: CloseButton,
 				}}
 			/>
 			<Stack.Screen
@@ -42,17 +42,17 @@ export default function EmailLayout() {
 	);
 }
 /* ------------------------------ close button ------------------------------ */
-const CloseButton = () => {
-	const { colors } = useTheme();
-	return (
-		<View className="flex w-full flex-1">
-			<Link href=".." asChild>
-				<Button size="sm" isIconOnly className="rounded-full" variant="ghost">
-					<Button.LabelContent>
-						<AntDesign name="close" size={16} color={colors.foreground} />
-					</Button.LabelContent>
-				</Button>
-			</Link>
-		</View>
-	);
-};
+// const CloseButton = () => {
+// 	const { colors } = useTheme();
+// 	return (
+// 		<View className="flex w-full flex-1">
+// 			<Link href=".." asChild>
+// 				<Button size="sm" isIconOnly className="rounded-full" variant="ghost">
+// 					<Button.LabelContent>
+// 						<AntDesign name="close" size={16} color={colors.foreground} />
+// 					</Button.LabelContent>
+// 				</Button>
+// 			</Link>
+// 		</View>
+// 	);
+// };

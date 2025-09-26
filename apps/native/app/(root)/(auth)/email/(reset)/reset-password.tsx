@@ -17,10 +17,7 @@ export default function ResetPasswordRoute() {
 	 * https://www.better-auth.com/docs/authentication/email-password#request-password-reset
 	 *
 	 */
-	const { token, error } = useLocalSearchParams<{
-		token: string;
-		error?: string;
-	}>();
+
 	/* ---------------------------------- state --------------------------------- */
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");

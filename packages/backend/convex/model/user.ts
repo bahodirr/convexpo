@@ -1,11 +1,11 @@
 import { ConvexError } from "convex/values";
 import type { Id } from "../_generated/dataModel";
 import type { QueryCtx } from "../_generated/server";
-import { betterAuthComponent } from "../auth";
+import { authComponent } from "../lib/betterAuth";
 
 /* ------------------------------ user metadata ----------------------------- */
 export async function getAuthUserDataOrThrow(ctx: QueryCtx) {
-	const userMetadata = await betterAuthComponent.getAuthUser(ctx);
+	const userMetadata = await authComponent.getAuthUser(ctx);
 	if (!userMetadata) {
 		throw new ConvexError({
 			code: "NOT_AUTHENTICATED",
@@ -17,7 +17,7 @@ export async function getAuthUserDataOrThrow(ctx: QueryCtx) {
 
 /* ------------------------ user metadata (graceful) ------------------------ */
 export async function getAuthUserData(ctx: QueryCtx) {
-	const userMetadata = await betterAuthComponent.getAuthUser(ctx);
+	const userMetadata = await authComponent.getAuthUser(ctx);
 	return userMetadata; // Returns null if not authenticated, doesn't throw
 }
 /* -------------------------------- user data ------------------------------- */

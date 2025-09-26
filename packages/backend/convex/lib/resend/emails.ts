@@ -1,14 +1,12 @@
-import type { RunMutationCtx } from "@convex-dev/better-auth";
+import type { MutationCtx } from "../../_generated/server";
 import generateResetPasswordEmail from "./emails/resetPassword";
 import generateVerifyEmail from "./emails/verifyEmail";
 import generateVerifyOTP from "./emails/verifyOTP";
 import { sendEmail } from "./sendEmails";
-
 // const logoUrl = "https://project.com/logo.png";
-
 /* ------------------------- send email verification ------------------------ */
 export const sendEmailVerification = async (
-	ctx: RunMutationCtx,
+	ctx: MutationCtx,
 	{
 		to,
 		url,
@@ -28,7 +26,7 @@ export const sendEmailVerification = async (
 
 /* -------------------------------- send otp -------------------------------- */
 export const sendOTPVerification = async (
-	ctx: RunMutationCtx,
+	ctx: MutationCtx,
 	{
 		to,
 		code,
@@ -48,7 +46,7 @@ export const sendOTPVerification = async (
 
 /* ------------------------------- send reset ------------------------------- */
 export const sendResetPassword = async (
-	ctx: RunMutationCtx,
+	ctx: MutationCtx,
 	{
 		to,
 		url,
