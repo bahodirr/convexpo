@@ -1,2 +1,2 @@
-export * from "./authComponent";
+export * from "./component";
 export * from "./createAuth";

@@ -8,32 +8,32 @@ import SplashScreenProvider from "@/providers/SplashScreenProvider";
 
 /* ------------------------------ themed route ------------------------------ */
 function ThemedLayout() {
-  const { currentTheme } = useAppTheme();
-  return (
-    <HeroUINativeProvider
-      config={{
-        colorScheme: "light",
-        theme: currentTheme,
-        textProps: {
-          allowFontScaling: false,
-        },
-      }}
-    >
-      <Slot />
-    </HeroUINativeProvider>
-  );
+	const { currentTheme } = useAppTheme();
+	return (
+		<HeroUINativeProvider
+			config={{
+				colorScheme: "dark",
+				// theme: currentTheme,
+				textProps: {
+					allowFontScaling: false,
+				},
+			}}
+		>
+			<Slot />
+		</HeroUINativeProvider>
+	);
 }
 /* ------------------------------- root layout ------------------------------ */
 export default function Layout() {
-  return (
-    <ConvexProvider>
-      <SplashScreenProvider>
-        <GestureHandlerRootView className="flex-1">
-          <AppThemeProvider>
-            <ThemedLayout />
-          </AppThemeProvider>
-        </GestureHandlerRootView>
-      </SplashScreenProvider>
-    </ConvexProvider>
-  );
+	return (
+		<ConvexProvider>
+			<SplashScreenProvider>
+				<GestureHandlerRootView className="flex-1">
+					<AppThemeProvider>
+						<ThemedLayout />
+					</AppThemeProvider>
+				</GestureHandlerRootView>
+			</SplashScreenProvider>
+		</ConvexProvider>
+	);
 }

@@ -4,7 +4,7 @@ import { convex } from "@convex-dev/better-auth/plugins";
 import { betterAuth } from "better-auth";
 import type { DataModel } from "../../_generated/dataModel";
 import { requireEnv } from "../../util";
-import { authComponent } from "./authComponent";
+import { authComponent } from "./component";
 /**
  * NOTE:
  * This createAuth is needed for integrating Convex with Better Auth,
@@ -22,6 +22,9 @@ export const createAuth = (
 			requireEnv("EXPO_WEB_URL"),
 			requireEnv("EXPO_MOBILE_URL"),
 		],
+		emailAndPassword: {
+			enabled: true,
+		},
 		user: {
 			deleteUser: {
 				enabled: true,

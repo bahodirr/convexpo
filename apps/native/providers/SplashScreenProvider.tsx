@@ -23,7 +23,7 @@ SplashScreen.preventAutoHideAsync();
  * options cannot be set in Expo Go
  */
 SplashScreen.setOptions({
-	duration: 250,
+	duration: 200,
 	fade: true,
 });
 

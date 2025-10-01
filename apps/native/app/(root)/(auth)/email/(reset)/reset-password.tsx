@@ -4,11 +4,12 @@ import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
 import FormHeader, { FormContainer } from "@/components/form";
-import { authClient } from "@/lib/better-auth/auth-client";
+import { authClient } from "@/lib/betterAuth/client";
 
 export default function ResetPasswordRoute() {
 	const { colors } = useTheme();
 	const router = useRouter();
+	// const
 	/**
 	 * We are using proper routing to navigate to the reset password
 	 * we recieve the token from the email,
@@ -17,7 +18,10 @@ export default function ResetPasswordRoute() {
 	 * https://www.better-auth.com/docs/authentication/email-password#request-password-reset
 	 *
 	 */
-
+	const { token, error } = useLocalSearchParams<{
+		token: string;
+		error?: string;
+	}>();
 	/* ---------------------------------- state --------------------------------- */
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -116,7 +120,7 @@ export default function ResetPasswordRoute() {
 			{/* new password */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your new password"
 					secureTextEntry
 					value={password}
@@ -141,23 +145,23 @@ export default function ResetPasswordRoute() {
 			{/* confirm password */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Confirm your new password"
 					secureTextEntry
 					value={confirmPassword}
 					onChangeText={setConfirmPassword}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="lock-closed-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
-					<TextField.InputEndContent className="pointer-events-none">
+					<TextField.InputEndContent className="pointer-events-none pr-2">
 						<Ionicons
 							name="checkmark-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputEndContent>
@@ -168,6 +172,7 @@ export default function ResetPasswordRoute() {
 				onPress={handleResetPassword}
 				disabled={isLoading}
 				className="rounded-3xl"
+				size="lg"
 			>
 				<Button.LabelContent>
 					{isLoading ? "Resetting..." : "Reset Password"}

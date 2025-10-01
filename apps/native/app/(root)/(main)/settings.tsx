@@ -1,34 +1,17 @@
+import { api, useQuery } from "@convexpo/backend";
 import { Ionicons } from "@expo/vector-icons";
 import { Button, Spinner, useTheme } from "heroui-native";
 import { useState } from "react";
-import { Alert, ScrollView } from "react-native";
-import { authClient } from "@/lib/better-auth/auth-client";
+import { Alert, ScrollView, Text, View } from "react-native";
+import { authClient } from "@/lib/betterAuth/client";
 
 export default function SettingsRoute() {
 	const { colors } = useTheme();
-	const [isSigningOut, setIsSigningOut] = useState(false);
 	const [isDeletingUser, setIsDeletingUser] = useState(false);
-	// sign out
-	const handleSignOut = async () => {
-		const { error, data } = await authClient.signOut(
-			{},
-			{
-				onRequest: () => {
-					setIsSigningOut(true);
-				},
-				onSuccess: () => {
-					setIsSigningOut(false);
-					console.log("Sign out successful");
-				},
-				onError: (ctx) => {
-					console.error(ctx.error);
-					Alert.alert("Error", ctx.error.message || "Failed to sign out");
-				},
-			},
-		);
+	const userData = useQuery(api.user.fetchUserAndProfile);
 
-		console.log(data, error);
-	};
+	if (!userData?.profile || !userData.userMetadata) return null;
+
 	// delete user
 	const handleDeleteUser = async () => {
 		const { error, data } = await authClient.deleteUser(
@@ -54,79 +37,62 @@ export default function SettingsRoute() {
 	};
 
 	return (
-		<ScrollView
-			automaticallyAdjustsScrollIndicatorInsets
-			contentInsetAdjustmentBehavior="always"
-			contentContainerClassName="px-4 py-4 gap-4"
-		>
-			{/*Sign Out*/}
-			<Button
-				className="rounded-full"
-				variant="tertiary"
-				disabled={isSigningOut}
-				onPress={() => {
-					Alert.alert("Sign Out", "Are you sure you want to sign out", [
-						{
-							text: "Cancel",
-							style: "cancel",
-						},
-						{
-							text: "Sign Out",
-							onPress: async () => {
-								await handleSignOut();
-							},
-						},
-					]);
-				}}
+		<View className="flex-1">
+			<ScrollView
+				contentInsetAdjustmentBehavior="always"
+				contentContainerClassName="px-6 py-2 gap-4 min-h-full "
 			>
-				<Button.StartContent>
-					<Ionicons
-						name="log-out-outline"
-						size={18}
-						color={colors.foreground}
-					/>
-				</Button.StartContent>
-				<Button.LabelContent>
-					{isSigningOut ? "Signing Out..." : "Sign Out"}
-				</Button.LabelContent>
-				<Button.EndContent>
-					{isSigningOut ? <Spinner color={colors.foreground} /> : null}
-				</Button.EndContent>
-			</Button>
-			{/* Delete User*/}
-			<Button
-				variant="tertiary"
-				className="rounded-full"
-				disabled={isDeletingUser}
-				onPress={async () => {
-					Alert.alert(
-						"Delete User",
-						"Are you sure you want to delete your account?",
-						[
-							{
-								text: "Cancel",
-								style: "cancel",
-							},
-							{
-								text: "Delete",
-								onPress: async () => {
-									await handleDeleteUser();
-								},
-							},
-						],
-					);
-				}}
-			>
-				<Button.StartContent>
-					<Ionicons name="trash-outline" size={18} color={colors.foreground} />
-				</Button.StartContent>
-				<Button.LabelContent>
-					{isDeletingUser ? "Deleting..." : "Delete User"}
-				</Button.LabelContent>
-				<Button.EndContent>
-					{isDeletingUser ? <Spinner color={colors.foreground} /> : null}
-				</Button.EndContent>
-			</Button>
-		</ScrollView>
+				{/* User Info Section */}
+				<View className="flex">
+					<Text className="text-lg text-muted-foreground">
+						{userData.profile.name}
+					</Text>
+					<Text className="text-lg text-muted-foreground">
+						{userData.userMetadata.email}
+					</Text>
+					<Text className="text-lg text-muted-foreground">
+						created {new Date(userData.userMetadata.createdAt).toDateString()}
+					</Text>
+				</View>
+
+				{/* Delete User*/}
+				<View className="flex gap-4">
+					<Button
+						variant="danger"
+						size="sm"
+						className="self-start rounded-full"
+						disabled={isDeletingUser}
+						onPress={async () => {
+							Alert.alert(
+								"Delete User",
+								"Are you sure you want to delete your account?",
+								[
+									{
+										text: "Cancel",
+										style: "cancel",
+									},
+									{
+										text: "Delete",
+										onPress: async () => {
+											await handleDeleteUser();
+										},
+									},
+								],
+							);
+						}}
+					>
+						<Button.StartContent>
+							<Ionicons name="trash-outline" size={18} color={"white"} />
+						</Button.StartContent>
+						<Button.LabelContent>
+							{isDeletingUser ? "Deleting..." : "Delete User"}
+						</Button.LabelContent>
+						<Button.EndContent>
+							{isDeletingUser ? <Spinner color={colors.foreground} /> : null}
+						</Button.EndContent>
+					</Button>
+				</View>
+			</ScrollView>
+		</View>
 	);
 }

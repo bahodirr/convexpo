@@ -4,7 +4,7 @@ import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
 import { Alert, Text } from "react-native";
 import FormHeader, { FormContainer } from "@/components/form";
-import { authClient } from "@/lib/better-auth/auth-client";
+import { authClient } from "@/lib/betterAuth/client";
 
 export default function SignUpRoute() {
 	const { colors } = useTheme();
@@ -76,16 +76,16 @@ export default function SignUpRoute() {
 			{/* name */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your full name"
 					autoCapitalize="words"
 					value={name}
 					onChangeText={setName}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="person-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
@@ -94,17 +94,17 @@ export default function SignUpRoute() {
 			{/* email */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your email"
 					keyboardType="email-address"
 					autoCapitalize="none"
 					value={email}
 					onChangeText={setEmail}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="mail-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
@@ -113,23 +113,23 @@ export default function SignUpRoute() {
 			{/* password */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your password"
 					secureTextEntry
 					value={password}
 					onChangeText={setPassword}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="lock-closed-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
-					<TextField.InputEndContent className="pointer-events-none">
+					<TextField.InputEndContent className="pointer-events-none pr-2">
 						<Ionicons
 							name="eye-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputEndContent>
@@ -138,23 +138,23 @@ export default function SignUpRoute() {
 			{/* confirm password */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Confirm your password"
 					secureTextEntry
 					value={confirmPassword}
 					onChangeText={setConfirmPassword}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="lock-closed-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
-					<TextField.InputEndContent className="pointer-events-none">
+					<TextField.InputEndContent className="pointer-events-none pr-2">
 						<Ionicons
 							name="checkmark-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputEndContent>
@@ -165,6 +165,7 @@ export default function SignUpRoute() {
 				onPress={handleSignUp}
 				disabled={isLoading}
 				className="rounded-3xl"
+				size="lg"
 			>
 				<Button.LabelContent>
 					{isLoading ? "Creating Account..." : "Sign Up"}
@@ -175,11 +176,11 @@ export default function SignUpRoute() {
 			</Button>
 			<Text className="px-14 text-center text-muted-foreground text-sm">
 				by continuing you agree to our{" "}
-				<Link href="http://convex.dev" className="text-primary underline">
+				<Link href="http://convex.dev" className="text-foreground underline">
 					terms of service
 				</Link>{" "}
 				and{" "}
-				<Link href="http://convex.dev" className="text-primary underline">
+				<Link href="http://convex.dev" className="text-foreground underline">
 					privacy policy
 				</Link>
 			</Text>

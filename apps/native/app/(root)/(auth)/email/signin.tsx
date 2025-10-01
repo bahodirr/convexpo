@@ -2,9 +2,9 @@ import Ionicons from "@expo/vector-icons/build/Ionicons";
 import { Link } from "expo-router";
 import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Pressable, Text } from "react-native";
 import FormHeader, { FormContainer } from "@/components/form";
-import { authClient } from "@/lib/better-auth/auth-client";
+import { authClient } from "@/lib/betterAuth/client";
 
 export default function SignInRoute() {
 	const { colors } = useTheme();
@@ -60,6 +60,7 @@ export default function SignInRoute() {
 				title="Login"
 				description="Enter your email and password to login"
 			/>
+
 			{/* email text-field*/}
 			<TextField isRequired>
 				<TextField.Input
@@ -70,10 +71,10 @@ export default function SignInRoute() {
 					value={email}
 					onChangeText={setEmail}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="mail-outline"
-							size={22}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
@@ -88,22 +89,23 @@ export default function SignInRoute() {
 					value={password}
 					onChangeText={setPassword}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="lock-closed-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
-					<TextField.InputEndContent className="pointer-events-none">
+					<TextField.InputEndContent className="pointer-events-none pr-2">
 						<Ionicons
 							name="eye-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputEndContent>
 				</TextField.Input>
 			</TextField>
+
 			{/* submit button */}
 			<Button
 				onPress={handleSignIn}
@@ -120,7 +122,11 @@ export default function SignInRoute() {
 			</Button>
 			{/* forgot password route */}
 			<Link href="/(root)/(auth)/email/(reset)/request-password-reset" asChild>
-				<Button variant="tertiary" size="sm" className="self-start rounded-3xl">
+				<Button
+					variant="tertiary"
+					size="sm"
+					className="self-center rounded-3xl"
+				>
 					<Button.StartContent>
 						<Ionicons
 							name="lock-closed-outline"
@@ -132,27 +138,7 @@ export default function SignInRoute() {
 					<Button.EndContent>
 						<Ionicons
 							name="chevron-forward"
-							size={18}
-							color={colors.defaultForeground}
-						/>
-					</Button.EndContent>
-				</Button>
-			</Link>
-			{/* sign up route */}
-			<Link href="/(root)/(auth)/email/signup" asChild>
-				<Button variant="tertiary" size="sm" className="self-start rounded-3xl">
-					<Button.StartContent>
-						<Ionicons
-							name="person-add-outline"
-							size={14}
-							color={colors.defaultForeground}
-						/>
-					</Button.StartContent>
-					<Button.LabelContent>Sign Up</Button.LabelContent>
-					<Button.EndContent>
-						<Ionicons
-							name="chevron-forward"
-							size={18}
+							size={16}
 							color={colors.defaultForeground}
 						/>
 					</Button.EndContent>

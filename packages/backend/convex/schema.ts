@@ -2,18 +2,12 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-	users: defineTable({
+	profile: defineTable({
 		name: v.optional(v.string()),
 	}),
-	/**
-	 * EXAMPLE
-	 */
-	feed: defineTable({
+	post: defineTable({
 		title: v.string(),
-		message: v.string(),
 		status: v.union(v.literal("start"), v.literal("middle"), v.literal("end")),
+		creatorId: v.id("profile"),
 	}),
-	/**
-	 * add your own tables here
-	 */
 });

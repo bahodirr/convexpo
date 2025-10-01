@@ -14,7 +14,12 @@ export default function RootLayout() {
 		<Stack>
 			{/* AUTH STACK */}
 			<Stack.Protected guard={!isAuthenticated}>
-				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+				<Stack.Screen
+					name="(auth)"
+					options={{
+						headerShown: false,
+					}}
+				/>
 			</Stack.Protected>
 			{/* AUTHENTICATED NESTED STACK */}
 			<Stack.Protected guard={isAuthenticated}>

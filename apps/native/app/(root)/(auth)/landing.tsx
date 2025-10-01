@@ -1,13 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Button, useTheme } from "heroui-native";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { authClient } from "@/lib/better-auth/auth-client";
-import { useGoogleSignIn } from "@/lib/better-auth/oauth/googleHandler";
+import { useAppleAuth, useGoogleAuth } from "@/lib/betterAuth/oauth";
 
 export default function Landing() {
 	const { colors } = useTheme();
+	const { signIn: signInWithGoogle, isLoading: isGoogleLoading } =
+		useGoogleAuth();
+	const { signIn: signInWithApple, isLoading: isAppleLoading } = useAppleAuth();
 	return (
 		<SafeAreaView className="flex-1 gap-4 px-8">
 			<View className="flex-1 justify-end">
@@ -24,25 +26,8 @@ export default function Landing() {
 					className="flex-1 overflow-hidden rounded-full"
 					size="lg"
 					variant="tertiary"
-					onPress={async () => {
-						await authClient.signIn.social(
-							{
-								provider: "google",
-								callbackURL: "exp://192.168.1.89:8081/--",
-							},
-							{
-								onRequest: () => {
-									console.log("Google Sign In Request");
-								},
-								onError: (ctx) => {
-									console.log("Google Sign In Error", ctx.error);
-								},
-								onSuccess: (data) => {
-									console.log("Google Sign In Success", data);
-								},
-							},
-						);
-					}}
+					onPress={signInWithGoogle}
+					disabled={isGoogleLoading || isAppleLoading}
 				>
 					<Button.StartContent>
 						<Ionicons
@@ -58,9 +43,8 @@ export default function Landing() {
 					className="flex-1 overflow-hidden rounded-full"
 					size="lg"
 					variant="tertiary"
-					onPress={() => {
-						console.warn("Apple Setup Needed");
-					}}
+					onPress={signInWithApple}
+					disabled={isGoogleLoading || isAppleLoading}
 				>
 					<Button.StartContent>
 						<Ionicons
@@ -72,7 +56,7 @@ export default function Landing() {
 					<Button.LabelContent>Apple</Button.LabelContent>
 				</Button>
 			</View>
-			<Link href="/(root)/(auth)/auth" asChild>
+			<Link href="/(root)/(auth)/email/signin" asChild>
 				<Button className="w-full rounded-full" size="lg">
 					<Button.LabelContent>Email</Button.LabelContent>
 				</Button>

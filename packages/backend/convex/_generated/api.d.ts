@@ -11,7 +11,7 @@
 import type * as auth from "../auth.js";
 import type * as healthCheck from "../healthCheck.js";
 import type * as http from "../http.js";
-import type * as lib_betterAuth_authComponent from "../lib/betterAuth/authComponent.js";
+import type * as lib_betterAuth_component from "../lib/betterAuth/component.js";
 import type * as lib_betterAuth_createAuth from "../lib/betterAuth/createAuth.js";
 import type * as lib_betterAuth_index from "../lib/betterAuth/index.js";
 import type * as lib_resend_emails_resetPassword from "../lib/resend/emails/resetPassword.js";
@@ -20,7 +20,9 @@ import type * as lib_resend_emails_verifyOTP from "../lib/resend/emails/verifyOT
 import type * as lib_resend_emails from "../lib/resend/emails.js";
 import type * as lib_resend_sendEmails from "../lib/resend/sendEmails.js";
 import type * as model_user from "../model/user.js";
-import type * as users from "../users.js";
+import type * as post from "../post.js";
+import type * as shared from "../shared.js";
+import type * as user from "../user.js";
 import type * as util from "../util.js";
 
 import type {
@@ -41,7 +43,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   healthCheck: typeof healthCheck;
   http: typeof http;
-  "lib/betterAuth/authComponent": typeof lib_betterAuth_authComponent;
+  "lib/betterAuth/component": typeof lib_betterAuth_component;
   "lib/betterAuth/createAuth": typeof lib_betterAuth_createAuth;
   "lib/betterAuth/index": typeof lib_betterAuth_index;
   "lib/resend/emails/resetPassword": typeof lib_resend_emails_resetPassword;
@@ -50,7 +52,9 @@ declare const fullApi: ApiFromModules<{
   "lib/resend/emails": typeof lib_resend_emails;
   "lib/resend/sendEmails": typeof lib_resend_sendEmails;
   "model/user": typeof model_user;
-  users: typeof users;
+  post: typeof post;
+  shared: typeof shared;
+  user: typeof user;
   util: typeof util;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

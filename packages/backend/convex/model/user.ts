@@ -1,78 +1,108 @@
-import { ConvexError } from "convex/values";
-import type { Id } from "../_generated/dataModel";
-import type { QueryCtx } from "../_generated/server";
+import type { GenericCtx } from "@convex-dev/better-auth";
+import type { DataModel, Id } from "../_generated/dataModel";
+import type { MutationCtx, QueryCtx } from "../_generated/server";
 import { authComponent } from "../lib/betterAuth";
 
-/* ------------------------------ user metadata ----------------------------- */
-export async function getAuthUserDataOrThrow(ctx: QueryCtx) {
-	const userMetadata = await authComponent.getAuthUser(ctx);
+/**
+ * Helper functions for accessing authenticated user data in queries and mutations.
+ *
+ * These functions integrate with Better Auth to provide type-safe access to user information.
+ * All functions work in queries, mutations, and actions via GenericCtx.
+ */
+
+/**
+ * Gets the authenticated user's ID from the JWT token.
+ *
+ * @param ctx - Query, mutation, or action context
+ * @returns The user's subject ID from the JWT, or undefined if not authenticated
+ */
+export const getUserId = async (ctx: GenericCtx<DataModel>) => {
+	const identity = await ctx.auth.getUserIdentity();
+	return identity?.subject;
+};
+
+/**
+ * Safely retrieves the authenticated user from the Better Auth user table.
+ *
+ * Uses `authComponent.safeGetAuthUser()` which:
+ * 1. Gets the user identity from the JWT via ctx.auth.getUserIdentity()
+ * 2. Queries the Better Auth "user" table to get the full user document
+ * 3. Returns null if the user is not authenticated or not found
+ *
+ * @param ctx - Query, mutation, or action context
+ * @returns The Better Auth user document, or null if not authenticated
+ */
+export async function safeGetUser(ctx: GenericCtx<DataModel>) {
+	return await authComponent.safeGetAuthUser(ctx);
+}
+
+/**
+ * Retrieves the authenticated user from the Better Auth user table, or throws an error.
+ *
+ * Uses `authComponent.getAuthUser()` which:
+ * 1. Gets the user identity from the JWT via ctx.auth.getUserIdentity()
+ * 2. Queries the Better Auth "user" table to get the full user document
+ * 3. Throws an error with message "Unauthenticated" if the user is not found
+ *
+ * Use this when authentication is required for the operation.
+ *
+ * @param ctx - Query, mutation, or action context
+ * @returns The Better Auth user document
+ * @throws Error with message "Unauthenticated" if not authenticated
+ */
+export async function getUser(ctx: GenericCtx<DataModel>) {
+	return await authComponent.getAuthUser(ctx);
+}
+
+/**
+ * Safely retrieves both the Better Auth user document and the custom profile data.
+ *
+ * This combines:
+ * 1. Better Auth user data (from the component's "user" table)
+ * 2. Custom profile data (from your "profile" table)
+ *
+ * The profile is linked via the `userId` field in the Better Auth user document.
+ * This field is set using `authComponent.setUserId()` in the onCreate trigger.
+ *
+ * @param ctx - Query or mutation context
+ * @returns Combined user and profile data, or null if not authenticated
+ */
+export async function getUserAndProfile(ctx: QueryCtx | MutationCtx) {
+	const userMetadata = await authComponent.safeGetAuthUser(ctx);
 	if (!userMetadata) {
-		throw new ConvexError({
-			code: "NOT_AUTHENTICATED",
-			message: "Not authenticated",
-		});
+		return null;
 	}
-	return userMetadata;
+	/**
+	 * Note: We cast userId to Id<"profile"> because:
+	 * - In Better Auth, userId is stored as a string
+	 * - We set it to a profile _id using authComponent.setUserId() in onCreate trigger
+	 * - We know it's actually a Convex Id<"profile">, so we cast it for type safety
+	 */
+	const profile = await ctx.db.get(userMetadata.userId as Id<"profile">);
+	return {
+		userMetadata,
+		profile,
+	};
 }
 
-/* ------------------------ user metadata (graceful) ------------------------ */
-export async function getAuthUserData(ctx: QueryCtx) {
+/**
+ * Retrieves both the Better Auth user document and the custom profile data, or throws an error.
+ *
+ * This is the same as `getUserAndProfile()` but throws if the user is not authenticated.
+ * Use this when authentication is required for the operation.
+ *
+ * @param ctx - Query or mutation context
+ * @returns Combined user and profile data
+ * @throws Error with message "Unauthenticated" if not authenticated
+ */
+export async function getUserAndProfileOrThrow(ctx: QueryCtx | MutationCtx) {
 	const userMetadata = await authComponent.getAuthUser(ctx);
-	return userMetadata; // Returns null if not authenticated, doesn't throw
-}
-/* -------------------------------- user data ------------------------------- */
-export async function getPublicUserDataOrThrow(
-	ctx: QueryCtx,
-	userId: Id<"users">,
-) {
-	const user = await ctx.db.get(userId as Id<"users">);
-	if (!user) {
-		throw new ConvexError({
-			code: "USER_NOT_FOUND",
-			message: "User not found",
-		});
-	}
-	return user;
-}
-/* ------------------------------ all user data ------------------------------ */
-export async function getAllUserDataOrThrow(ctx: QueryCtx) {
-	const userMetaData = await getAuthUserDataOrThrow(ctx);
-	const user = await getPublicUserDataOrThrow(
-		ctx,
-		userMetaData.userId as Id<"users">,
-	);
-	return {
-		user,
-		userMetaData,
-	};
-}
-
-/* ------------------------- all user data (graceful) ------------------------ */
-export async function getAllUserData(ctx: QueryCtx) {
-	const userMetaData = await getAuthUserData(ctx);
-	if (!userMetaData) {
-		return null; // Return null if not authenticated
-	}
-	const user = await ctx.db.get(userMetaData.userId as Id<"users">);
-	if (!user) {
-		return null; // Return null if user doesn't exist (deleted)
+	const profile = await ctx.db.get(userMetadata.userId as Id<"profile">);
+	if (!profile) {
+		throw new Error("No Profile Associated with User");
 	}
 	return {
-		user,
-		userMetaData,
+		userMetadata,
+		profile,
 	};
-}
-/* ------------------------------- asset admin ------------------------------ */
-// lol probably dont follow this implementation in produciton
-const ADMIN_EMAILS = ["myname@project.com"];
-
-export async function assertAdmin(ctx: QueryCtx) {
-	const userData = await getAllUserDataOrThrow(ctx);
-	if (!ADMIN_EMAILS.includes(userData.userMetaData.email)) {
-		throw new ConvexError({
-			code: "NOT_ADMIN",
-			message: "Not admin",
-		});
-	}
-	return userData;
 }

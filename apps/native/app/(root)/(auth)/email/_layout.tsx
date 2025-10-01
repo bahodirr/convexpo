@@ -1,4 +1,7 @@
-import { Stack } from "expo-router";
+import Ionicons from "@expo/vector-icons/build/Ionicons";
+import { Link, Stack } from "expo-router";
+import { useTheme } from "heroui-native";
+import { Pressable, Text } from "react-native";
 import { useNavigationOptions } from "@/hooks/useNavigationOptions";
 
 export default function EmailLayout() {
@@ -14,6 +17,8 @@ export default function EmailLayout() {
 			<Stack.Screen
 				name="signin"
 				options={{
+					headerLeft: () => <CloseButton />,
+					headerRight: () => <SignUpButton />,
 					title: "",
 				}}
 			/>
@@ -39,17 +44,23 @@ export default function EmailLayout() {
 	);
 }
 /* ------------------------------ close button ------------------------------ */
-// const CloseButton = () => {
-// 	const { colors } = useTheme();
-// 	return (
-// 		<View className="flex w-full flex-1">
-// 			<Link href=".." asChild>
-// 				<Button size="sm" isIconOnly className="rounded-full" variant="ghost">
-// 					<Button.LabelContent>
-// 						<AntDesign name="close" size={16} color={colors.foreground} />
-// 					</Button.LabelContent>
-// 				</Button>
-// 			</Link>
-// 		</View>
-// 	);
-// };
+const CloseButton = () => {
+	const { colors } = useTheme();
+	return (
+		<Link href=".." asChild>
+			<Pressable className="justify-center rounded-full p-2">
+				<Ionicons name="close" size={22} color={colors.foreground} />
+			</Pressable>
+		</Link>
+	);
+};
+
+const SignUpButton = () => {
+	return (
+		<Link href="/(root)/(auth)/email/signup" asChild>
+			<Pressable className="justify-center rounded-full px-3">
+				<Text className="text-foreground">Sign Up</Text>
+			</Pressable>
+		</Link>
+	);
+};

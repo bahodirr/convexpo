@@ -18,7 +18,7 @@ This project was bootstrapped with **[Better-T-Stack](https://github.com/AmanVar
 >  --examples todo
 > ```
 
----
+
 
 ## Tech Stack
 
@@ -31,34 +31,27 @@ This project was bootstrapped with **[Better-T-Stack](https://github.com/AmanVar
 * **[Biome](https://biomejs.dev/)** — fast formatting and linting
 * **[Turborepo](https://turbo.build/repo/docs)** — monorepo build system
 
----
-
 ## Project Structure
 
 ```text
 convexpo/
 ├─ apps/
-│  └─ native/          # React Native (Expo) app
+│  └─ native/          # Expo App
 └─ packages/
-   └─ backend/         # Convex backend (functions, schema, auth routes)
+   └─ backend/         # Convex backend
 ```
 
-* The **backend** exposes Better Auth HTTP routes and emails via Resend.
-* The **native** app uses Expo Router and consumes Better Auth’s client APIs.
+## Authentication Providers
 
----
+This starter includes multiple authentication methods using Convex + Better Auth:
 
-## Prerequisites
-
-* A **Resend** account & API key (for transactional emails)
-* A **verified domain** in Resend (required for authentication emails)
-* A **Convex** account (created by the CLI wizard below)
-* **Expo Go** installed on your phone (for instant runs) or a expo **Prebuild**
-
-
-> **⚠️ IMPORTANT:** Authentication emails require a verified domain in Resend. You cannot use test mode with just an API key for auth flows. The sender email must match your verified domain.
-
----
+- **Email & Password**
+  - Requires [Resend](https://resend.com/) + custom domain setup.
+- **Google OAuth**
+  - Requires Google Cloud Console project
+- **Apple OAuth**
+  - Requires Apple Developer account
+  - ⚠️ Note: Apple Auth cannot be tested in Expo Go. Use a Development Build with EAS.
 
 ## Running the Example Project
 
@@ -76,13 +69,13 @@ convexpo/
    pnpm run dev
    ```
 
-4. In the **Native#dev** terminal pane you should see your **Expo Go mobile URL scheme** — **save this**, you’ll need it for deep links:
-
-   ```
+4. In the **convexpo#dev** terminal pane you should see your **Expo Go mobile URL scheme**
+    ```
    Metro waiting on exp://xxx.xxx.x.xx:xxxx
    ```
+    > **⚠️ IMPORTANT:** if using expo go  **save for later**, you’ll need it the backend better auth trusted origins. If using prebuild we'll use the app schema from app.json
 
-5. In the **@my-better-t-app/backend** terminal pane, the Convex wizard will prompt:
+5. In the **@convexpo/backend** terminal pane, the Convex wizard will prompt:
 
    ```
    What would you like to configure (use arrow keys)
@@ -102,9 +95,48 @@ convexpo/
 
 11. `cd` into **`packages/backend`**.
 
-12. **Convex env setup**
+12. **Convex backend env setup**
+
+   ```bash
+   npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
+   ```
+
+## Choose authentication method
+- **Google OAuth**
+- **Apple OAuth**
+- **Email & Password**
+
+## Google OAuth
+
+Docs: [Better Auth Google Docs](https://www.better-auth.com/docs/authentication/google) => Follow Part 1
+
+**Status:** prototype; functions will be cleaned up soon.
+
+Uncomment Google in `packages/backend/convex/lib/auth/index.ts`:
+
+```ts
+// socialProviders: {
+//   google: {
+//     clientId: requireEnv("GOOGLE_CLIENT_ID"),
+//     clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
+//   },
+// },
+```
+
+Expo usage lives in:
+
+```
+apps/native/lib/better-auth/oauth/googlehandler.ts
+# Email & Password
+
+## Prerequisites
+
+* A **Resend** account & API key (for transactional emails)
+* A **verified domain** in Resend (required for authentication emails)
+* **Expo Go** or **Prebuild** installed on your phone (for instant runs) or Simiulator
 
 **a) Resend Setup (Domain + API Key)**
+> **⚠️ IMPORTANT:** Authentication emails require a verified domain in Resend. You cannot use test mode with just an API key for auth flows. The sender email must match your verified domain.
 
 **First, verify your domain in Resend:**
 
@@ -132,17 +164,6 @@ convexpo/
 npx convex env set RESEND_AUTH_EMAIL=auth@yourdomain.com
 ```
 
-**b) Better Auth secret**
-
-```bash
-npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
-```
-
-**c) Expo mobile URL (for deep links)** — use your **Expo Go** URL
-
-```bash
-npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx
-```
 
 13. **Expo env setup**
 
@@ -150,6 +171,14 @@ In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
 
 ```ini
 CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
+```
+
+**c) Expo mobile URL (for deep links)** — use your **Expo Go** URL
+if using prebuild use schema:// in this case for the example because of app.json under schema we have convexpo, so we'd have convexpo:// . if using expo go your
+<!-- the expo go url would be -->
+
+```bash
+npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx or your schema convexpo://
 ```
 
 
@@ -185,9 +214,12 @@ pnpm run dev
 * Use **Sign Up** to create an account.
 * Use **Forgot Password** to trigger a reset email → tap the link → you’ll land on the **Reset Password** screen inside the app.
 
----
+
+```
 
 ## Apple Login
+
+
 
 If you want Apple Sign-In with Better Auth, see: [Better Auth Apple Docs](https://www.better-auth.com/docs/authentication/apple)
 
@@ -198,8 +230,8 @@ Uncomment Apple in `packages/backend/convex/lib/auth/index.ts`:
 ```ts
 // socialProviders: {
 //   apple: {
-//     clientId: requireEnv("APPLE_CLIENT_ID"),
-//     clientSecret: requireEnv("APPLE_CLIENT_SECRET"),
+//     clientId: "",
+//     clientSecret: "",
 //     appBundleIdentifier: requireEnv("APPLE_APP_BUNDLE_IDENTIFIER"),
 //   },
 // },
@@ -209,33 +241,6 @@ Expo usage lives in:
 
 ```
 apps/native/lib/better-auth/oauth/applehandler.ts
-```
-
-If you want a step-by-step, please open an **Issue** and I’ll add a guide.
-
----
-
-## Google Login
-
-Docs: [Better Auth Google Docs](https://www.better-auth.com/docs/authentication/google)
-
-**Status:** prototype; functions will be cleaned up soon.
-
-Uncomment Google in `packages/backend/convex/lib/auth/index.ts`:
-
-```ts
-// socialProviders: {
-//   google: {
-//     clientId: requireEnv("GOOGLE_CLIENT_ID"),
-//     clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
-//   },
-// },
-```
-
-Expo usage lives in:
-
-```
-apps/native/lib/better-auth/oauth/googlehandler.ts
 ```
 
 If you want a step-by-step, please open an **Issue** and I’ll add a guide.

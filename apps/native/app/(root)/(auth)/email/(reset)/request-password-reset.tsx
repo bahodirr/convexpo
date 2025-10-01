@@ -1,17 +1,12 @@
 import Ionicons from "@expo/vector-icons/build/Ionicons";
+import Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import { Button, Spinner, TextField, useTheme } from "heroui-native";
 import { useState } from "react";
 import { Alert } from "react-native";
 import FormHeader, { FormContainer } from "@/components/form";
-import { authClient } from "@/lib/better-auth/auth-client";
+import { authClient } from "@/lib/betterAuth/client";
 
-/**
- * RequestPasswordResetRouteadd redirect to link!!!
- */
-if (!process.env.EXPO_PUBLIC_MOBILE_URL) {
-	throw new Error("EXPO_PUBLIC_MOBILE_URL is not defined");
-}
 export default function RequestPasswordResetRoute() {
 	const router = useRouter();
 	const { colors } = useTheme();
@@ -33,15 +28,7 @@ export default function RequestPasswordResetRoute() {
 		const { error, data } = await authClient.requestPasswordReset(
 			{
 				email: email,
-				/**
-				 * "/--/" is for expo go
-				 * "myschema://" for dev builds
-				 *
-				 * make sure if you make a dev build to change the route
-				 *
-				 * https://docs.expo.dev/versions/latest/sdk/linking/#linkingcreateurlpath-namedparameters
-				 */
-				redirectTo: `${process.env.EXPO_PUBLIC_MOBILE_URL}/email/reset-password`, // use metro link
+				redirectTo: Linking.createURL("email/reset-password"),
 			},
 			{
 				onRequest: () => {
@@ -76,17 +63,17 @@ export default function RequestPasswordResetRoute() {
 			{/* email */}
 			<TextField isRequired>
 				<TextField.Input
-					className="rounded-3xl"
+					className="h-16 rounded-3xl"
 					placeholder="Enter your email"
 					keyboardType="email-address"
 					autoCapitalize="none"
 					value={email}
 					onChangeText={setEmail}
 				>
-					<TextField.InputStartContent className="pointer-events-none">
+					<TextField.InputStartContent className="pointer-events-none pl-2">
 						<Ionicons
 							name="mail-outline"
-							size={16}
+							size={20}
 							color={colors.mutedForeground}
 						/>
 					</TextField.InputStartContent>
@@ -97,6 +84,7 @@ export default function RequestPasswordResetRoute() {
 				onPress={handleRequestReset}
 				disabled={isLoading}
 				className="rounded-3xl"
+				size="lg"
 			>
 				<Button.LabelContent>
 					{isLoading ? "Sending..." : "Send Reset Link"}
