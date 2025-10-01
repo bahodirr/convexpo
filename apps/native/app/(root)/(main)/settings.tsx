@@ -58,7 +58,7 @@ export default function SettingsRoute() {
 				{/* Delete User*/}
 				<View className="flex gap-4">
 					<Button
-						variant="danger"
+						variant="tertiary"
 						size="sm"
 						className="self-start rounded-full"
 						disabled={isDeletingUser}
@@ -82,7 +82,11 @@ export default function SettingsRoute() {
 						}}
 					>
 						<Button.StartContent>
-							<Ionicons name="trash-outline" size={18} color={"white"} />
+							<Ionicons
+								name="trash-outline"
+								size={18}
+								color={colors.foreground}
+							/>
 						</Button.StartContent>
 						<Button.LabelContent>
 							{isDeletingUser ? "Deleting..." : "Delete User"}

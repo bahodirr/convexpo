@@ -8,14 +8,17 @@ export const ThemeToggle: FC = () => {
 	const { theme, toggleTheme } = useTheme();
 
 	return (
-		<Pressable onPress={toggleTheme} className="px-2">
+		<Pressable
+			onPress={toggleTheme}
+			className="justify-center rounded-full p-2.5"
+		>
 			{theme === "light" ? (
 				<Animated.View key="moon" entering={ZoomIn} exiting={FadeOut}>
-					<Ionicons name="moon" color="black" size={20} />
+					<Ionicons name="moon-outline" color="black" size={18} />
 				</Animated.View>
 			) : (
 				<Animated.View key="sun" entering={ZoomIn} exiting={FadeOut}>
-					<Ionicons name="sunny" color="white" size={20} />
+					<Ionicons name="sunny-outline" color="white" size={18} />
 				</Animated.View>
 			)}
 		</Pressable>

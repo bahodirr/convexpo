@@ -3,27 +3,32 @@ import { Stack, useRouter } from "expo-router";
 import { useTheme } from "heroui-native";
 import { useState } from "react";
 import { Alert, Pressable, Text } from "react-native";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useNavigationOptions } from "@/hooks/useNavigationOptions";
 import { authClient } from "@/lib/betterAuth/client";
 
 export default function MainLayout() {
 	const { standard } = useNavigationOptions();
+
 	return (
 		<Stack>
 			<Stack.Screen
 				name="index"
 				options={{
-					title: "Home",
-					headerTitle: "",
+					title: "Informational",
+					headerTitle: "Informational",
+					headerLargeTitle: true,
 					headerBackTitle: "Home",
 					...standard,
 					headerRight: () => <SettingsButton />,
+					headerLeft: () => <ThemeToggle />,
 				}}
 			/>
 			<Stack.Screen
 				name="settings"
 				options={{
 					title: "Settings",
+					headerBackButtonDisplayMode: "generic",
 					headerLargeTitle: true,
 					...standard,
 					headerRight: () => <SignOutButton />,
@@ -50,7 +55,6 @@ const SettingsButton = () => {
 };
 
 const SignOutButton = () => {
-	const { colors } = useTheme();
 	const [isSigningOut, setIsSigningOut] = useState(false);
 
 	const handleSignOut = async () => {

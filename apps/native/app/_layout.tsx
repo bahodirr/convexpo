@@ -12,8 +12,8 @@ function ThemedLayout() {
 	return (
 		<HeroUINativeProvider
 			config={{
-				colorScheme: "dark",
-				// theme: currentTheme,
+				colorScheme: "system",
+				theme: currentTheme,
 				textProps: {
 					allowFontScaling: false,
 				},
@@ -26,14 +26,14 @@ function ThemedLayout() {
 /* ------------------------------- root layout ------------------------------ */
 export default function Layout() {
 	return (
-		<ConvexProvider>
-			<SplashScreenProvider>
-				<GestureHandlerRootView className="flex-1">
+		<GestureHandlerRootView className="flex-1">
+			<ConvexProvider>
+				<SplashScreenProvider>
 					<AppThemeProvider>
 						<ThemedLayout />
 					</AppThemeProvider>
-				</GestureHandlerRootView>
-			</SplashScreenProvider>
-		</ConvexProvider>
+				</SplashScreenProvider>
+			</ConvexProvider>
+		</GestureHandlerRootView>
 	);
 }

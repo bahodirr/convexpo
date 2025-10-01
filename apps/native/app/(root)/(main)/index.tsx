@@ -5,23 +5,8 @@ import {
 	useQuery,
 } from "@convexpo/backend";
 import Ionicons from "@expo/vector-icons/build/Ionicons";
-import { Button, useTheme } from "heroui-native";
+import { Button, Chip, useTheme } from "heroui-native";
 import { FlatList, Text, View } from "react-native";
-
-const POST_TITLES = [
-	"Why you waste time on phone? So disappointing!",
-	"You call this success? Neighbor's kid is already a doctor!",
-	"You so lazy! Your cousin finished their degree already!",
-	"When are you going to get a real job? This is embarrassing!",
-	"You still not married?! I didn't raise you for this!",
-	"I raise you for this? What a waste of my time!",
-	"You spend money on THAT? I should've saved my energy!",
-	"Why you dress like this? No wonder you're still single!",
-	"Other kids already have houses! What are you doing?!",
-	"You call this hard work? You should be doing better!",
-	"Why you never listen to me? Always so stubborn!",
-	"Stop playing games and get a job! So useless!",
-];
 
 export default function HomeRoute() {
 	const postData = useQuery(api.post.getPostsAndUsers);
@@ -37,7 +22,7 @@ export default function HomeRoute() {
 		<View className="flex-1">
 			<FlatList
 				contentInsetAdjustmentBehavior="automatic"
-				contentContainerClassName="gap-4 px-3 pb-24"
+				contentContainerClassName="gap-4 pt-2 px-3 pb-24"
 				keyExtractor={(item) => item.post._id}
 				data={postData}
 				renderItem={({ item }) => <PostItem item={item} />}
@@ -46,28 +31,55 @@ export default function HomeRoute() {
 				onPress={handleCreatePost}
 				className="absolute bottom-8 self-center overflow-hidden rounded-full"
 			>
-				<Button.StartContent>
-					<Ionicons name="add-outline" size={18} color={colors.background} />
-				</Button.StartContent>
 				<Button.LabelContent>Create Post</Button.LabelContent>
+				<Button.EndContent className="">
+					<Ionicons name="add-outline" size={18} color={colors.background} />
+				</Button.EndContent>
 			</Button>
 		</View>
 	);
 }
+const POST_TITLES = [
+	"Store passwords in the user’s browser and validate client-side. Just send a boolean to your server. Reduces database load by 90% and keeps sensitive data off your servers.",
+	"Passwords in plain text are actually more secure because hackers expect encryption",
+	"Use single character column names in your database. ‘u’ for users, ‘p’ for password, ‘e’ for email. We reduced our database size by 40% just from shorter column names.",
+	"Always keep your database and application on different continents. Database in EU-North, app servers in US-West. Shared regional infrastructure creates a single point of failure.",
+];
 
 const PostItem = ({
 	item,
 }: {
 	item: FunctionReturnType<typeof api.post.getPostsAndUsers>[number];
 }) => {
-	const renderStatusColor = () => {
+	const renderStatusChip = () => {
 		switch (item.post.status) {
 			case "start":
-				return <View className="h-4 w-4 rounded-full bg-blue-500" />;
+				return (
+					<Chip layout={undefined} variant="primary" color="default">
+						<Chip.StartContent className="pr-1">
+							<View className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+						</Chip.StartContent>
+						<Chip.LabelContent>Started</Chip.LabelContent>
+					</Chip>
+				);
 			case "middle":
-				return <View className="h-4 w-4 rounded-full bg-yellow-500" />;
+				return (
+					<Chip layout={undefined} variant="primary" color="default">
+						<Chip.StartContent className="pr-1">
+							<View className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+						</Chip.StartContent>
+						<Chip.LabelContent>In Progress</Chip.LabelContent>
+					</Chip>
+				);
 			case "end":
-				return <View className="h-4 w-4 rounded-full bg-red-500" />;
+				return (
+					<Chip layout={undefined} variant="primary" color="default">
+						<Chip.StartContent>
+							<View className="mr-1.5 h-1.5 w-1.5 rounded-full bg-green-500" />
+						</Chip.StartContent>
+						<Chip.LabelContent>Completed</Chip.LabelContent>
+					</Chip>
+				);
 		}
 	};
 	return (
@@ -75,10 +87,10 @@ const PostItem = ({
 			<Text className="max-w-80 font-bold text-foreground text-lg">
 				{item.post.title}
 			</Text>
-			<Text className="pb-4 text-muted-foreground">
+			<Text className="pb-1 text-muted-foreground">
 				By <Text className="italic">{item.creator?.name}</Text>
 			</Text>
-			{renderStatusColor()}
+			{renderStatusChip()}
 		</View>
 	);
 };
