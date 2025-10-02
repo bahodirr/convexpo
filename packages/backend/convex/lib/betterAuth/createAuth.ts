@@ -19,12 +19,13 @@ export const createAuth = (
 		database: authComponent.adapter(ctx),
 		trustedOrigins: [
 			"https://appleid.apple.com",
-			requireEnv("EXPO_WEB_URL"),
 			requireEnv("EXPO_MOBILE_URL"),
+			// requireEnv("EXPO_WEB_URL"),
 		],
 		emailAndPassword: {
 			enabled: true,
 		},
+		// baseURL: requireEnv("CONVEX_SITE_URL"),
 		user: {
 			deleteUser: {
 				enabled: true,
