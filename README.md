@@ -1,5 +1,4 @@
 # Convexpo
-TODO: https://t3.chat/chat/e95e142b-b37a-443f-8241-3eb37ad085ab
 
 ## Convex + Better Auth + Expo (React Native) + Hero UI Native
 
@@ -70,14 +69,15 @@ This starter includes multiple authentication methods using Convex + Better Auth
    ```bash
    pnpm run dev
    ```
+   In the **convexpo#dev** terminal pane you should see your **Expo Go mobile URL scheme**
 
-4. In the **convexpo#dev** terminal pane you should see your **Expo Go mobile URL scheme**
     ```
    Metro waiting on exp://xxx.xxx.x.xx:xxxx
    ```
-    > **⚠️ IMPORTANT:** if using expo go  **save for later**, you’ll need it for the backend environment variable. If using prebuild we'll use the app schema from app.json
+    > **⚠️ IMPORTANT:** if using expo go  **save for later**, you’ll need it for the backend environment variable. If using a dev build, we'll use the app `schema` from app.json for this.
 
-5. In the **@convexpo/backend** terminal pane, the Convex wizard will prompt:
+4. Configure Convex Backend
+In the **@convexpo/backend** terminal pane, the Convex wizard will prompt:
 
    ```
    What would you like to configure (use arrow keys)
@@ -85,56 +85,61 @@ This starter includes multiple authentication methods using Convex + Better Auth
      choose an existing project
    ```
 
-1. Choose **create a new project**.
+    a. Choose **create a new project**.
 
-2. **Name** it (anything).
+    b. **Name** it (anything).
 
-3. Select **cloud development**.
+    c. Select **cloud development**.
 
-A temporary error may appear while routes initialize. Check `packages/backend/.env.local` — you should now see **`CONVEX_DEPLOYMENT`** and **`CONVEX_URL`** set.
+     A temporary error will appear while routes initialize. Check `packages/backend/.env.local` — you should now see `CONVEX_DEPLOYMENT` and `CONVEX_URL` populated.
 
-**Stop the dev servers** (Ctrl + C) now that Convex credentials exist.
-
-11. `cd` into **`packages/backend`**.
-
-12. **Convex backend env setup**
-
-   ```bash
-   npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
-   ```
-   13. **Expo env setup**
-
-In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
-
-```ini
-CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
-```
-
-**c) Expo mobile URL (for deep links)** — use your **Expo Go** URL
-if using prebuild use schema:// in this case for the example because of app.json under schema we have convexpo, so we'd have convexpo:// . if using expo go your
-<!-- the expo go url would be -->
-
-```bash
-npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx or your schema convexpo://
-```
+    **Stop the dev servers** (Ctrl + C) now that Convex credentials exist.
 
 
-Create `apps/native/.env.development`:
+5. **Set Backend Environment Variables**
 
-> **Env setup: `.cloud` and `.site`**
-> - Where to find it in the Convex dashboard: Project → Settings → URL & deployment keys → Show development credentials → Deployment URL
-> - The Deployment URL will look like `https://xxxx-xxx-xxx.convex.cloud`
-> - For HTTP Actions, use the same prefix with a `.site` TLD: `https://xxxx-xxx-xxx.convex.site`
+    `cd` into **`packages/backend`**.
 
-```ini
-EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud   # deployment URL
-EXPO_PUBLIC_CONVEX_SITE_URL=https://xxxx-xxx-xxx.convex.site      # HTTP Actions URL
 
-# NOTE: The "/--" suffix is only needed for **Expo Go**.
-# For dev/prod builds with a custom scheme (e.g., myapp://), do NOT include /--
-# Remember this may change based on location
-EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
-```
+    Generate and set the authentication secret:
+    ```bash
+    npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
+      ```
+    set your mobile app url for deep linking **(from step 3)**
+    ```bash
+    # For Expo Go development
+    npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx
+
+    # For custom app scheme (dev builds) from apps/native/app.json
+    npx convex env set EXPO_MOBILE_URL=convexpo://
+    ```
+
+
+
+6. **Set Frontend Environment Varibles**
+
+    Create `apps/native/.env.development`:
+
+    In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
+
+    ```ini
+    CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
+    ```
+
+    now add to .env.development the following
+
+
+    ```ini
+    # Copy from CONVEX_URL in packages/backend/.env.local
+    EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
+
+    # Same as above but with .site instead of .cloud
+    EXPO_PUBLIC_CONVEX_SITE_URL=https://xxxx-xxx-xxx.convex.site
+    ```
+    >  **More information about `.cloud` and `.site`**
+    > - Find in Convex dashboard: Project → Settings → URL & deployment keys → Show development credentials
+    > - The Deployment URL format: `https://xxxx-xxx-xxx.convex.cloud`
+    > - For HTTP Actions, use the same prefix For HTTP Actions, replace .cloud with .site: `https://xxxx-xxx-xxx.convex.site`
 
 
 ## Choose authentication method
@@ -142,15 +147,56 @@ EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
 - **Apple OAuth**
 - **Email & Password**
 
+> **⚠️ IMPORTANT:** The Convex server may take a short time to warm up on first run after any method above (index creation).
+
 ## Google OAuth
 
 Docs: [Better Auth Google Docs](https://www.better-auth.com/docs/authentication/google) => Follow Part 1
 
+### Prerequisites
+
+* [Google Cloud Console](https://console.cloud.google.com/enable-mfa?redirectTo=%2Fwelcome%3Fproject%3Dradiant-galaxy-466314-n6&project=radiant-galaxy-466314-n6) Account + project
 
 
 
 
-Uncomment Google in `packages/backend/convex/lib/auth/index.ts`:
+### Google Cloud Console Setup
+
+Create OAuth 2.0 Credential in Google
+
+  1. search google auth platform
+
+  2. press `Clients`
+
+  3. Create Client
+
+  4. Application Type `web`
+
+  5. name it
+
+  6. **Add URI** to Authorized redirect Uri's
+
+  ```
+  # For development
+  https://xxxx-xxx-xxx.convex.site/api/auth/callback/google
+
+  # For production
+  https://your-prod-deployment.convex.site/api/auth/callback/google
+  ```
+  > Replace xxxx-xxx-xxx with your Convex deployment URL (use .site not .cloud)
+
+  7. **Save Credentials**- you'll get a **Client ID** and **Client Secret**
+
+### Backend Setup
+
+cd `packages/backend` & for the newly generated secrets run
+```
+npx convex env set GOOGLE_CLIENT_SECRET <key>
+npx convex env set GOOGLE_CLIENT_ID <key>
+```
+
+Uncomment Google in `packages/backend/convex/lib/betterAuth/createAuth.ts`
+
 ```ts
 // socialProviders: {
 //   google: {
@@ -160,17 +206,15 @@ Uncomment Google in `packages/backend/convex/lib/auth/index.ts`:
 // },
 ```
 
-Expo usage lives in:
+Expo usage lives in `apps/native/app/(root)/(auth)/landing.tsx`
 
-```
-apps/native/lib/better-auth/oauth/googlehandler.ts
-# Email & Password
+now done => `pnpm dev` from root => will take a moment for index creation if first run
+## Email & Password
 
-## Prerequisites
+### Prerequisites
 
 * A **Resend** account & API key (for transactional emails)
 * A **verified domain** in Resend (required for authentication emails)
-* **Expo Go** or **Prebuild** installed on your phone (for instant runs) or Simiulator
 
 **a) Resend Setup (Domain + API Key)**
 > **⚠️ IMPORTANT:** Authentication emails require a verified domain in Resend. You cannot use test mode with just an API key for auth flows. The sender email must match your verified domain.
@@ -191,42 +235,40 @@ apps/native/lib/better-auth/oauth/googlehandler.ts
   * Domain: select your verified domain
 * Set it in Convex:
 
+    cd into `packages/backend`
+
   ```bash
   npx convex env set RESEND_API_KEY=...
   ```
 
-**Finally, update the sender email:**
+* **Finally, update the sender email:**
 
-```bash
-npx convex env set RESEND_AUTH_EMAIL=auth@yourdomain.com
-```
-
----
-
-## Running (after setup): Email + Password
-
-Go back to root folder and run the following command:
-```bash
-pnpm run dev
-```
-
-> **⚠️ IMPORTANT:** The Convex server may take a short time to warm up on first run (index creation).
-
-* Scan the QR in **Expo Go** to open the app.
-* Use **Sign Up** to create an account.
-* Use **Forgot Password** to trigger a reset email → tap the link → you’ll land on the **Reset Password** screen inside the app.
-
-
-```
+  ```bash
+  npx convex env set RESEND_AUTH_EMAIL=auth@yourdomain.com
+  ```
+now done => `pnpm dev` from root => will take a moment for index creation if first run
 
 ## Apple Login
 
 If you want Apple Sign-In with Better Auth, see: [Better Auth Apple Docs](https://www.better-auth.com/docs/authentication/apple)
 
+### Prerequisites
+
+* A **Dev Build** use expo EAS
+* A **Apple Developer Account**
+
 create a EAS Build it should ask you to provision ... this and that and to setup to your apple account. Then Once this is up. you go to the following
 
+on successful EAS Build you shoudl now see in Apple Developer > Account > Identifiers > <project name> with com.colonystudio.convexpo > make sure to change to whatever your app name might be > press on it > Sign in With apple > Enable.
 
-Uncomment Apple in `packages/backend/convex/lib/auth/index.ts`:
+Uncomment Apple in `packages/backend/convex/lib/betterAuth/createAuth.ts`:
+
+set the name of com from identifiers to the appBundleIdentifier
+
+cd `packages/backend` & for the newly generated secrets run
+```
+npx convex env set APPLE_APP_BUNDLE_IDENTIFIER <key>
+```
 
 ```ts
 // socialProviders: {
@@ -239,11 +281,10 @@ Uncomment Apple in `packages/backend/convex/lib/auth/index.ts`:
 ```
 
 Expo usage lives in:
-
 ```
 apps/native/lib/betterAuth/oauth/useAppleAuth.ts
 ```
-
+now done => `pnpm dev` from root => will take a moment for index creation if first run
 ---
 
 ## License

@@ -36,10 +36,10 @@ export const createAuth = (
 			// 	clientSecret: requireEnv("APPLE_CLIENT_SECRET"),
 			// 	appBundleIdentifier: requireEnv("APPLE_APP_BUNDLE_IDENTIFIER"),
 			// },
-			google: {
-				clientId: requireEnv("GOOGLE_CLIENT_ID"),
-				clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
-			},
+			// google: {
+			// 	clientId: requireEnv("GOOGLE_CLIENT_ID"),
+			// 	clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
+			// },
 		},
 		logger: {
 			disabled: optionsOnly,
