@@ -250,16 +250,16 @@ now done => `pnpm dev` from root => will take a moment for index creation if fir
   Uncomment Google in `packages/backend/convex/lib/betterAuth/createAuth.ts`
 
 ```ts
-		// emailAndPassword: {
-		// 	enabled: true,
-		// 	requireEmailVerification: false,
-		// 	sendResetPassword: async ({ user, url }) => {
-		// 		await sendResetPassword(requireActionCtx(ctx), {
-		// 			to: user.email,
-		// 			url,
-		// 		});
-		// 	},
-		// },
+	// emailAndPassword: {
+	// 	enabled: true,
+	// 	requireEmailVerification: false,
+	// 	sendResetPassword: async ({ user, url }) => {
+	// 		await sendResetPassword(requireActionCtx(ctx), {
+	// 			to: user.email,
+	// 			url,
+	// 		});
+	// 	},
+	// },
 ```
 now done => `pnpm dev` from root => will take a moment for index creation if first run
 
