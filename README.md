@@ -246,6 +246,21 @@ now done => `pnpm dev` from root => will take a moment for index creation if fir
   ```bash
   npx convex env set RESEND_AUTH_EMAIL=auth@yourdomain.com
   ```
+
+  Uncomment Google in `packages/backend/convex/lib/betterAuth/createAuth.ts`
+
+```ts
+		// emailAndPassword: {
+		// 	enabled: true,
+		// 	requireEmailVerification: false,
+		// 	sendResetPassword: async ({ user, url }) => {
+		// 		await sendResetPassword(requireActionCtx(ctx), {
+		// 			to: user.email,
+		// 			url,
+		// 		});
+		// 	},
+		// },
+```
 now done => `pnpm dev` from root => will take a moment for index creation if first run
 
 ## Apple Login
@@ -259,7 +274,7 @@ If you want Apple Sign-In with Better Auth, see: [Better Auth Apple Docs](https:
 
 create a EAS Build it should ask you to provision ... this and that and to setup to your apple account. Then Once this is up. you go to the following
 
-on successful EAS Build you shoudl now see in Apple Developer > Account > Identifiers > <project name> with com.colonystudio.convexpo > make sure to change to whatever your app name might be > press on it > Sign in With apple > Enable.
+on successful EAS Build you should now see in Apple Developer > Account > Identifiers > <project name> with com.colonystudio.convexpo > make sure to change to whatever your app name might be > press on it > Sign in With apple > Enable.
 
 Uncomment Apple in `packages/backend/convex/lib/betterAuth/createAuth.ts`:
 

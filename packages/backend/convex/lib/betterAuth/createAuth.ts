@@ -22,9 +22,16 @@ export const createAuth = (
 			requireEnv("EXPO_MOBILE_URL"),
 			// requireEnv("EXPO_WEB_URL"),
 		],
-		emailAndPassword: {
-			enabled: true,
-		},
+		// emailAndPassword: {
+		// 	enabled: true,
+		// 	requireEmailVerification: false,
+		// 	sendResetPassword: async ({ user, url }) => {
+		// 		await sendResetPassword(requireActionCtx(ctx), {
+		// 			to: user.email,
+		// 			url,
+		// 		});
+		// 	},
+		// },
 		// baseURL: requireEnv("CONVEX_SITE_URL"),
 		user: {
 			deleteUser: {
