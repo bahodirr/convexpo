@@ -1,4 +1,5 @@
 # Convexpo
+TODO: https://t3.chat/chat/e95e142b-b37a-443f-8241-3eb37ad085ab
 
 ## Convex + Better Auth + Expo (React Native) + Hero UI Native
 
@@ -43,15 +44,16 @@ convexpo/
 
 ## Authentication Providers
 
+
 This starter includes multiple authentication methods using Convex + Better Auth:
 
-- **Email & Password**
-  - Requires [Resend](https://resend.com/) + custom domain setup.
-- **Google OAuth**
-  - Requires Google Cloud Console project
-- **Apple OAuth**
-  - Requires Apple Developer account
-  - ⚠️ Note: Apple Auth cannot be tested in Expo Go. Use a Development Build with EAS.
+
+- **Convex Account** — required for all forms of authentication
+- **Email & Password** — requires Resend + custom domain setup
+- **Google OAuth** — requires Google Cloud Console project
+
+- **Apple OAuth** — requires Apple Developer account
+	- ⚠️ Note: Apple Auth cannot be tested in Expo Go. Use a Development Build with EAS.
 
 ## Running the Example Project
 
@@ -73,7 +75,7 @@ This starter includes multiple authentication methods using Convex + Better Auth
     ```
    Metro waiting on exp://xxx.xxx.x.xx:xxxx
    ```
-    > **⚠️ IMPORTANT:** if using expo go  **save for later**, you’ll need it the backend better auth trusted origins. If using prebuild we'll use the app schema from app.json
+    > **⚠️ IMPORTANT:** if using expo go  **save for later**, you’ll need it for the backend environment variable. If using prebuild we'll use the app schema from app.json
 
 5. In the **@convexpo/backend** terminal pane, the Convex wizard will prompt:
 
@@ -83,15 +85,15 @@ This starter includes multiple authentication methods using Convex + Better Auth
      choose an existing project
    ```
 
-6. Choose **create a new project**.
+1. Choose **create a new project**.
 
-7. **Name** it (anything).
+2. **Name** it (anything).
 
-8. Select **cloud development**.
+3. Select **cloud development**.
 
-9. A temporary error may appear while routes initialize. Check `packages/backend/.env.local` — you should now see **`CONVEX_DEPLOYMENT`** and **`CONVEX_URL`** set.
+A temporary error may appear while routes initialize. Check `packages/backend/.env.local` — you should now see **`CONVEX_DEPLOYMENT`** and **`CONVEX_URL`** set.
 
-10. **Stop the dev servers** (Ctrl + C) now that Convex credentials exist.
+**Stop the dev servers** (Ctrl + C) now that Convex credentials exist.
 
 11. `cd` into **`packages/backend`**.
 
@@ -100,6 +102,40 @@ This starter includes multiple authentication methods using Convex + Better Auth
    ```bash
    npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
    ```
+   13. **Expo env setup**
+
+In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
+
+```ini
+CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
+```
+
+**c) Expo mobile URL (for deep links)** — use your **Expo Go** URL
+if using prebuild use schema:// in this case for the example because of app.json under schema we have convexpo, so we'd have convexpo:// . if using expo go your
+<!-- the expo go url would be -->
+
+```bash
+npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx or your schema convexpo://
+```
+
+
+Create `apps/native/.env.development`:
+
+> **Env setup: `.cloud` and `.site`**
+> - Where to find it in the Convex dashboard: Project → Settings → URL & deployment keys → Show development credentials → Deployment URL
+> - The Deployment URL will look like `https://xxxx-xxx-xxx.convex.cloud`
+> - For HTTP Actions, use the same prefix with a `.site` TLD: `https://xxxx-xxx-xxx.convex.site`
+
+```ini
+EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud   # deployment URL
+EXPO_PUBLIC_CONVEX_SITE_URL=https://xxxx-xxx-xxx.convex.site      # HTTP Actions URL
+
+# NOTE: The "/--" suffix is only needed for **Expo Go**.
+# For dev/prod builds with a custom scheme (e.g., myapp://), do NOT include /--
+# Remember this may change based on location
+EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
+```
+
 
 ## Choose authentication method
 - **Google OAuth**
@@ -110,10 +146,11 @@ This starter includes multiple authentication methods using Convex + Better Auth
 
 Docs: [Better Auth Google Docs](https://www.better-auth.com/docs/authentication/google) => Follow Part 1
 
-**Status:** prototype; functions will be cleaned up soon.
+
+
+
 
 Uncomment Google in `packages/backend/convex/lib/auth/index.ts`:
-
 ```ts
 // socialProviders: {
 //   google: {
@@ -164,41 +201,6 @@ apps/native/lib/better-auth/oauth/googlehandler.ts
 npx convex env set RESEND_AUTH_EMAIL=auth@yourdomain.com
 ```
 
-
-13. **Expo env setup**
-
-In `packages/backend/.env.local`, locate **`CONVEX_URL`**. It should look like:
-
-```ini
-CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud
-```
-
-**c) Expo mobile URL (for deep links)** — use your **Expo Go** URL
-if using prebuild use schema:// in this case for the example because of app.json under schema we have convexpo, so we'd have convexpo:// . if using expo go your
-<!-- the expo go url would be -->
-
-```bash
-npx convex env set EXPO_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx or your schema convexpo://
-```
-
-
-Create `apps/native/.env.development`:
-
-> **Env setup: `.cloud` and `.site`**
-> - Where to find it in the Convex dashboard: Project → Settings → URL & deployment keys → Show development credentials → Deployment URL
-> - The Deployment URL will look like `https://xxxx-xxx-xxx.convex.cloud`
-> - For HTTP Actions, use the same prefix with a `.site` TLD: `https://xxxx-xxx-xxx.convex.site`
-
-```ini
-EXPO_PUBLIC_CONVEX_URL=https://xxxx-xxx-xxx.convex.cloud   # deployment URL
-EXPO_PUBLIC_CONVEX_SITE_URL=https://xxxx-xxx-xxx.convex.site      # HTTP Actions URL
-
-# NOTE: The "/--" suffix is only needed for **Expo Go**.
-# For dev/prod builds with a custom scheme (e.g., myapp://), do NOT include /--
-# Remember this may change based on location
-EXPO_PUBLIC_MOBILE_URL=exp://xxx.xxx.x.xx:xxxx/--
-```
-
 ---
 
 ## Running (after setup): Email + Password
@@ -219,11 +221,10 @@ pnpm run dev
 
 ## Apple Login
 
-
-
 If you want Apple Sign-In with Better Auth, see: [Better Auth Apple Docs](https://www.better-auth.com/docs/authentication/apple)
 
-**Status:** prototype; functions will be cleaned up soon.
+create a EAS Build it should ask you to provision ... this and that and to setup to your apple account. Then Once this is up. you go to the following
+
 
 Uncomment Apple in `packages/backend/convex/lib/auth/index.ts`:
 
@@ -240,10 +241,8 @@ Uncomment Apple in `packages/backend/convex/lib/auth/index.ts`:
 Expo usage lives in:
 
 ```
-apps/native/lib/better-auth/oauth/applehandler.ts
+apps/native/lib/betterAuth/oauth/useAppleAuth.ts
 ```
-
-If you want a step-by-step, please open an **Issue** and I’ll add a guide.
 
 ---
 

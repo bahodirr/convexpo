@@ -9,8 +9,8 @@ import { Button, Chip, useTheme } from "heroui-native";
 import { FlatList, Text, View } from "react-native";
 
 export default function HomeRoute() {
-	const postData = useQuery(api.post.getPostsAndUsers);
 	const { colors } = useTheme();
+	const postData = useQuery(api.post.getPostsAndUsers);
 	const createPost = useMutation(api.post.createPost);
 	const handleCreatePost = () => {
 		const randomTitle =
