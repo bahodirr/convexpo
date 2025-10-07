@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { UI_COLORS } from "@/lib/constants";
 
@@ -7,7 +7,7 @@ export default function EmailLayout() {
 	return (
 		<Stack
 			screenOptions={{
-				gestureEnabled: false,
+				gestureEnabled: true,
 				headerTransparent: true,
 				presentation: "modal",
 			}}
@@ -23,6 +23,7 @@ export default function EmailLayout() {
 			<Stack.Screen
 				name="signup"
 				options={{
+					headerLeft: () => <CloseButton />,
 					title: "",
 				}}
 			/>
@@ -44,13 +45,16 @@ export default function EmailLayout() {
 /* ------------------------------ close button ------------------------------ */
 const CloseButton = () => {
     const colors = UI_COLORS;
-	return (
-		<Link href="/(auth)" asChild>
-			<Pressable style={styles.iconButton}>
-                <Ionicons name="close" size={22} color={colors.foreground} />
-			</Pressable>
-		</Link>
-	);
+    return (
+        <Pressable
+            style={styles.iconButton}
+            onPress={() => router.back()}
+            accessibilityRole="button"
+            accessibilityLabel="Close"
+        >
+            <Ionicons name="close" size={22} color={colors.foreground} />
+        </Pressable>
+    );
 };
 
 const SignUpButton = () => {

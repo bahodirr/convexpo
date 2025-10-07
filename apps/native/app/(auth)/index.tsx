@@ -23,7 +23,7 @@ export default function Landing() {
           Convexpo
         </Text>
         <Text style={[styles.subtitle, { color: UI_COLORS.mutedForeground }]}>
-          Convex + Better Auth + Expo + Heroui = 🚀
+          Convex + Better Auth + Expo 🚀
         </Text>
       </View>
       <View>
