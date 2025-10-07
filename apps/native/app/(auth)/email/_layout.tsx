@@ -1,17 +1,15 @@
-import Ionicons from "@expo/vector-icons/build/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
-import { useTheme } from "heroui-native";
-import { Pressable, Text } from "react-native";
-import { useNavigationOptions } from "@/hooks/useNavigationOptions";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { UI_COLORS } from "@/lib/constants";
 
 export default function EmailLayout() {
-	const { modal } = useNavigationOptions();
 	return (
 		<Stack
 			screenOptions={{
 				gestureEnabled: false,
 				headerTransparent: true,
-				...modal,
+				presentation: "modal",
 			}}
 		>
 			<Stack.Screen
@@ -45,11 +43,11 @@ export default function EmailLayout() {
 }
 /* ------------------------------ close button ------------------------------ */
 const CloseButton = () => {
-	const { colors } = useTheme();
+    const colors = UI_COLORS;
 	return (
-		<Link href=".." asChild>
-			<Pressable className="justify-center rounded-full p-2">
-				<Ionicons name="close" size={22} color={colors.foreground} />
+		<Link href="/(auth)" asChild>
+			<Pressable style={styles.iconButton}>
+                <Ionicons name="close" size={22} color={colors.foreground} />
 			</Pressable>
 		</Link>
 	);
@@ -57,10 +55,28 @@ const CloseButton = () => {
 
 const SignUpButton = () => {
 	return (
-		<Link href="/(root)/(auth)/email/signup" asChild>
-			<Pressable className="justify-center rounded-full px-3">
-				<Text className="text-foreground">Sign Up</Text>
+		<Link href="/(auth)/email/signup" asChild>
+			<Pressable style={styles.textButton}>
+                <Text style={[styles.textButtonLabel, { color: UI_COLORS.foreground }]}>Sign Up</Text>
 			</Pressable>
 		</Link>
 	);
 };
+
+const styles = StyleSheet.create({
+	iconButton: {
+		justifyContent: "center",
+		borderRadius: 9999,
+		padding: 8,
+	},
+	textButton: {
+		justifyContent: "center",
+		borderRadius: 9999,
+		paddingHorizontal: 12,
+		paddingVertical: 6,
+	},
+	textButtonLabel: {
+		fontSize: 16,
+		fontWeight: "600",
+	},
+});

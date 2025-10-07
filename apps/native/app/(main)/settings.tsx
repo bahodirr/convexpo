@@ -1,12 +1,12 @@
 import { api, useQuery } from "@convexpo/backend";
 import { Ionicons } from "@expo/vector-icons";
-import { Button, Spinner, useTheme } from "heroui-native";
 import { useState } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { authClient } from "@/lib/betterAuth/client";
+import { UI_COLORS } from "@/lib/constants";
+const themeColors = UI_COLORS;
 
 export default function SettingsRoute() {
-	const { colors } = useTheme();
 	const [isDeletingUser, setIsDeletingUser] = useState(false);
 	const userData = useQuery(api.user.fetchUserAndProfile);
 
@@ -37,30 +37,30 @@ export default function SettingsRoute() {
 	};
 
 	return (
-		<View className="flex-1">
+		<View style={styles.container}>
 			<ScrollView
 				contentInsetAdjustmentBehavior="always"
-				contentContainerClassName="px-6 py-2 gap-4 min-h-full "
+				contentContainerStyle={styles.scrollContent}
 			>
-				{/* User Info Section */}
-				<View className="flex">
-					<Text className="text-lg text-muted-foreground">
+				<View style={styles.userSection}>
+					<Text style={[styles.primaryText, { color: themeColors.mutedForeground }]}>
 						{userData.profile.name}
 					</Text>
-					<Text className="text-lg text-muted-foreground">
+					<Text style={[styles.primaryText, { color: themeColors.mutedForeground }]}>
 						{userData.userMetadata.email}
 					</Text>
-					<Text className="text-lg text-muted-foreground">
+					<Text style={[styles.primaryText, { color: themeColors.mutedForeground }]}>
 						created {new Date(userData.userMetadata.createdAt).toDateString()}
 					</Text>
 				</View>
-
-				{/* Delete User*/}
-				<View className="flex gap-4">
-					<Button
-						variant="tertiary"
-						size="sm"
-						className="self-start rounded-full"
+				<View style={styles.actions}>
+					<Pressable
+						style={({ pressed }) => [
+							styles.actionButton,
+							{ backgroundColor: themeColors.background, borderColor: themeColors.border },
+							isDeletingUser && styles.disabledButton,
+							pressed && styles.pressedButton,
+						]}
 						disabled={isDeletingUser}
 						onPress={async () => {
 							Alert.alert(
@@ -81,22 +81,54 @@ export default function SettingsRoute() {
 							);
 						}}
 					>
-						<Button.StartContent>
-							<Ionicons
-								name="trash-outline"
-								size={18}
-								color={colors.foreground}
-							/>
-						</Button.StartContent>
-						<Button.LabelContent>
+						<Ionicons name="trash-outline" size={18} color={themeColors.foreground} />
+						<Text style={[styles.actionLabel, { color: themeColors.foreground }]}>
 							{isDeletingUser ? "Deleting..." : "Delete User"}
-						</Button.LabelContent>
-						<Button.EndContent>
-							{isDeletingUser ? <Spinner color={colors.foreground} /> : null}
-						</Button.EndContent>
-					</Button>
+						</Text>
+					</Pressable>
 				</View>
 			</ScrollView>
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	scrollContent: {
+		paddingHorizontal: 24,
+		paddingVertical: 8,
+		gap: 16,
+		minHeight: "100%",
+	},
+	userSection: {
+		gap: 8,
+	},
+	primaryText: {
+		fontSize: 18,
+	},
+	actions: {
+		gap: 16,
+		alignItems: "flex-start",
+	},
+	actionButton: {
+		borderWidth: 1,
+		borderRadius: 9999,
+		paddingVertical: 8,
+		paddingHorizontal: 12,
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 8,
+	},
+	actionLabel: {
+		fontSize: 14,
+		fontWeight: "600",
+	},
+	disabledButton: {
+		opacity: 0.6,
+	},
+	pressedButton: {
+		opacity: 0.85,
+	},
+});

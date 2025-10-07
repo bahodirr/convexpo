@@ -1,39 +1,46 @@
-import { Slot } from "expo-router";
+import { useConvexAuth } from "convex/react";
+import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "../global.css";
-import { HeroUINativeProvider } from "heroui-native";
-import { AppThemeProvider, useAppTheme } from "@/contexts/app-theme-context";
 import ConvexProvider from "@/providers/ConvexProvider";
 import SplashScreenProvider from "@/providers/SplashScreenProvider";
 
-/* ------------------------------ themed route ------------------------------ */
-function ThemedLayout() {
-	const { currentTheme } = useAppTheme();
-	return (
-		<HeroUINativeProvider
-			config={{
-				colorScheme: "system",
-				theme: currentTheme,
-				textProps: {
-					allowFontScaling: false,
-				},
-			}}
-		>
-			<Slot />
-		</HeroUINativeProvider>
-	);
-}
 /* ------------------------------- root layout ------------------------------ */
 export default function Layout() {
-	return (
-		<GestureHandlerRootView className="flex-1">
-			<ConvexProvider>
-				<SplashScreenProvider>
-					<AppThemeProvider>
-						<ThemedLayout />
-					</AppThemeProvider>
-				</SplashScreenProvider>
-			</ConvexProvider>
-		</GestureHandlerRootView>
-	);
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ConvexProvider>
+        <SplashScreenProvider>
+          <RouterStack />
+        </SplashScreenProvider>
+      </ConvexProvider>
+    </GestureHandlerRootView>
+  );
+}
+
+function RouterStack() {
+  const { isAuthenticated } = useConvexAuth();
+  return (
+    <Stack>
+      {/* AUTH STACK */}
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen
+          name="(auth)"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Protected>
+      {/* AUTHENTICATED NESTED STACK */}
+      <Stack.Protected guard={isAuthenticated}>
+        {/* MAIN STACK*/}
+        <Stack.Screen
+          name="(main)"
+          options={{
+            title: "",
+            headerShown: false,
+          }}
+        />
+      </Stack.Protected>
+    </Stack>
+  );
 }

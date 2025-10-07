@@ -1,16 +1,12 @@
 import { Stack } from "expo-router";
-import { useNavigationOptions } from "@/hooks/useNavigationOptions";
 
 export default function AuthLayout() {
-  const { root, standard } = useNavigationOptions();
   return (
     <Stack>
       <Stack.Screen
-        name="landing"
+        name="index"
         options={{
-          headerShown: true,
-          title: "",
-          ...standard,
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -18,7 +14,6 @@ export default function AuthLayout() {
         options={{
           headerShown: false,
           presentation: "modal",
-          ...root,
         }}
       />
     </Stack>

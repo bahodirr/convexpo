@@ -1,15 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
-import { useTheme } from "heroui-native";
 import { useState } from "react";
-import { Alert, Pressable, Text } from "react-native";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { useNavigationOptions } from "@/hooks/useNavigationOptions";
+import { Alert, Pressable, StyleSheet, Text } from "react-native";
 import { authClient } from "@/lib/betterAuth/client";
+import { UI_COLORS } from "@/lib/constants";
+const themeColors = UI_COLORS;
 
 export default function MainLayout() {
-	const { standard } = useNavigationOptions();
-
 	return (
 		<Stack>
 			<Stack.Screen
@@ -19,9 +16,7 @@ export default function MainLayout() {
 					headerTitle: "Informational",
 					headerLargeTitle: true,
 					headerBackTitle: "Home",
-					...standard,
 					headerRight: () => <SettingsButton />,
-					headerLeft: () => <ThemeToggle />,
 				}}
 			/>
 			<Stack.Screen
@@ -30,7 +25,6 @@ export default function MainLayout() {
 					title: "Settings",
 					headerBackButtonDisplayMode: "generic",
 					headerLargeTitle: true,
-					...standard,
 					headerRight: () => <SignOutButton />,
 				}}
 			/>
@@ -39,17 +33,20 @@ export default function MainLayout() {
 }
 
 const SettingsButton = () => {
-	const { colors } = useTheme();
 	const router = useRouter();
 
 	return (
 		<Pressable
-			className="justify-center rounded-full p-2.5"
+			style={({ pressed }) => [
+				styles.iconButton,
+				{ backgroundColor: themeColors.background, borderColor: themeColors.border },
+				pressed && styles.pressedButton,
+			]}
 			onPress={() => {
 				router.navigate("/settings");
 			}}
 		>
-			<Ionicons name="settings-outline" size={18} color={colors.foreground} />
+			<Ionicons name="settings-outline" size={18} color={themeColors.foreground} />
 		</Pressable>
 	);
 };
@@ -81,7 +78,12 @@ const SignOutButton = () => {
 
 	return (
 		<Pressable
-			className="justify-center rounded-full px-3"
+			style={({ pressed }) => [
+				styles.signOutButton,
+				{ backgroundColor: themeColors.background, borderColor: themeColors.border },
+				isSigningOut && styles.disabledButton,
+				pressed && styles.pressedButton,
+			]}
 			disabled={isSigningOut}
 			onPress={() => {
 				Alert.alert("Sign Out", "Are you sure you want to sign out?", [
@@ -98,7 +100,31 @@ const SignOutButton = () => {
 				]);
 			}}
 		>
-			<Text className="text-foreground">Sign Out</Text>
+			<Text style={[styles.signOutText, { color: themeColors.foreground }]}>Sign Out</Text>
 		</Pressable>
 	);
 };
+
+const styles = StyleSheet.create({
+	iconButton: {
+		justifyContent: "center",
+		borderRadius: 9999,
+		padding: 10,
+	},
+	pressedButton: {
+		opacity: 0.85,
+	},
+	signOutButton: {
+		justifyContent: "center",
+		borderRadius: 9999,
+		paddingHorizontal: 12,
+	paddingVertical: 8,
+	},
+	disabledButton: {
+		opacity: 0.6,
+	},
+	signOutText: {
+		fontSize: 16,
+		fontWeight: "600",
+	},
+});

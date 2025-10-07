@@ -1,56 +1,59 @@
 {
-	"expo": {
-		"name": "Convexpo",
-		"slug": "convexpo",
-		"version": "1.0.0",
-		"scheme": "convexpo",
-		"web": {
-			"bundler": "metro",
-			"output": "static",
-			"favicon": "./assets/favicon.png"
-		},
-		"plugins": [
-			[
-				"expo-splash-screen",
-				{
-					"backgroundColor": "#ffffff",
-					"image": "./assets/logo-b.png",
-					"dark": {
-						"image": "./assets/logo-w.png",
-						"backgroundColor": "#000000"
-					}
-				}
-			],
-			"expo-router",
-			"expo-secure-store",
-			"expo-web-browser"
-		],
-		"experiments": {
-			"typedRoutes": true,
-			"tsconfigPaths": true,
-			"reactCompiler": true
-		},
-		"newArchEnabled": true,
-		"orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"userInterfaceStyle": "automatic",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true,
-			"bundleIdentifier": "com.colonystudio.convexpo"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/logo-b.png",
-				"backgroundColor": "#ffffff"
-			},
-			"package": "com.colonystudio.convexpo",
-			"edgeToEdgeEnabled": true
-		}
-	}
+  "expo": {
+    "name": "Convexpo",
+    "slug": "convexpo",
+    "version": "1.0.0",
+    "scheme": "convexpo",
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/logo-b.png",
+          "dark": {
+            "image": "./assets/logo-w.png",
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
+      "expo-router",
+      "expo-secure-store",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true,
+      "reactCompiler": true
+    },
+    "newArchEnabled": true,
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.colonystudio.convexpo",
+      "appleTeamId": "PHSD73G5UF"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo-b.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.colonystudio.convexpo",
+      "edgeToEdgeEnabled": true
+    }
+  }
 }

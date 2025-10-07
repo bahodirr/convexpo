@@ -16,3 +16,10 @@ export const NAV_THEME = {
 		text: "hsl(210 40% 98%)",
 	},
 };
+
+export const UI_COLORS = {
+	foreground: "#0F172A",
+	mutedForeground: "#64748B",
+	background: "#FFFFFF",
+	border: "#E2E8F0",
+} as const;

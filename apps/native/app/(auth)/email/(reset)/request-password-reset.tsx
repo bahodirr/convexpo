@@ -1,15 +1,17 @@
-import Ionicons from "@expo/vector-icons/build/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
-import { Button, Spinner, TextField, useTheme } from "heroui-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 import { Alert } from "react-native";
 import FormHeader, { FormContainer } from "@/components/form";
 import { authClient } from "@/lib/betterAuth/client";
+import { UI_COLORS } from "@/lib/constants";
+
+const themeColors = UI_COLORS;
 
 export default function RequestPasswordResetRoute() {
 	const router = useRouter();
-	const { colors } = useTheme();
 	/* ---------------------------------- state --------------------------------- */
 	const [email, setEmail] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
@@ -61,38 +63,70 @@ export default function RequestPasswordResetRoute() {
 				description="Enter your email to receive a password reset link"
 			/>
 			{/* email */}
-			<TextField isRequired>
-				<TextField.Input
-					className="h-16 rounded-3xl"
-					placeholder="Enter your email"
-					keyboardType="email-address"
-					autoCapitalize="none"
-					value={email}
-					onChangeText={setEmail}
-				>
-					<TextField.InputStartContent className="pointer-events-none pl-2">
-						<Ionicons
-							name="mail-outline"
-							size={20}
-							color={colors.mutedForeground}
-						/>
-					</TextField.InputStartContent>
-				</TextField.Input>
-			</TextField>
+			<View>
+				<View style={styles.inputWrapper}>
+					<Ionicons name="mail-outline" size={20} color={themeColors.mutedForeground} style={styles.inputIcon} />
+					<TextInput
+						style={styles.input}
+						placeholder="Enter your email"
+						keyboardType="email-address"
+						autoCapitalize="none"
+						value={email}
+						onChangeText={setEmail}
+						placeholderTextColor={themeColors.mutedForeground}
+					/>
+				</View>
+			</View>
 			{/* submit button */}
-			<Button
+			<Pressable
 				onPress={handleRequestReset}
 				disabled={isLoading}
-				className="rounded-3xl"
-				size="lg"
+				style={({ pressed }) => [
+					styles.primaryButton,
+					{ backgroundColor: themeColors.foreground },
+					isLoading && styles.disabledButton,
+					pressed && styles.pressedButton,
+				]}
 			>
-				<Button.LabelContent>
+				<Text style={[styles.primaryButtonLabel, { color: themeColors.background }]}>
 					{isLoading ? "Sending..." : "Send Reset Link"}
-				</Button.LabelContent>
-				<Button.EndContent>
-					{isLoading ? <Spinner color={colors.background} /> : null}
-				</Button.EndContent>
-			</Button>
+				</Text>
+			</Pressable>
 		</FormContainer>
 	);
 }
+
+const styles = StyleSheet.create({
+	inputWrapper: {
+		height: 56,
+		borderRadius: 24,
+		borderWidth: 1,
+		borderColor: themeColors.border,
+		paddingHorizontal: 12,
+		alignItems: "center",
+		flexDirection: "row",
+	},
+	inputIcon: {
+		marginRight: 8,
+	},
+	input: {
+		flex: 1,
+		fontSize: 16,
+	},
+	primaryButton: {
+		borderRadius: 24,
+		paddingVertical: 16,
+		alignItems: "center",
+		marginTop: 8,
+	},
+	primaryButtonLabel: {
+		fontSize: 16,
+		fontWeight: "600",
+	},
+	disabledButton: {
+		opacity: 0.6,
+	},
+	pressedButton: {
+		opacity: 0.85,
+	},
+});
