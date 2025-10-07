@@ -1,24 +1,19 @@
 {
-	"name": "my-better-t-app",
+	"name": "convexpo",
 	"private": true,
 	"workspaces": [
 		"apps/*",
 		"packages/*"
 	],
 	"scripts": {
-		"check": "biome check --write .",
+		"check": "tsc --noEmit",
 		"dev": "turbo dev",
 		"build": "turbo build",
-		"check-types": "turbo check-types",
-		"dev:native": "turbo -F native dev",
-		"dev:web": "turbo -F web dev",
-		"dev:server": "turbo -F @my-better-t-app/backend dev",
-		"dev:setup": "turbo -F @my-better-t-app/backend dev:setup"
+		"check-types": "turbo check-types"
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"turbo": "^2.5.4",
-		"@biomejs/biome": "2.2.0"
+		"turbo": "^2.5.4"
 	},
-	"packageManager": "pnpm@10.15.0"
+	"packageManager": "bun@1.2.23"
 }
