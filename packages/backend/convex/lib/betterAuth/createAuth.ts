@@ -19,6 +19,7 @@ export const createAuth = (
 		database: authComponent.adapter(ctx),
 		trustedOrigins: [
 			requireEnv("EXPO_MOBILE_URL"),
+			"polytalk://",
 			"http://192.168.7.57:8081", 
 		],
 		// emailAndPassword: {

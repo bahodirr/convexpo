@@ -23,11 +23,9 @@ export const useAppleAuth = () => {
 				provider: "apple",
 				idToken: {
 					token: credential.identityToken,
-					nonce: credential.authorizationCode ?? undefined,
-					accessToken: credential.identityToken,
 				},
 			});
-		} catch (error) {
+		} catch (error) {			
 			console.error("Apple sign in error:", error);
 		} finally {
 			setIsLoading(false);

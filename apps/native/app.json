@@ -45,7 +45,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.polytalk.app",
-      "appleTeamId": "PHSD73G5UF"
+      "appleTeamId": "PHSD73G5UF",
+			"usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {

@@ -10,7 +10,7 @@ export const useGoogleAuth = () => {
       await authClient.signIn.social({
         provider: "google",
         // On native, the Expo client plugin converts this path to a deep link.
-        callbackURL: "/",
+        // Use the same destination as Apple for consistency.
       });
     } catch (error) {
       console.error("Google sign in error:", error);
