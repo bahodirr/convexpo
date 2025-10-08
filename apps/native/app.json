@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Convexpo",
-    "slug": "convexpo",
+    "name": "Polytalk",
+    "slug": "polytalk",
     "version": "1.0.0",
-    "scheme": "convexpo",
+    "scheme": "polytalk",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -44,7 +44,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.colonystudio.convexpo",
+      "bundleIdentifier": "com.polytalk.app",
       "appleTeamId": "PHSD73G5UF"
     },
     "android": {
@@ -52,7 +52,7 @@
         "foregroundImage": "./assets/logo-b.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.colonystudio.convexpo",
+      "package": "com.polytalk.app",
       "edgeToEdgeEnabled": true
     }
   }

@@ -11,7 +11,7 @@ const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL, {
 	// Optionally pause queries until the user is authenticated
 	expectAuth: true,
 	unsavedChangesWarning: false,
-	verbose: false, //  __DEV__,
+	// verbose: false, //  __DEV__,
 });
 
 export default function ConvexProvider({

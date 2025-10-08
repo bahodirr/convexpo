@@ -1,8 +1,9 @@
 {
-	"name": "@convexpo/backend",
+	"name": "@polytalk/backend",
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "convex dev",
+    "deploy": "convex deploy",
 		"dev:setup": "convex dev --configure --until-success"
 	},
 	"author": "",

@@ -1,5 +1,5 @@
 {
-	"name": "convexpo",
+	"name": "polytalk",
 	"version": "1.0.0",
 	"main": "expo-router/entry",
 	"scripts": {
@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"@better-auth/expo": "^1.3.8",
-		"@convexpo/backend": "workspace:*",
+		"@polytalk/backend": "workspace:*",
 		"@expo/vector-icons": "^15.0.2",
 		"@react-navigation/bottom-tabs": "^7.2.0",
 		"@react-navigation/drawer": "^7.1.1",

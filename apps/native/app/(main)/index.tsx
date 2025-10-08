@@ -3,7 +3,7 @@ import {
 	type FunctionReturnType,
 	useMutation,
 	useQuery,
-} from "@convexpo/backend";
+} from "@polytalk/backend";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { UI_COLORS } from "@/lib/constants";

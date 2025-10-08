@@ -1,4 +1,4 @@
-import { api, useQuery } from "@convexpo/backend";
+import { api, useQuery } from "@polytalk/backend";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";

@@ -18,9 +18,8 @@ export const createAuth = (
 	return betterAuth({
 		database: authComponent.adapter(ctx),
 		trustedOrigins: [
-			"https://appleid.apple.com",
 			requireEnv("EXPO_MOBILE_URL"),
-			// requireEnv("EXPO_WEB_URL"),
+			"http://192.168.7.57:8081", 
 		],
 		// emailAndPassword: {
 		// 	enabled: true,
@@ -32,7 +31,7 @@ export const createAuth = (
 		// 		});
 		// 	},
 		// },
-		// baseURL: requireEnv("CONVEX_SITE_URL"),
+		baseURL: requireEnv("CONVEX_SITE_URL"),
 		user: {
 			deleteUser: {
 				enabled: true,
@@ -44,10 +43,10 @@ export const createAuth = (
 			// 	clientSecret: requireEnv("APPLE_CLIENT_SECRET"),
 			// 	appBundleIdentifier: requireEnv("APPLE_APP_BUNDLE_IDENTIFIER"),
 			// },
-			// google: {
-			// 	clientId: requireEnv("GOOGLE_CLIENT_ID"),
-			// 	clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
-			// },
+			google: {
+				clientId: requireEnv("GOOGLE_CLIENT_ID"),
+				clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
+			},
 		},
 		logger: {
 			disabled: optionsOnly,
