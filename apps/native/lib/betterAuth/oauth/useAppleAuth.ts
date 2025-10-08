@@ -24,6 +24,7 @@ export const useAppleAuth = () => {
 				idToken: {
 					token: credential.identityToken,
 				},
+				callbackURL: "/",
 			});
 		} catch (error) {			
 			console.error("Apple sign in error:", error);

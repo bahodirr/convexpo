@@ -11,6 +11,7 @@ export const useGoogleAuth = () => {
         provider: "google",
         // On native, the Expo client plugin converts this path to a deep link.
         // Use the same destination as Apple for consistency.
+        callbackURL: "/",
       });
     } catch (error) {
       console.error("Google sign in error:", error);

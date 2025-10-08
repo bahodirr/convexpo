@@ -20,6 +20,7 @@ export const createAuth = (
 		trustedOrigins: [
 			requireEnv("EXPO_MOBILE_URL"),
 			"polytalk://",
+			"polytalk:///",
 			"http://192.168.7.57:8081", 
 		],
 		// emailAndPassword: {
