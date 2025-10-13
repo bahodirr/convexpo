@@ -1,34 +1,14 @@
 # Convexpo
 
-## Convex + Better Auth + Expo (React Native) + Hero UI Native
-
-This project was bootstrapped with **[Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack)**, a modern TypeScript stack combining Convex, Expo/React Native, Tailwind (NativeWind), Turborepo, and more. For architecture and deeper patterns, refer to the Better-T-Stack repo and docs.
-
-> To reproduce a similar starter, run:
->
-> ```bash
-> pnpm create better-t-stack@latest my-better-t-app \
->  --frontend native-nativewind \
->  --backend convex \
->  --runtime none --api none --auth none --database none --orm none --db-setup none \
->  --package-manager pnpm --no-git \
->  --web-deploy none --server-deploy none \
->  --install \
->  --addons turborepo \
->  --examples todo
-> ```
-
+## Convex + Better Auth + Expo (React Native)
 
 
 ## Tech Stack
 
 * **TypeScript** — static typing for safety and DX
 * **[React Native (Expo)](https://expo.dev/)** — SDK 54
-* **[Tailwind (NativeWind)](https://www.nativewind.dev/)** — Tailwind for React Native
-* **[Hero UI Native](https://github.com/heroui-inc/heroui-native)** — modern React Native UI library 🚧 *Alpha*
 * **[Convex](https://docs.convex.dev/)** — reactive backend-as-a-service
 * **[Better Auth](https://convex-better-auth.netlify.app/)** — auth primitives on Convex
-* **[Biome](https://biomejs.dev/)** — fast formatting and linting
 * **[Turborepo](https://turbo.build/repo/docs)** — monorepo build system
 
 ## Project Structure
